@@ -22,4 +22,13 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function parentCategories()
+    {
+        return $this
+            ->createQueryBuilder('category')
+            ->Where('category.parentCategory = false')
+            ->getQuery()
+            ->getResult();
+    }
 }

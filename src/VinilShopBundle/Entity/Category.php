@@ -39,6 +39,29 @@ class Category
      */
     private $name;
 
+    /**
+     * @return bool
+     */
+    public function isParentCategory()
+    {
+        return $this->parentCategory;
+    }
+
+    /**
+     * @param bool $parentCategory
+     */
+    public function setParentCategory($parentCategory)
+    {
+        $this->parentCategory = $parentCategory;
+    }
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="parent_category", type="boolean")
+     */
+    private $parentCategory;
+
 
     public function __construct()
     {

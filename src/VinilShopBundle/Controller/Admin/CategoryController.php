@@ -32,6 +32,12 @@ class CategoryController extends Controller
     public function addAction(Request $request)
     {
         $category = new Category();
+        $categories = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Category')
+            ->parentCategories()
+            ;
+
         $form = $this->createForm(CategoryType::class,$category);
         $form->add('submit',SubmitType::class);
         $form->handleRequest($request);

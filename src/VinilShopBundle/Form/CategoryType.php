@@ -2,9 +2,14 @@
 
 namespace VinilShopBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use VinilShopBundle\Entity\Category;
+use VinilShopBundle\Repository\CategoryRepository;
+
 
 class CategoryType extends AbstractType
 {
@@ -14,8 +19,22 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('parent',null,['choice_label'=>'name'])
+            ->add('parent',EntityType::class,[
+                'choice_label'=>'name',
+                'class'=> Category::class,
+                'query_builder'=> function(CategoryRepository $repository){
+                    return
+                        $repository
+                        ->createQueryBuilder('c')
+                        ->Where('c.parentCategory = false');
+//                        ->getQuery()
+//                        ->getResult();
+
+
+
+                }])
             ->add('name')
+            ->add('parentCategory')
             ;
     }/**
      * {@inheritdoc}
