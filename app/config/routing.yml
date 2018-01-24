@@ -1,0 +1,5 @@
+vinil_shop:
+    resource: "@VinilShopBundle/Controller/"
+    type:     annotation
+    prefix:   /
+

@@ -1,0 +1,28 @@
+{% extends '@VinilShop/admin_layout.html.twig' %}
+{% block body %}
+
+
+
+
+    {% import _self as macros %}
+    <ul class="main-menu">
+        {{ macros.tree(categores)  }}
+    </ul>
+
+
+{% endblock %}
+
+
+{% macro tree(categores) %}
+    {% for category in categores %}
+        <li>
+            <a href="#">{{ category.name }}</a>
+            {% if category.children %}
+                <ul>
+                    {{ _self.tree(category.children) }}
+                </ul>
+
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endmacro %}
