@@ -30,6 +30,22 @@ class Attribute_name
 
 
     /**
+     * @var string
+     *
+     * @ORM\OneToMany(targetEntity="VinilShopBundle\Entity\Attribute", mappedBy="name")
+     */
+    private $attributes;
+
+
+    /**
+     * @var Category[]
+     *
+     * @ORM\ManyToMany(targetEntity="VinilShopBundle\Entity\Category", mappedBy="attribute_names")
+     */
+    private $categoryes;
+
+
+    /**
      * Get id
      *
      * @return int

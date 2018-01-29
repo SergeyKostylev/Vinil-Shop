@@ -1,0 +1,29 @@
+{% extends '@VinilShop/admin_layout.html.twig' %}
+{% block body %}
+<h2>Товары</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Название</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Актив</th>
+                <th scope="col">Категория</th>
+            </tr>
+        </thead>
+            <tbody>
+                {% for product in products %}
+
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>{{ product.isActive }}</td>
+                        <td>{{ product.category.name }}</td>
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+    </table>
+{% endblock %}
+

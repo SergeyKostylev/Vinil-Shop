@@ -37,11 +37,11 @@
                 <a class="nav-link disabled" href="#">Disabled</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Добавить</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <a class="dropdown-item" href="{{ path('add_category') }}">Категорию</a>
+                    <a class="dropdown-item" href="{{ path('add_manufacturer') }}">Производителя</a>
+                    <a class="dropdown-item" href="{{ path('add_product') }}">Товар</a>
                 </div>
             </li>
         </ul>
@@ -53,11 +53,38 @@
 </nav>
 
 <main role="main" class="container">
-<h1>ADMIN LAYOUT</h1>
-    {% block body %}
 
 
-    {% endblock %}
+
+    {#col-	.col-sm-	.col-md-	.col-lg-	.col-xl-#}
+
+    {#<div class="container">#}
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>Admin Menu</h3>
+               <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link bg-dark"  href="{{ path('categoryes') }}">Категории</a>
+                </div>
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link bg-dark"  href="{{ path('manufacturers') }}">Производители</a>
+                </div>
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link bg-dark"  href="{{ path('products') }}">Продукты</a>
+                </div>
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link bg-dark"  href="{{ path('attributes') }}">Список всех характеристик</a>
+                </div>
+            </div>
+            <div class="col-sm">
+                {% block body %}
+
+
+                {% endblock %}
+            </div>
+        </div>
+    {#</div>#}
+
+
 
 
 </main><!-- /.container -->

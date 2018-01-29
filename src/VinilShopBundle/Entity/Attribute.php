@@ -22,11 +22,12 @@ class Attribute
     private $id;
 
     /**
-     * @var int
+     * @var Attribute_name
      *
-     * @ORM\Column(name="name_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="VinilShopBundle\Entity\Attribute_name", inversedBy="attributes")
      */
-    private $nameId;
+    private $name;
+
 
     /**
      * @var string
@@ -34,6 +35,14 @@ class Attribute
      * @ORM\Column(name="value", type="string", length=255, nullable=true)
      */
     private $value;
+
+
+    /**
+     * @var Product[]
+     *
+     * @ORM\ManyToMany(targetEntity="VinilShopBundle\Entity\Product", mappedBy="attributes")
+     */
+    private $products;
 
 
     /**
@@ -47,27 +56,27 @@ class Attribute
     }
 
     /**
-     * Set nameId
+     * Set name
      *
-     * @param integer $nameId
+     * @param integer $name
      *
      * @return Attribute
      */
-    public function setNameId($nameId)
+    public function setNameId($name)
     {
-        $this->nameId = $nameId;
+        $this->nameId = $name;
 
         return $this;
     }
 
     /**
-     * Get nameId
+     * Get name
      *
      * @return int
      */
-    public function getNameId()
+    public function getName()
     {
-        return $this->nameId;
+        return $this->name;
     }
 
     /**

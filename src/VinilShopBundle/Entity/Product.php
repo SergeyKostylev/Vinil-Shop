@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * product
  *
  * @ORM\Table(name="product")
- * @ORM\Entity(repositoryClass="VinilShopBundle\Repository\productRepository")
+ * @ORM\Entity(repositoryClass="VinilShopBundle\Repository\ProductRepository")
  */
 class Product
 {
@@ -24,7 +24,7 @@ class Product
     /**
      * @var int
      *
-     * @ORM\Column(name="article", type="integer")
+     * @ORM\Column(name="article", type="integer",options={"unsigned"=true})
      */
     private $article;
 
@@ -36,11 +36,43 @@ class Product
     private $name;
 
     /**
-     * @var int
+     * @var Category
      *
-     * @ORM\Column(name="category_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="VinilShopBundle\Entity\Category", inversedBy="products")
      */
-    private $categoryId;
+    private $category;
+
+    /**
+     * @return attribute[]
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+
+    /**
+     * @param attribute[] $attributes
+     */
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
+    }
+
+    /**
+     * @return Manufacturer
+     */
+    public function getManufacturer()
+    {
+        return $this->manufacturer;
+    }
+
+    /**
+     * @param Manufacturer $manufacturer
+     */
+    public function setManufacturer($manufacturer)
+    {
+        $this->manufacturer = $manufacturer;
+    }
 
     /**
      * @var Manufacturer
@@ -83,6 +115,18 @@ class Product
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
+
+    /**
+     * @var attribute[]
+     *
+     * @ORM\ManyToMany(targetEntity="VinilShopBundle\Entity\Attribute", inversedBy="products")
+     */
+    private $attributes;
+
+
+
+
+
 
 
     /**
@@ -144,27 +188,27 @@ class Product
     }
 
     /**
-     * Set categoryId
+     * Set category
      *
-     * @param integer $categoryId
+     * @param integer $category
      *
      * @return product
      */
-    public function setCategoryId($categoryId)
+    public function setCategory($category)
     {
-        $this->categoryId = $categoryId;
+        $this->category = $category;
 
         return $this;
     }
 
     /**
-     * Get categoryId
+     * Get category
      *
      * @return int
      */
-    public function getCategoryId()
+    public function getCategory()
     {
-        return $this->categoryId;
+        return $this->category;
     }
 
     /**

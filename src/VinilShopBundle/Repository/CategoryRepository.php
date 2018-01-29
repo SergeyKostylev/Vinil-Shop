@@ -27,7 +27,7 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this
             ->createQueryBuilder('category')
-            ->Where('category.parentCategory = false')
+            ->Where('category.lastCategory = false')
             ->getQuery()
             ->getResult();
     }

@@ -1,0 +1,15 @@
+{% extends '@VinilShop/admin_layout.html.twig' %}
+{% block body %}
+<h2>Производители</h2>
+    <div class="list-group">
+
+        {% for manufacturer in manufacturers %}
+
+            <a href="{{ path('edit_manufacturer',  {id: manufacturer.id}) }}" class="list-group-item list-group-item-action list-group-item-secondary">
+               {{ manufacturer.name }}
+            </a>
+
+        {% endfor %}
+    </div>
+{% endblock %}
+

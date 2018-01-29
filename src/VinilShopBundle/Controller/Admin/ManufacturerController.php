@@ -7,40 +7,41 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
-use VinilShopBundle\Entity\Category;
-use VinilShopBundle\Form\CategoryType;
+use VinilShopBundle\Entity\Manufacturer;
+use VinilShopBundle\Form\ManufacturerType;
 
-class CategoryController extends Controller
+
+class ManufacturerController extends Controller
 {
     /**
-     * @Route("/admin/category", name = "categoryes")
+     * @Route("/admin/manufacturer", name = "manufacturers")
      * @Template()
      */
 
     public function indexAction(Request $request)
     {
-        $categores = $this
+        $manufacturers = $this
             ->getDoctrine()
-            ->getRepository('VinilShopBundle:Category')
-            ->findTree();
-        return['categores'=>$categores];
+            ->getRepository('VinilShopBundle:Manufacturer')
+            ->findAll();
+        return['manufacturers'=>$manufacturers];
     }
     /**
-     * @Route("/admin/category/add", name = "add_category")
+     * @Route("/admin/manufacturer/add", name = "add_manufacturer")
      * @Template()
      */
     public function addAction(Request $request)
     {
-        $category = new Category();
-        $form = $this->createForm(CategoryType::class,$category);
+        $manufacturer = new Manufacturer();
+        $form = $this->createForm(ManufacturerType::class,$manufacturer);
         $form->add('submit',SubmitType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($category);
+            $em->persist($manufacturer);
             $em->flush();
-            return $this->redirectToRoute('add_category');
+            return $this->redirectToRoute('add_manufacturer');
 
         }
         return [
@@ -49,32 +50,32 @@ class CategoryController extends Controller
     }
 
     /**
-     * @Route("/admin/category/edit/{id}", name = "edit_category")
+     * @Route("/admin/manufacturer/edit/{id}", name = "edit_manufacturer")
      * @Template()
      */
     public function editAction(Request $request, $id)
     {
-        $category = $this
+        $manufacturer = $this
             ->getDoctrine()
-            ->getRepository('VinilShopBundle:Category')
+            ->getRepository('VinilShopBundle:Manufacturer')
             ->find($id);
-        if(!$category) {
-            throw  $this->createNotFoundException('Category not found');
+        if(!$manufacturer) {
+            throw  $this->createNotFoundException('Manufacturer not found');
         }
 
-        $form = $this->createForm(CategoryType::class,$category);
+        $form = $this->createForm(ManufacturerType::class,$manufacturer);
         $form->add('submit',SubmitType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
 
             $em = $this->getDoctrine()->getManager();
-            $em->persist($category);
+            $em->persist($manufacturer);
             $em->flush();
-            return $this->redirectToRoute('categoryes');
+            return $this->redirectToRoute('manufacturer');
         }
 
-        return[ 'category'=>$category,
+        return[ 'category'=>$manufacturer,
                 'form' => $form->createView()];
 
     }

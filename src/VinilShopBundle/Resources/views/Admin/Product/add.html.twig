@@ -1,0 +1,18 @@
+{% extends '@VinilShop/admin_layout.html.twig' %}
+{% block body %}
+
+
+    {{ form_start(form) }}
+    {#{{ form_row(form.parent, {'label': 'Родительская категория'}) }}#}
+    {#{{ form_row(form.name, {'label': 'Название категории'}) }}#}
+
+    {#{{ form_row(form.lastCategory, {'label': 'Категория не может иметь подкатегорий'}) }}#}
+    {#{{ form_row(form.submit, {'label': 'Создать'}) }}#}
+    {{ form_end(form) }}
+
+    {#<div>#}
+        {#<div>Примечание:</div>#}
+        {#Категория может не входить не в одну из существующих. Для этого поле "Родительская категория" нужно оставить пустым.#}
+
+    {#</div>#}
+{% endblock %}

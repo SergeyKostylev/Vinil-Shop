@@ -1,0 +1,12 @@
+{% extends '@VinilShop/admin_layout.html.twig' %}
+{% block body %}
+
+
+    <ul class="main-menu">
+        {% for attribute in attributes %}
+        {{ attribute.name  }}<br>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
+

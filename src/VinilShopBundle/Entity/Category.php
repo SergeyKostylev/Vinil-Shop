@@ -40,27 +40,42 @@ class Category
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\OneToMany(targetEntity="VinilShopBundle\Entity\Product", mappedBy="category")
+     */
+    private $products;
+
+    /**
+     * @var Attribute_name[]
+     *
+     * @ORM\ManyToMany(targetEntity="VinilShopBundle\Entity\Attribute_name", inversedBy="categoryes")
+     */
+    private $attribute_names;
+
+
+    /**
      * @return bool
      */
-    public function isParentCategory()
+    public function isLastCategory()
     {
-        return $this->parentCategory;
+        return $this->lastCategory;
     }
 
     /**
-     * @param bool $parentCategory
+     * @param bool $lastCategory
      */
-    public function setParentCategory($parentCategory)
+    public function setLastCategory($lastCategory)
     {
-        $this->parentCategory = $parentCategory;
+        $this->lastCategory = $lastCategory;
     }
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="parent_category", type="boolean")
+     * @ORM\Column(name="last_category", type="boolean")
      */
-    private $parentCategory;
+    private $lastCategory;
 
 
     public function __construct()
