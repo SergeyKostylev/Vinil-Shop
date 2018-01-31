@@ -13,6 +13,10 @@
         <li>
             <a href="#" style="font-size: 14pt">{{ category.name }}</a>
             <a href="{{ path('edit_category', {id: category.id}) }}" type="button" class="btn btn-warning btn-sm">Редактировать</a>
+
+            {% if category.lastCategory %}
+                <a id="{{ category.id }}"  type="button" class="ajaxBtnDelCategory btn btn-danger btn-sm">Удалить</a>
+            {% endif %}
             {% if category.children %}
                 <ul>
                     {{ _self.tree(category.children) }}

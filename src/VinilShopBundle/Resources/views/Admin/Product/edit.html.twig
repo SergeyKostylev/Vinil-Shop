@@ -1,16 +1,26 @@
 {% extends '@VinilShop/admin_layout.html.twig' %}
 {% block body %}
+    <div class="block-center titleImagePic">
+            <img src="{{ asset(images_of_entities) }}{{ product.titleImage }}" height="110">
+    </div>
     {{ form_start(form) }}
-    {{ form_row(form.titleImage, {'label': 'Титульное изображение'}) }}
+
+        <div class="disp-none titleImageImputEdid">
+            {{ form_row(form.titleImage, {'label': 'Титульное изображение'}) }}
+        </div>
+
+        <div>
+            <button type="button" class="titleImageImputBut btn btn-primary offset-sm-3 col-6">Изменить</button>
+        </div>
+
         {{ form_row(form.name, {'label': 'Наименование'}) }}
         {{ form_row(form.category, {'label': 'Категория'}) }}
         <div class="manufInput">
             {{ form_row(form.manufacturer, {'label': 'Производитель','attr':{'class':'manufInput'}}) }}
-        </div>
+         </div>
         <div class="disp-none newManufInput ">
             {{ form_row(form.new_manufacturer, {'label': 'Создать нового'}) }}
         </div>
-
         <div class="row">
             <button type="button" class="manufDispBtn btn btn-primary offset-sm-3 col-6">Добавить нового</button>
         </div>
@@ -18,7 +28,7 @@
         {{ form_row(form.description, {'label': 'Описание'}) }}
         {{ form_row(form.otherImages, {'label': 'Остальные изображения'}) }}
         {{ form_row(form.isActive, {'label': 'Есть в наличии'}) }}
-        {{ form_row(form.submit, {'label': 'Создать'}) }}
+        {{ form_row(form.submit, {'label': 'Редактировать'}) }}
     {{ form_end(form) }}
 
     {#<div>#}

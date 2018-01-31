@@ -23,6 +23,13 @@ class Product
     private $id;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="article", type="integer",options={"unsigned"=true})
+     */
+    private $article;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -60,7 +67,7 @@ class Product
     /**
      *
      * @ORM\Column(type="string", length=255, nullable=true)
-     *
+     * @Assert\NotBlank(message="dd")
      * @Assert\File(mimeTypes={ "image/jpeg" })
      */
     private $titleImage;
@@ -100,6 +107,19 @@ class Product
     }
 
     /**
+     * Set article
+     *
+     * @param integer $article
+     *
+     * @return product
+     */
+    public function setArticle($article)
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+    /**
      * @return attribute[]
      */
     public function getAttributes()
@@ -131,6 +151,15 @@ class Product
         $this->manufacturer = $manufacturer;
     }
 
+    /**
+     * Get article
+     *
+     * @return int
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
 
     /**
      * Set name
@@ -323,35 +352,5 @@ class Product
     {
         return $this->isActive;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add attribute
-     *
-     * @param \VinilShopBundle\Entity\Attribute $attribute
-     *
-     * @return Product
-     */
-    public function addAttribute(\VinilShopBundle\Entity\Attribute $attribute)
-    {
-        $this->attributes[] = $attribute;
-
-        return $this;
-    }
-
-    /**
-     * Remove attribute
-     *
-     * @param \VinilShopBundle\Entity\Attribute $attribute
-     */
-    public function removeAttribute(\VinilShopBundle\Entity\Attribute $attribute)
-    {
-        $this->attributes->removeElement($attribute);
-    }
 }
+

@@ -5,8 +5,10 @@ namespace VinilShopBundle\Form;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use VinilShopBundle\Entity\Attribute_name;
 use VinilShopBundle\Entity\Category;
 use VinilShopBundle\Repository\CategoryRepository;
 
@@ -30,6 +32,12 @@ class CategoryType extends AbstractType
                         ->Where('c.lastCategory = false');
                 }])
             ->add('name')
+            ->add('attributeNames',EntityType::class,[
+                'choice_label'=>'name',
+                'required' => false,
+                'multiple' =>true,
+                'expanded' => true,
+                'class'=> Attribute_name::class])
             ->add('lastCategory')
             ;
     }/**

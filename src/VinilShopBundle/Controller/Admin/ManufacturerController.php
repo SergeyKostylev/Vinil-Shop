@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use VinilShopBundle\Entity\Manufacturer;
 use VinilShopBundle\Form\ManufacturerType;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class ManufacturerController extends Controller
@@ -75,8 +76,31 @@ class ManufacturerController extends Controller
             return $this->redirectToRoute('manufacturer');
         }
 
-        return[ 'category'=>$manufacturer,
+        return[ 'manufacturer'=>$manufacturer,
                 'form' => $form->createView()];
+
+    }
+    /**
+     * @Route("/admin/manufacturer/delete/{id}", name = "delete_manufacturer")
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $manufacturer = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Manufacturer')
+            ->find($id);
+
+        if (!$manufacturer) {
+            throw  $this->createNotFoundException('Производитель не найдена');
+            return new Response(    'Ops',
+                Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+//        $em->remove($category);
+//        $em->flush();
+        return new Response(    'Content',
+            Response::HTTP_OK);
+
 
     }
 

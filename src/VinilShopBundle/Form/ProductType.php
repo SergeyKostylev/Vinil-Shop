@@ -4,12 +4,13 @@ namespace VinilShopBundle\Form;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use VinilShopBundle\Entity\Category;
-use VinilShopBundle\Entity\Product;
 use VinilShopBundle\Repository\CategoryRepository;
-use VinilShopBundle\Repository\ProductRepository;
+
+
 
 class ProductType extends AbstractType
 {
@@ -19,11 +20,16 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('article')
             ->add('name')
             ->add('price')
             ->add('description')
-            ->add('titleImage')
+            ->add('titleImage',FileType::class,
+                [
+                    'label' => 'Титульное изображение',
+                    'data_class' => null,
+//                    'property_path' => 'brochure',
+                    'required' => false
+                ])
             ->add('otherImages')
             ->add('isActive')
             ->add('category', EntityType::class, ['choice_label'=>'name',
@@ -35,7 +41,7 @@ class ProductType extends AbstractType
                             ->Where('c.lastCategory = true');
                         }
             ])
-            ->add('manufacturer', null, ['choice_label'=>'name',]);
+            ->add('manufacturer', null, ['choice_label'=>'name','label' => false]);
 
     }/**
      * {@inheritdoc}

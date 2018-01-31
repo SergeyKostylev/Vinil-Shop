@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use VinilShopBundle\Entity\Category;
 use VinilShopBundle\Form\CategoryType;
+use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller
 {
@@ -47,7 +48,6 @@ class CategoryController extends Controller
             'form' => $form->createView()
         ];
     }
-
     /**
      * @Route("/admin/category/edit/{id}", name = "edit_category")
      * @Template()
@@ -76,6 +76,33 @@ class CategoryController extends Controller
 
         return[ 'category'=>$category,
                 'form' => $form->createView()];
+
+    }
+
+
+    /**
+     * @Route("/admin/category/delete/{id}", name = "delete_category")
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $category = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Category')
+            ->find($id);
+
+
+        if (!$category) {
+            throw  $this->createNotFoundException('Категория не найдена');
+            return new Response(    'Ops',
+                Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+//        $em->remove($category);
+//        $em->flush();
+        dump($category);die;
+        return new Response(    'Content',
+            Response::HTTP_OK);
+
 
     }
 
