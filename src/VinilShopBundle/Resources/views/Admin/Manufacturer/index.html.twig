@@ -2,28 +2,20 @@
 {% block body %}
 <h2>Производители</h2>
     <div class="list-group">
+
+
         <ul class="list-group">
-        {% for manufacturer in manufacturers %}
+            {% for manufacturer in manufacturers %}
 
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ manufacturer.name }}
+                    <span class="btn-group">
+                        <a href="{{ path('edit_manufacturer',  {id: manufacturer.id}) }}" class="btn btn-warning btn-sm">Изменить</a>
+                        <a id="{{ manufacturer.id }}" class="ajaxBtnDelMan btn btn-danger btn-sm">Удалить</a>
+                    </span>
+                </li>
 
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                {{ manufacturer.name }}
-                <span class="btn-group">
-                    <a href="{{ path('edit_manufacturer',  {id: manufacturer.id}) }}" class="btn btn-warning btn-sm">Изменить</a>
-                    <a id="{{ manufacturer.id }}" class="ajaxBtnDelMan btn btn-danger btn-sm">Удалить</a>
-
-                </span>
-            </li>
-
-
-
-
-
-
-
-
-
-        {% endfor %}
+            {% endfor %}
         </ul>
     </div>
 {% endblock %}

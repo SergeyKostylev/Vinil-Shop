@@ -10,4 +10,6 @@ namespace VinilShopBundle\Repository;
  */
 class ManufacturerRepository extends \Doctrine\ORM\EntityRepository
 {
+
+
 }

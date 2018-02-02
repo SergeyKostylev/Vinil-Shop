@@ -5,8 +5,8 @@
     {{ form_start(form) }}
     {{ form_row(form.parent, {'label': 'Родительская категория'}) }}
     {{ form_row(form.name, {'label': 'Название категории'}) }}
-
     {{ form_row(form.lastCategory, {'label': 'Категория не может иметь подкатегорий'}) }}
+    {{ form_row(form.attributeNames) }}
     {{ form_row(form.submit, {'label': 'Изменить'}) }}
     {{ form_end(form) }}
 

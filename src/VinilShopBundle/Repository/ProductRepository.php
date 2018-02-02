@@ -24,4 +24,17 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             $max_article[0]['val'];
 
     }
+
+    public function productOfManufacturer($id)
+    {
+
+        return $this
+            ->createQueryBuilder('prod')
+            ->where('prod.manufacturer = :manufacturer')
+            ->setParameter('manufacturer', $id)
+            ->getQuery()
+            ->getResult();
+
+    }
+
 }

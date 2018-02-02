@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use VinilShopBundle\Entity\Manufacturer;
 use VinilShopBundle\Form\ManufacturerType;
@@ -96,11 +97,26 @@ class ManufacturerController extends Controller
             return new Response(    'Ops',
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-//        $em->remove($category);
-//        $em->flush();
+
+        $manuf_products = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Product')
+            ->productOfManufacturer($id);
+
+        if($manuf_products){
+
+            return new JsonResponse([
+                'prodExist' => true
+            ],500);
+
+
+        }
+
+        $em->remove($manufacturer);
+        $em->flush();
+        dump($em);die();
         return new Response(    'Content',
             Response::HTTP_OK);
-
 
     }
 

@@ -21,8 +21,7 @@ class AttributesController extends Controller
         $attributes = $this
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Attribute_name')
-            ->findAll();
-//        dump($attributes);die;
+            ->findBy([],['name' => 'ASC']);
         return['attributes'=>$attributes];
     }
     /**

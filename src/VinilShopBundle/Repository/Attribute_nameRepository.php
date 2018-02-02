@@ -10,4 +10,5 @@ namespace VinilShopBundle\Repository;
  */
 class Attribute_nameRepository extends \Doctrine\ORM\EntityRepository
 {
+
 }

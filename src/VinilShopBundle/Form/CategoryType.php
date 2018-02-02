@@ -37,6 +37,7 @@ class CategoryType extends AbstractType
                 'required' => false,
                 'multiple' =>true,
                 'expanded' => true,
+                'label' => false,
                 'class'=> Attribute_name::class])
             ->add('lastCategory')
             ;

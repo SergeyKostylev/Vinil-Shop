@@ -54,7 +54,16 @@
 
 <main role="main" class="container">
 
-
+    {#Модальное окно#}
+    <div id="modal_form">
+        <div id="error_message">
+            {#Сообщенеи#}
+        </div>
+        <button id="modal_close" class="btn btn-outline-dark">OK</button>
+    </div>
+    <div id="overlay"></div>
+    {#Конец модального окна#}
+    <div class="col-sm">
 
     {#col-	.col-sm-	.col-md-	.col-lg-	.col-xl-#}
 
@@ -75,6 +84,8 @@
                     <a class="nav-link bg-dark"  href="{{ path('attributes') }}">Список всех характеристик</a>
                 </div>
             </div>
+
+
             <div class="col-sm">
                 {% block body %}
 
