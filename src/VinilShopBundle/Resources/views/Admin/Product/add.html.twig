@@ -2,6 +2,7 @@
 {% block body %}
     {{ form_start(form) }}
     {{ form_row(form.titleImage, {'label': 'Титульное изображение'}) }}
+
         {{ form_row(form.name, {'label': 'Наименование'}) }}
         {{ form_row(form.category, {'label': 'Категория'}) }}
         <div class="manufInput">
@@ -19,6 +20,14 @@
         {{ form_row(form.otherImages, {'label': 'Остальные изображения'}) }}
         {{ form_row(form.isActive, {'label': 'Есть в наличии'}) }}
         {{ form_row(form.submit, {'label': 'Создать'}) }}
+
+    {#{% for attributeField in form.attributes %}#}
+
+        {#{{ attributeField.id }}#}
+
+    {#{% endfor %}#}
+
+<button type="button" class="enterAttributes" >Заполнить характеристики</button>
     {{ form_end(form) }}
 
     {#<div>#}

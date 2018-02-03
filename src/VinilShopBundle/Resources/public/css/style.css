@@ -12,6 +12,12 @@ body {
 .block-center{
     text-align: center;
 }
+/*.addAttributeButton{*/
+
+   /*text-align: right;*/
+    /*bottom: 15px;*/
+    /*right: 15px;*/
+/*}*/
 
 .attrib_list{
     height: 200px;

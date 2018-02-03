@@ -110,12 +110,79 @@ $(document).ready(function () {
                 }else{
                     $attrib_list.hide();
                 }
-            })
+            });
+
+    // var $enterAtr =$('.enterAttributes');
+    //         $enterAtr.on('click', function () {
+    //             var $attr = $('#vinilshopbundle_product_category');
+    //             var $id = $attr.val();
+    //             alert($attr.val());
+    //             $.get('/admin/product/attributes/'+ $id,function (r){})
+    //                 .done(function (r) {
+    //
+    //                 })
+    //                 .fail(function (r) {
+    //                     alert(r);
+    //                 });
+    //
+    //
+    //         });
+
+
+
+
+
+    var $collectionHolder;
+
+    var $addrow = $('.addAttributeButton');
+    var $newrow =$('<div></div>').append($addrow);
+
+    $collectionHolder = $('div.collection');
+    $collectionHolder.append($newrow);
+    $collectionHolder.data('index',$collectionHolder.find('.row').length);
+
+
+
+    removeAttribRow = function () {
+      var $this =$(this);
+      var $row =$this.parent().parent().remove();
+    };
+
+    $('.collection').on('click', '.delRowButton', removeAttribRow);
+
+
+    $addrow.on('click',function (e) {
+        e.preventDefault();
+        addRowForm($collectionHolder,$newrow);
+    });
+    function addRowForm($collectionHolder,$newrow) {
+
+        var prototype_name = $('.attributes_name').data('prototype_name');
+        var prototype_value = $('.attributes_value').data('prototype_value');
+        var index = $collectionHolder.data('index');
+        var newFormName = prototype_name;
+        var newFormValue = prototype_value;
+        var $blockTemplate = $('.block-attribs-template');
+        var $block =$blockTemplate.clone();
+
+        newFormName = newFormName.replace(/__name__/g, index);
+        newFormValue = newFormValue.replace(/__name__/g, index);
+        $collectionHolder.data('index', index + 1);
+        $block.removeClass('block-attribs-template')
+            .find('.attrib-name')
+            .append(newFormName);
+        $block.removeClass('disp-none')
+            .find('.attrib-value')
+            .append(newFormValue);
+
+        $newrow.before($block);
+    };
 
 
 
 
 });
+
 
 
 

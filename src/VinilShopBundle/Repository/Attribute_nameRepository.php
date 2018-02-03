@@ -11,4 +11,15 @@ namespace VinilShopBundle\Repository;
 class Attribute_nameRepository extends \Doctrine\ORM\EntityRepository
 {
 
+    public function attributesOfProduct($id)
+    {
+        return $this
+            ->createQueryBuilder('attr')
+            ->join('attr.categoryes', 'c')
+            ->andWhere('c.id = :id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
+
+    }
 }

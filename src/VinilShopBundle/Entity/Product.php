@@ -82,7 +82,7 @@ class Product
     /**
      * @var attribute[]
      *
-     * @ORM\ManyToMany(targetEntity="VinilShopBundle\Entity\Attribute", inversedBy="products")
+     * @ORM\ManyToMany(targetEntity="VinilShopBundle\Entity\Attribute", inversedBy="products", cascade={"persist"})
      */
     private $attributes;
 
