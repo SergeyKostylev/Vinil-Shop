@@ -46,27 +46,26 @@ class ProductController extends Controller
     public function addAction(Request $request)
     {
         $product = new Product();
-        $form = $this->createForm(ProductType::class,$product);
+        $form = $this->createForm(ProductType::class,$product,['required_file' => true]);
         $form->add('submit',SubmitType::class);
         $form->add('new_manufacturer', ManufacturerType::class, ['mapped' => false, 'required' => false]);
-        $form->add('attributes', CollectionType::class,
-            array(
+        $form->add('attributes', CollectionType::class,array(
             'entry_type' => AttributeType::class,
             'allow_add' => true,
-            'entry_options'=> array(
-                'attr'   => array('class'=>'attrib-row')
-            )
+            'label' => false,
+            'allow_delete' => true,
+//            'entry_options'=> array(
+//                'category_id' => $product->getCategory()->getId()
+//            )
         ));
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $fileUploader = new FileUploader($this->getParameter('img_entities_directory'));
             $file = $product->getTitleImage();
             $fileName = $fileUploader->upload($file);
             $product->setTitleImage($fileName);
-
             $em = $this->getDoctrine()->getManager();
 
             $newManufacturer= $form->get('new_manufacturer')->getData();
@@ -93,6 +92,13 @@ class ProductController extends Controller
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Product')
             ->find($id);
+        $category_id = $product->getCategory()->getID();
+
+        $attributes = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Attribute_name')
+            ->attributesOfCategory($category_id);
+        $amount_attributes = count($attributes);
 
         if(!$product) {
             throw  $this->createNotFoundException('Товар не найден');
@@ -103,6 +109,7 @@ class ProductController extends Controller
         $form->add('attributes', CollectionType::class,array(
             'entry_type' => AttributeType::class,
             'allow_add' => true,
+            'label' => false,
             'allow_delete' => true,
             'entry_options'=> array(
                 'category_id' => $product->getCategory()->getId()
@@ -142,79 +149,13 @@ class ProductController extends Controller
         }
         return [
             'product' => $product,
+            'amount_attributes' => $amount_attributes,
             'form' => $form->createView()
         ];
     }
-    /**
-     * @Route("/admin/product/delete/{id}", name = "delete_product")
-     */
-
-    public function deleteAction(Request $request, $id)
-    {
-
-        $em = $this->getDoctrine()->getManager();
-        $product = $this
-            ->getDoctrine()
-            ->getRepository('VinilShopBundle:Product')
-            ->find($id);
-
-        if (!$product) {
-            throw  $this->createNotFoundException('Товар не найден');
-
-            return new Response(    'Ops',
-                Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-        $em->remove($product);
-        $em->flush();
-
-        return new Response(    'Content',
-            Response::HTTP_OK);
 
 
-    }
-    /**
-     * @Route("/admin/product/attributes/{id}", name = "attributes_of_product")
-     */
-    public function getAllAtyributesOfProductAction(Request $request, $id)
-    {
-        $attributes = $this
-            ->getDoctrine()
-            ->getRepository('VinilShopBundle:Attribute_name')
-            ->attributesOfProduct($id);
 
-        $collection=[];
-        foreach ($attributes as $attrib )
-        {
-            /**
-             * @var Attribute_name $attrib
-             */
-
-            array_push($collection ,
-                [
-                    'id' => $attrib->getId(),
-                    'name' => $attrib->getName()
-                ]);
-        }
-//        dump($collection);die;
-
-        return new JsonResponse($collection
-            ,200);
-
-//        $response = new JsonResponse;
-
-//        if () {
-//            throw  $this->createNotFoundException('Товар не найден');
-//
-//            return new Response(    'Ops',
-//                Response::HTTP_INTERNAL_SERVER_ERROR);
-//        }
-//
-
-//        return new Response(    'Content',
-//            Response::HTTP_OK);
-
-
-    }
 
 
 

@@ -3,6 +3,7 @@
     <div class="block-center titleImagePic">
             <img src="{{ asset(images_of_entities) }}{{ product.titleImage }}" height="110">
     </div>
+    <span class="amount_attributes" data-amount-attributes="{{ amount_attributes }}"></span>
     {{ form_start(form) }}
 
         <div class="disp-none titleImageImputEdid">
@@ -35,11 +36,10 @@
     </div>
 {#End template#}
 
-<div class="collection border border-warning">
+<div class="collection card-body border border-warning">
 
     <div class="attributes_name" data-prototype_name="{{ form_widget(form.attributes.vars.prototype.name)|e('html_attr') }}"></div>
     <div class="attributes_value" data-prototype_value="{{ form_widget(form.attributes.vars.prototype.value)|e('html_attr') }}"></div>
-
 
     {% for attributeField in form.attributes %}
 

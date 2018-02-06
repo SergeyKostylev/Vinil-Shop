@@ -97,8 +97,8 @@ class CategoryController extends Controller
             return new Response(    'Ops',
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-//        $em->remove($category);
-//        $em->flush();
+        $em->remove($category);
+        $em->flush();
         dump($category);die;
         return new Response(    'Content',
             Response::HTTP_OK);

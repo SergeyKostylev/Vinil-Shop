@@ -26,13 +26,17 @@ class AttributeType extends AbstractType
                 'label' => 'Характеристика',
                 'placeholder' =>'Не выбрано',
                 'query_builder' => function(Attribute_nameRepository $attribute) use ($category) {
-                    return
-                        $attribute
-                            ->createQueryBuilder('a')
-                            ->join('a.categoryes','c')
+
+                        $qb = $attribute->createQueryBuilder('a');
+                        $qb->join('a.categoryes','c');
+
+                        if ($category){
+                            $qb
                             ->where('c = :id')
-                            ->setParameter('id', $category)
-                        ;
+                            ->setParameter('id', $category);
+                        }
+
+                    return $qb;
                 }
             ])
             ->add('value')

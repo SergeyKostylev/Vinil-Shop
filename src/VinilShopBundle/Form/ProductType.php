@@ -19,6 +19,8 @@ class ProductType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $required_file = $options['required_file'];
+
         $builder
             ->add('name')
             ->add('price')
@@ -27,13 +29,16 @@ class ProductType extends AbstractType
                 [
                     'label' => 'Титульное изображение',
                     'data_class' => null,
-//                    'property_path' => 'brochure',
-                    'required' => false
+//                    'mapped' => false,
+                    'required' => $required_file
+//                    'required' => false,
+
                 ])
             ->add('otherImages')
             ->add('isActive')
             ->add('category', EntityType::class, ['choice_label'=>'name',
                         'class'=> Category::class,
+                        'placeholder' => 'Выберите категорию',
                         'query_builder'=> function(CategoryRepository $repository) {
                         return
                         $repository
@@ -49,7 +54,8 @@ class ProductType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'VinilShopBundle\Entity\Product'
+            'data_class' => 'VinilShopBundle\Entity\Product',
+            'required_file' => false
         ));
     }
 

@@ -9,9 +9,55 @@ body {
 .disp-none{
     display: none;
 }
+.disp-on{
+    display:block;
+}
 .block-center{
     text-align: center;
 }
+#error_message {
+    text-indent: 10px;
+}
+
+.sidebar{
+    border-color: #000000;
+}
+
+.white-icon{
+    color: white;
+}
+.white-icon :hover
+{
+    color: #abdde5;
+}
+
+.nav-icons{
+    /*font-size: 18pt;*/
+    color: #3E3BFF;
+}
+.nav-icons-yellow{
+    color: #FFE800;
+}
+.font-link {
+    font-size: 12pt;
+    color: #FFFFFF;
+}
+
+.categorySelect option:first-child{
+    display: none;
+}
+.menuAddBorder{
+    border-radius-: 6px;
+    border-color: #70766C;
+    border-style: solid;
+    border-width: 1px;
+}
+.activBg{
+    background-color: #70766C;
+    /*opacity: 0.5*/
+}
+
+
 /*.addAttributeButton{*/
 
    /*text-align: right;*/
@@ -29,10 +75,10 @@ body {
 }
 #modal_form {
     width: 500px;
-    height: 170px; /* Рaзмеры дoлжны быть фиксирoвaны */
+    height: 300px; /* Рaзмеры дoлжны быть фиксирoвaны */
     border-radius: 10px;
     border: 3px #000 solid;
-    background: #dadada;
+    /*background: #dadada;*/
     position: fixed; /* чтoбы oкнo былo в видимoй зoне в любoм месте */
     top: 45%; /* oтступaем сверху 45%, oстaльные 5% пoдвинет скрипт */
     left: 50%; /* пoлoвинa экрaнa слевa */
@@ -44,13 +90,13 @@ body {
     padding: 20px 10px;
 
 }
-#modal_form #modal_close {
-    width: 100px;
-    position: absolute;
-    bottom: 15px;
-    text-align: center;
-    right: 15px;
-}
+/*#modal_form #modal_close {*/
+    /*width: 100px;*/
+    /*position: absolute;*/
+    /*bottom: 15px;*/
+    /*text-align: center;*/
+    /*right: 15px;*/
+/*}*/
 
 #overlay {
     z-index:3; /* пoдлoжкa дoлжнa быть выше слoев элементoв сaйтa, нo ниже слoя мoдaльнoгo oкнa */

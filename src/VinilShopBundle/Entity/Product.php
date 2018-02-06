@@ -2,6 +2,7 @@
 
 namespace VinilShopBundle\Entity;
 
+use Doctrine\Common\Annotations\Annotation\Required;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -62,6 +63,7 @@ class Product
      * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @Assert\File(mimeTypes={ "image/jpeg" })
+     *
      */
     private $titleImage;
 
