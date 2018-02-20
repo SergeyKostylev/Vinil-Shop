@@ -104,5 +104,45 @@ class Attribute
     }
 
 
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add product
+     *
+     * @param \VinilShopBundle\Entity\Product $product
+     *
+     * @return Attribute
+     */
+    public function addProduct(\VinilShopBundle\Entity\Product $product)
+    {
+        $this->products[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Remove product
+     *
+     * @param \VinilShopBundle\Entity\Product $product
+     */
+    public function removeProduct(\VinilShopBundle\Entity\Product $product)
+    {
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+}

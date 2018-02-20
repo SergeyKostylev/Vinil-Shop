@@ -74,7 +74,7 @@ class ManufacturerController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($manufacturer);
             $em->flush();
-            return $this->redirectToRoute('manufacturer');
+            return $this->redirectToRoute('manufacturers');
         }
 
         return[ 'manufacturer'=>$manufacturer,

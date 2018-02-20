@@ -4,6 +4,7 @@ namespace VinilShopBundle\Entity;
 
 use Doctrine\Common\Annotations\Annotation\Required;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -62,17 +63,25 @@ class Product
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      *
-     * @Assert\File(mimeTypes={ "image/jpeg" })
+     * @Assert\File(maxSize = "7024k", mimeTypes={ "image/jpeg" })
      *
      */
     private $titleImage;
 
     /**
-     * @var string
+     * @var File[]
+     * @Assert\All(@Assert\File(maxSize = "7024k", mimeTypes={ "image/jpeg" }))
      *
-     * @ORM\Column(name="other_images", type="string", length=255, nullable=true)
      */
     private $otherImages;
+
+    /**
+     * @var string
+     *
+     * @ORM\OneToMany(targetEntity="VinilShopBundle\Entity\GalleryImages", mappedBy="product",cascade={"remove"} )
+     *
+     */
+    private $galleryImages;
 
     /**
      * @var bool
@@ -88,6 +97,23 @@ class Product
      */
     private $attributes;
 
+
+
+    /**
+     * @return string
+     */
+    public function getGalleryImages()
+    {
+        return $this->galleryImages;
+    }
+
+    /**
+     * @param string $galleryImages
+     */
+    public function setGalleryImages($galleryImages)
+    {
+        $this->galleryImages = $galleryImages;
+    }
 
 
 
@@ -279,28 +305,22 @@ class Product
     }
 
     /**
-     * Set otherImages
-     *
-     * @param string $otherImages
-     *
-     * @return product
-     */
-    public function setOtherImages($otherImages)
-    {
-        $this->otherImages = $otherImages;
-
-        return $this;
-    }
-
-    /**
-     * Get otherImages
-     *
-     * @return string
+     * @return File[]
      */
     public function getOtherImages()
     {
         return $this->otherImages;
     }
+
+    /**
+     * @param File[] $otherImages
+     */
+    public function setOtherImages($otherImages)
+    {
+        $this->otherImages = $otherImages;
+    }
+
+
 
     /**
      * Set isActive
@@ -355,5 +375,29 @@ class Product
     public function removeAttribute(\VinilShopBundle\Entity\Attribute $attribute)
     {
         $this->attributes->removeElement($attribute);
+    }
+
+    /**
+     * Add galleryImage
+     *
+     * @param \VinilShopBundle\Entity\GalleryImages $galleryImage
+     *
+     * @return Product
+     */
+    public function addGalleryImage(\VinilShopBundle\Entity\GalleryImages $galleryImage)
+    {
+        $this->galleryImages[] = $galleryImage;
+
+        return $this;
+    }
+
+    /**
+     * Remove galleryImage
+     *
+     * @param \VinilShopBundle\Entity\GalleryImages $galleryImage
+     */
+    public function removeGalleryImage(\VinilShopBundle\Entity\GalleryImages $galleryImage)
+    {
+        $this->galleryImages->removeElement($galleryImage);
     }
 }

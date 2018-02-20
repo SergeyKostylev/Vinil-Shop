@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use VinilShopBundle\Entity\Attribute;
 use VinilShopBundle\Entity\Attribute_name;
+use VinilShopBundle\Entity\GalleryImages;
 use VinilShopBundle\Entity\Product;
 use VinilShopBundle\Form\Attribute_nameType;
 use VinilShopBundle\Form\AttributeType;
@@ -54,19 +55,24 @@ class ProductController extends Controller
             'allow_add' => true,
             'label' => false,
             'allow_delete' => true,
-//            'entry_options'=> array(
-//                'category_id' => $product->getCategory()->getId()
-//            )
         ));
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $galleryFiles = $product->getOtherImages();
+            $em = $this->getDoctrine()->getManager();
+            foreach($galleryFiles as $file){
+                $fileUploader = new FileUploader($this->getParameter('gallery_img'));
+                $fileName = $fileUploader->upload($file);
+                $gallery_image = new GalleryImages();
+                $gallery_image->setName($fileName)->setProduct($product);;
+                $em->persist($gallery_image);
+            }
             $fileUploader = new FileUploader($this->getParameter('img_entities_directory'));
             $file = $product->getTitleImage();
             $fileName = $fileUploader->upload($file);
             $product->setTitleImage($fileName);
-            $em = $this->getDoctrine()->getManager();
 
             $newManufacturer= $form->get('new_manufacturer')->getData();
             if ($newManufacturer){
@@ -81,7 +87,6 @@ class ProductController extends Controller
             'form' => $form->createView()
         ];
     }
-
     /**
      * @Route("/admin/product/edit/{id}", name = "edit_product")
      * @Template()
@@ -103,7 +108,6 @@ class ProductController extends Controller
         if(!$product) {
             throw  $this->createNotFoundException('Товар не найден');
         }
-
         $form =$this->createForm(ProductType::class, $product);
         $form->add('new_manufacturer', ManufacturerType::class, ['mapped' => false, 'required' => false ]);
         $form->add('attributes', CollectionType::class,array(
@@ -120,6 +124,18 @@ class ProductController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
+
+            $galleryFiles = $form['otherImages']->getData();
+            $em = $this->getDoctrine()->getManager();
+
+            foreach($galleryFiles as $file){
+                $fileUploader = new FileUploader($this->getParameter('gallery_img'));
+                $fileName = $fileUploader->upload($file);
+                $gallery_image = new GalleryImages();
+                $gallery_image->setName($fileName)->setProduct($product);;
+                $em->persist($gallery_image);
+            }
+
             /**
              * @var UploadedFile $file
              */
@@ -137,7 +153,6 @@ class ProductController extends Controller
                     $product->setTitleImage($currentFile);
                 }
             }
-            $em = $this->getDoctrine()->getManager();
             $newManufacturer= $form->get('new_manufacturer')->getData();
             if ($newManufacturer){
                 $product->setManufacturer($newManufacturer);

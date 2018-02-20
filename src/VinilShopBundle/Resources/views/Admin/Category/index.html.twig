@@ -1,6 +1,10 @@
 {% extends '@VinilShop/admin_layout.html.twig' %}
 {% block body %}
-
+    <div class="border-left-info padding-left20px margin-bottom15px">
+            <b>Примечание:</b>
+            <br>
+            Невозможно удалить категорию если она имеет или может иметь дочерние категории
+    </div>
     {% import _self as macros %}
     <ul class="main-menu">
         {{ macros.tree(categores)  }}
@@ -12,10 +16,10 @@
     {% for category in categores %}
         <li>
             <a href="#" style="font-size: 14pt">{{ category.name }}</a>
-            <a href="{{ path('edit_category', {id: category.id}) }}" type="button" class="btn btn-warning btn-sm">Редактировать</a>
+            &#160;&#160;&#160;<a href="{{ path('edit_category', {id: category.id}) }}" class="text-warning font-15pt" title="Редактировать"><i class="fas fa-pencil-alt"></i></a>
 
             {% if category.lastCategory %}
-                <a id="{{ category.id }}"  type="button" class="ajaxBtnDelCategory btn btn-danger btn-sm">Удалить</a>
+                &#160;&#160;&#160;&#160;&#160;<a id="{{ category.id }}"  class="ajaxBtnDelCategory font-15pt text-danger" title="Удалить"><i class="fas fa-trash-alt"></i></a>
             {% endif %}
             {% if category.children %}
                 <ul>

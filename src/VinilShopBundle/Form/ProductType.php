@@ -34,7 +34,13 @@ class ProductType extends AbstractType
 //                    'required' => false,
 
                 ])
-            ->add('otherImages')
+            ->add('otherImages', FileType::class,
+                [
+                    'label' => 'Изображения для галереи',
+                    'multiple' => true,
+                    'required' => false
+                ])
+//            ->add('galleryImages',EntityType::class,)
             ->add('isActive')
             ->add('category', EntityType::class, ['choice_label'=>'name',
                         'class'=> Category::class,

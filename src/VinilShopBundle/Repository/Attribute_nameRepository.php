@@ -23,4 +23,18 @@ class Attribute_nameRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
 
     }
+    public function findByName($name)
+    {
+        return $this
+            ->createQueryBuilder('attr')
+            ->andWhere('attr.name =:name')
+            ->setParameter('name',$name)
+            ->getQuery()
+            ->getResult();
+
+    }
+
+
+
+
 }

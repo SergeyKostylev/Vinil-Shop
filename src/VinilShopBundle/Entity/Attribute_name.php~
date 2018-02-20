@@ -110,5 +110,60 @@ class Attribute_name
     {
         return $this->name;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categoryes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add attribute
+     *
+     * @param \VinilShopBundle\Entity\Attribute $attribute
+     *
+     * @return Attribute_name
+     */
+    public function addAttribute(\VinilShopBundle\Entity\Attribute $attribute)
+    {
+        $this->attributes[] = $attribute;
+
+        return $this;
+    }
+
+    /**
+     * Remove attribute
+     *
+     * @param \VinilShopBundle\Entity\Attribute $attribute
+     */
+    public function removeAttribute(\VinilShopBundle\Entity\Attribute $attribute)
+    {
+        $this->attributes->removeElement($attribute);
+    }
+
+    /**
+     * Add categorye
+     *
+     * @param \VinilShopBundle\Entity\Category $categorye
+     *
+     * @return Attribute_name
+     */
+    public function addCategorye(\VinilShopBundle\Entity\Category $categorye)
+    {
+        $this->categoryes[] = $categorye;
+
+        return $this;
+    }
+
+    /**
+     * Remove categorye
+     *
+     * @param \VinilShopBundle\Entity\Category $categorye
+     */
+    public function removeCategorye(\VinilShopBundle\Entity\Category $categorye)
+    {
+        $this->categoryes->removeElement($categorye);
+    }
+}

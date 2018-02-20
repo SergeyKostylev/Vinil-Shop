@@ -19,22 +19,30 @@ class ApiController extends Controller
 
     public function deleteAction(Request $request, $id)
     {
-
         $em = $this->getDoctrine()->getManager();
         $product = $this
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Product')
             ->find($id);
-//        dump($product);die;
-//
+
         if (!$product) {
             throw  $this->createNotFoundException('Товар не найден');
-
             return new Response(    'Ops',
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+        $titleImage = $product->getTitleImage();
+        $galleryImages = $product->getGalleryImages();
+
         $em->remove($product);
         $em->flush();
+
+        if(count($galleryImages)) {
+            foreach ($galleryImages as $images){
+                $nameImage = $images->getName();
+                @unlink($this->getParameter('gallery_img') . '/' .$nameImage);
+            }
+        }
+        @unlink($this->getParameter('img_entities_directory') . '/' .$titleImage);
 
         return new Response(    'Content',
             Response::HTTP_OK);
@@ -76,6 +84,37 @@ class ApiController extends Controller
         }
         return new JsonResponse($collection
             ,200);
+
+    }
+
+    /**
+     * @Route("/admin/gallery-image/delete/{id}", name = "delete_gallery_image")
+     */
+
+    public function galleryImageAction(Request $request, $id)
+    {
+        $image = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:GalleryImages')
+            ->find($id);
+
+        if (!$image) {
+            throw  $this->createNotFoundException('Изображение не найдено');
+            return new Response(    'Ops',
+                Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        $nameImage = $image->getName();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($image);
+        $em->flush();
+
+        @unlink($this->getParameter('gallery_img') . '/' .$nameImage);
+
+        return new Response(    'Content',
+            Response::HTTP_OK);
+
 
     }
 

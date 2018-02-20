@@ -2,90 +2,105 @@
 {% block body %}
     {{ form_start(form) }}
 
-
     <span class="amount_attributes" data-amount-attributes=""></span>
-
 
     {#Templete form#}
     <div class="row attribRow block-attribs-template disp-none">
 
-        <div class="col-md">
+        <div class="col-md-5">
             <div class="form-group attrib-name">
 
             </div>
         </div>
 
-        <div class="col-md">
+        <div class="col-md-5">
             <div class="form-group attrib-value">
 
             </div>
         </div>
 
-        <div class="delRow col-md-3">
-            <button type="button" class="delRowButton btn btn-danger">Delete</button>
+        <div class="delRow col-md-2">
+            <button type="button" class="delRowButton btn btn-danger"><i class="fas fa-trash"></i></button>
         </div>
 
     </div>
     {#End template#}
 
-    {{ form_row(form.titleImage, {'label': 'Титульное изображение'}) }}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
 
-        {{ form_row(form.name, {'label': 'Наименование'}) }}
-        {{ form_row(form.category, {'label': 'Категория', 'attr' : {'class' : 'categorySelect', }}) }}
-
-<div class="card text-white bg-secondary">
-    <div class="card-header ">
-        Характеристики
-        {#<div class="float-right">#}
-            {#<span class="fab fa-aviato"></span>#}
-        {#</div>#}
-        </div>
-    <div class="collection card-body">
-
-        <div class="attributes_name" data-prototype_name="{{ form_widget(form.attributes.vars.prototype.name)|e('html_attr') }}"></div>
-        <div class="attributes_value" data-prototype_value="{{ form_widget(form.attributes.vars.prototype.value)|e('html_attr') }}"></div>
-
-        {% for attributeField in form.attributes %}
-
-            <div class="row attribRow">
-                <div class="col-md">
-                    {#{{ attributeField.vars.data.name.name }}#}
-                    {{ form_row(attributeField.name,  {'label': false }) }}
-                </div>
-                <div class="col-md">
-                    {{ form_row(attributeField.value,  {'label': false}) }}
-                </div>
-                <div class="delRow col-md-3">
-                    <button type="button" class="delRowButton btn btn-danger">Delete</button>
-                </div>
+                {{ form_row(form.name, {'label': 'Название'}) }}
+                {{ form_row(form.price, {'label': 'Цена'}) }}
+                {{ form_row(form.isActive, {'label': 'Есть в наличии'}) }}
 
             </div>
-        {% endfor %}
-        <button type="button" class="addAttributeButton btn btn-primary">Добавить</button>
-    </div>
-</div>
-
-
-
-        <div class="manufInput">
-            {{ form_row(form.manufacturer, {'label': 'Производитель','attr':{'class':'manufInput'}}) }}
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="manufInput">
+                    {{ form_row(form.manufacturer, {'label': 'Производитель','attr':{'class':'manufInput'}}) }}
+                </div>
+                <div class="disp-none newManufInput ">
+                    {{ form_row(form.new_manufacturer, {'label': false}) }}
+                </div>
+                <div class="row justify-content-center">
+                    <button type="button" class="manufDispBtn btn btn-primary ">Добавить нового</button>
+                </div>
+            </div>
         </div>
-        <div class="disp-none newManufInput ">
-            {{ form_row(form.new_manufacturer, {'label': 'Создать нового'}) }}
-        </div>
-
         <div class="row">
-            <button type="button" class="manufDispBtn btn btn-primary offset-sm-3 col-6">Добавить нового</button>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                {{ form_row(form.category, {'label': 'Категория', 'attr' : {'class' : 'categorySelect', }}) }}
+            </div>
         </div>
-        {{ form_row(form.price, {'label': 'Цена'}) }}
-        {{ form_row(form.description, {'label': 'Описание'}) }}
-        {{ form_row(form.otherImages, {'label': 'Остальные изображения'}) }}
-        {{ form_row(form.isActive, {'label': 'Есть в наличии'}) }}
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+
+                <div class="card text-white bg-secondary margin-bottom15px">
+                    <div class="card-header ">
+                        Характеристики
+                    </div>
+                    <div class="collection card-body">
+
+                        <div class="attributes_name" data-prototype_name="{{ form_widget(form.attributes.vars.prototype.name)|e('html_attr') }}"></div>
+                        <div class="attributes_value" data-prototype_value="{{ form_widget(form.attributes.vars.prototype.value)|e('html_attr') }}"></div>
+
+                        {#{% for attributeField in form.attributes %}#}
+                            {#<div class="row attribRow">#}
+                                        {#<div class="col-md-5">#}
+                                            {#{{ attributeField.vars.data.name.name }}#}
+                                            {#{{ form_row(attributeField.name,  {'label': false }) }}#}
+                                        {#</div>#}
+                                        {#<div class="col-md-5">#}
+                                            {#{{ form_row(attributeField.value,  {'label': false}) }}#}
+                                        {#</div>#}
+                                        {#<div class="delRow col-md-2">#}
+                                            {#<button type="button" class="delRowButton btn btn-danger font-15pt" title="Удалить"><i class="fas fa-trash-alt"></i></button>#}
+                                        {#</div>#}
+                            {#</div>#}
+                        {#{% endfor %}#}
+
+                        <button type="button" class="addAttributeButton btn btn-primary">Добавить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                {{ form_row(form.description, {'label': 'Описание', 'attr' : {'class' : 'height120px'}}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                {{ form_row(form.titleImage, {'label': 'Титульное изображение', 'attr' : {'class' : 'btn btn-outline-primary'}}) }}
+            </div>
+            <div class="col-6">
+                {{ form_row(form.otherImages, {'label': 'Файлы гелереи', 'attr' : {'class' : 'btn btn-outline-primary'}}) }}
+            </div>
+        </div>
         {{ form_row(form.submit, {'label': 'Создать'}) }}
+    </div>
 
-<button type="button" class="enterAttributes" >Заполнить характеристики</button>
     {{ form_end(form) }}
-
     {#<div>#}
         {#<div>Примечание:</div>#}
         {#Категория может не входить не в одну из существующих. Для этого поле "Родительская категория" нужно оставить пустым.#}

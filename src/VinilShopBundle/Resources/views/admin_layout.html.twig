@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{{ asset('bundles/vinilshop/css/fa-solid.css') }}">
 
     <link href="{{ asset('bundles/vinilshop/css/Admin/dashboard.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/vinilshop/css/Admin/gallery.css') }}" rel="stylesheet">
+    {##}
     <link href="{{ asset('bundles/vinilshop/css/style.css') }}" rel="stylesheet">
 </head>
 
@@ -35,14 +37,14 @@
             </li>
 
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Добавить</a>
-                <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="{{ path('add_category') }}">Категорию</a>
-                    <a class="dropdown-item" href="{{ path('add_manufacturer') }}">Производителя</a>
-                    <a class="dropdown-item" href="{{ path('add_product') }}">Товар</a>
-                </div>
-            </li>
+            {#<li class="nav-item dropdown">#}
+                {#<a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Добавить</a>#}
+                {#<div class="dropdown-menu" aria-labelledby="dropdown01">#}
+                    {#<a class="dropdown-item" href="{{ path('add_category') }}">Категорию</a>#}
+                    {#<a class="dropdown-item" href="{{ path('add_manufacturer') }}">Производителя</a>#}
+                    {#<a class="dropdown-item" href="{{ path('add_product') }}">Товар</a>#}
+                {#</div>#}
+            {#</li>#}
         </ul>
 
         <form class="form-inline my-2 my-lg-0">
@@ -81,13 +83,18 @@
 
                 <div class="nav-link font-link activBg" id="menuadd"><i class="far fa-plus-square nav-icons-yellow"></i> &#160;Добавить</div>
                 <li class="nav-item">
-                    <a class="nav-link font-link menuAddItem" href="{{ path('add_category') }}"><i class="fab fa-steam-symbol nav-icons"></i> &#160;Категорию</a>                </li>
+                    <a class="nav-link font-link menuAddItem" href="{{ path('add_category') }}"><i class="fab fa-steam-symbol nav-icons"></i> &#160;Категорию</a>
+                </li>
                 <li class="nav-item">
-                    <a class="nav-link font-link menuAddItem" href="{{ path('add_manufacturer') }}"><i class="fab fa-connectdevelop nav-icons fa-1x"></i> &#160;Производителя</a>                </li>
+                    <a class="nav-link font-link menuAddItem" href="{{ path('add_manufacturer') }}"><i class="fab fa-connectdevelop nav-icons fa-1x"></i> &#160;Производителя</a>
+                </li>
                 <li class="nav-item">
-                    <a class="nav-link font-link menuAddItem" href="{{ path('add_product') }}"><i class="fas fa-archive nav-icons"></i> &#160;Товар</a>                </li>
+                    <a class="nav-link font-link menuAddItem" href="{{ path('add_product') }}"><i class="fas fa-archive nav-icons"></i> &#160;Товар</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link font-link menuAddItem" href="{{ path('add_attribute') }}"><i class="fas fa-assistive-listening-systems nav-icons"></i> &#160;Характеристику</a>
+                </li>
                 </div>
-
 
                 <div class="dropdown-divider border border-primary"></div>
 

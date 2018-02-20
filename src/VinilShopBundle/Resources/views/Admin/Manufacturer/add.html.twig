@@ -1,6 +1,8 @@
 {% extends '@VinilShop/admin_layout.html.twig' %}
 {% block body %}
-
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-8 col-lg-5">
 
     {{ form_start(form) }}
 
@@ -8,6 +10,8 @@
 
     {{ form_row(form.submit, {'label': 'Добавить'}) }}
     {{ form_end(form) }}
-
+        </div>
+    </div>
+</div>
 
 {% endblock %}

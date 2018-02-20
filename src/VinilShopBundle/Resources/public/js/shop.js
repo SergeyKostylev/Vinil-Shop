@@ -22,16 +22,43 @@ $(document).ready(function () {
 
     };
 
+    var $galleryImageToggleButton =$('.gallery-image-toggle-button');
+    $galleryImageToggleButton.on('click',function () {
+        var $this = $(this);
+        var $boby = $this.parent().siblings().filter('.card-body');
+        $boby.toggle(290);
+    });
+
+    var $galleryImageButton = $('.gallery-image-button');
+
+    $galleryImageButton.on('click',function () {
+        var $this = $(this);
+        var $imageId = $this.siblings().filter('.image-id').data('image-id');
+        var $imageBlock = $this.parent().parent();
+        $.get('/admin/gallery-image/delete/' + $imageId, function (r) {})
+            .done(function (r) {
+                $imageBlock.fadeOut(700);
+                setTimeout(function () {
+                    $imageBlock.remove();
+                },900);
+            })
+            .fail(function (r) {
+            });
+    });
+
+
+
     var $DelProd = $('.ajaxBtnDelProd');
 
     $DelProd.on('click',function () {
         var $this = $(this);
+
         $.get('/admin/product/delete/'+ $(this).attr('id'),function (r){})
             .done(function (r) {
                 $this.parent().parent().parent().toggle(230);
             })
             .fail(function (r) {
-                console.log(' NOT GooD');
+                console.log(' NOT GoodD');
             });
 
     });

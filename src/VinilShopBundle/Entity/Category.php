@@ -40,6 +40,21 @@ class Category
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\OneToMany(targetEntity="VinilShopBundle\Entity\Product", mappedBy="category")
+     */
+    private $products;
+
+    /**
+     * @var Attribute_name[]
+     *
+     * @ORM\ManyToMany(targetEntity="VinilShopBundle\Entity\Attribute_name", inversedBy="categoryes")
+     */
+    private $attribute_names;
+
+
+    /**
      * @return string
      */
     public function getProducts()
@@ -71,19 +86,8 @@ class Category
         $this->attribute_names = $attribute_names;
     }
 
-    /**
-     * @var string
-     *
-     * @ORM\OneToMany(targetEntity="VinilShopBundle\Entity\Product", mappedBy="category")
-     */
-    private $products;
 
-    /**
-     * @var Attribute_name[]
-     *
-     * @ORM\ManyToMany(targetEntity="VinilShopBundle\Entity\Attribute_name", inversedBy="categoryes")
-     */
-    private $attribute_names;
+
 
     /**
      * @return bool
