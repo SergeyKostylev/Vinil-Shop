@@ -1,4 +1,9 @@
 {% extends '@VinilShop/admin_layout.html.twig' %}
+
+      {% block titleMenu %}
+          Создание товара
+      {% endblock %}
+
 {% block body %}
     {{ form_start(form) }}
 
@@ -64,20 +69,20 @@
                         <div class="attributes_name" data-prototype_name="{{ form_widget(form.attributes.vars.prototype.name)|e('html_attr') }}"></div>
                         <div class="attributes_value" data-prototype_value="{{ form_widget(form.attributes.vars.prototype.value)|e('html_attr') }}"></div>
 
-                        {#{% for attributeField in form.attributes %}#}
-                            {#<div class="row attribRow">#}
-                                        {#<div class="col-md-5">#}
-                                            {#{{ attributeField.vars.data.name.name }}#}
-                                            {#{{ form_row(attributeField.name,  {'label': false }) }}#}
-                                        {#</div>#}
-                                        {#<div class="col-md-5">#}
-                                            {#{{ form_row(attributeField.value,  {'label': false}) }}#}
-                                        {#</div>#}
-                                        {#<div class="delRow col-md-2">#}
-                                            {#<button type="button" class="delRowButton btn btn-danger font-15pt" title="Удалить"><i class="fas fa-trash-alt"></i></button>#}
-                                        {#</div>#}
-                            {#</div>#}
-                        {#{% endfor %}#}
+                        {% for attributeField in form.attributes %}
+                            <div class="row attribRow">
+                                <div class="col-md-5">
+                                    {#{{ attributeField.vars.data.name.name }}#}
+                                    {{ form_row(attributeField.name,  {'label': false }) }}
+                                </div>
+                                <div class="col-md-5">
+                                    {{ form_row(attributeField.value,  {'label': false}) }}
+                                </div>
+                                <div class="delRow col-md-2">
+                                    <button type="button" class="delRowButton btn btn-danger"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                        {% endfor %}
 
                         <button type="button" class="addAttributeButton btn btn-primary">Добавить</button>
                     </div>
@@ -101,9 +106,5 @@
     </div>
 
     {{ form_end(form) }}
-    {#<div>#}
-        {#<div>Примечание:</div>#}
-        {#Категория может не входить не в одну из существующих. Для этого поле "Родительская категория" нужно оставить пустым.#}
 
-    {#</div>#}
 {% endblock %}

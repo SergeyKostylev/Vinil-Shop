@@ -4719,14 +4719,14 @@ tbody.collapse.show {
   color: #6c757d;
 }
 
-.pagination {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding-left: 0;
-  list-style: none;
-  border-radius: 0.25rem;
-}
+/*.pagination {*/
+  /*display: -webkit-box;*/
+  /*display: -ms-flexbox;*/
+  /*display: flex;*/
+  /*padding-left: 0;*/
+  /*list-style: none;*/
+  /*border-radius: 0.25rem;*/
+/*}*/
 
 .page-link {
   position: relative;
@@ -4780,6 +4780,15 @@ tbody.collapse.show {
   cursor: auto;
   background-color: #fff;
   border-color: #dee2e6;
+}
+
+.pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: 0.25rem;
 }
 
 .pagination-lg .page-link {

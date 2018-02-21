@@ -28,18 +28,29 @@ use VinilShopBundle\Service\FileUploader;
 class ProductController extends Controller
 {
     /**
-     * @Route("/admin/product", name = "products")
+     * @Route("/admin/product/list/{page}/{sort}/{direction}", name = "products")
      * @Template()
      */
-
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, $page =1 , $sort = 'name', $direction='asc')
     {
         $products = $this
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Product')
             ->findAll();
-        return['products'=>$products];
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $products, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10,
+                    ['defaultSortFieldName' => $sort,
+                'defaultSortDirection' => $direction]
+        );
+
+        return[
+            'pagination' => $pagination];
     }
+
     /**
      * @Route("/admin/product/add", name = "add_product")
      * @Template()
@@ -87,6 +98,39 @@ class ProductController extends Controller
             'form' => $form->createView()
         ];
     }
+    /**
+     * @Route("/admin/product/category/{id}/{page}/{sort}/{direction}", name = "product_by_category")
+     * @Template()
+     */
+    public function productByCategoryAction(Request $request, $id, $page =1 , $sort = 'name', $direction='asc')
+    {
+        $products = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Product')
+            ->findByCategory($id);
+        $category = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Category')
+            ->find($id);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $products, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10,
+            ['defaultSortFieldName' => $sort,
+                'defaultSortDirection' => $direction]
+        );
+        return [
+            'pagination' => $pagination,
+            'category' => $category
+        ];
+
+    }
+
+
+
+
     /**
      * @Route("/admin/product/edit/{id}", name = "edit_product")
      * @Template()

@@ -13,17 +13,17 @@ namespace VinilShopBundle\Repository;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function articleMaxValue()
-    {
-        $em = $this->getEntityManager();
-        $dql   = "SELECT MAX(p.article) val  FROM VinilShopBundle:Product p";
-        $query = $em->createQuery($dql);
-        $max_article = $query->getResult();
-
-        return
-            $max_article[0]['val'];
-
-    }
+//    public function articleMaxValue()
+//    {
+//        $em = $this->getEntityManager();
+//        $dql   = "SELECT MAX(p.article) val  FROM VinilShopBundle:Product p";
+//        $query = $em->createQuery($dql);
+//        $max_article = $query->getResult();
+//
+//        return
+//            $max_article[0]['val'];
+//
+//    }
 
     public function productOfManufacturer($id)
     {
@@ -35,6 +35,37 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
 
+    }
+
+    public function findByCategory($id)
+    {
+        $last_category = $this
+            ->createQueryBuilder('prod')
+            ->join('prod.category', 'cat')
+            ->select('cat.lastCategory')
+            ->where('cat.id = :id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
+
+        if($last_category){
+            $products = $this
+                ->createQueryBuilder('prod')
+                ->join('prod.category', 'cat')
+                ->where('cat.id = :id')
+                ->setParameter('id' , $id)
+                ->getQuery()
+                ->getResult();
+        }else{
+            $products = $this
+                ->createQueryBuilder('prod')
+                ->join('prod.category', 'cat')
+                ->where('cat.parent = :id')
+                ->setParameter('id' , $id)
+                ->getQuery()
+                ->getResult();
+        }
+        return $products;
     }
 
 }

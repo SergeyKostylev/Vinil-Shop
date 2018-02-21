@@ -1,4 +1,9 @@
 {% extends '@VinilShop/admin_layout.html.twig' %}
+
+   {% block titleMenu %}
+       Категории
+   {% endblock %}
+
 {% block body %}
     <div class="border-left-info padding-left20px margin-bottom15px">
             <b>Примечание:</b>
@@ -15,12 +20,13 @@
 {% macro tree(categores) %}
     {% for category in categores %}
         <li>
-            <a href="#" style="font-size: 14pt">{{ category.name }}</a>
+            <a href="{{ path('product_by_category' , {id: category.id}) }}" class="font-15pt">{{ category.name }}</a>
             &#160;&#160;&#160;<a href="{{ path('edit_category', {id: category.id}) }}" class="text-warning font-15pt" title="Редактировать"><i class="fas fa-pencil-alt"></i></a>
 
             {% if category.lastCategory %}
                 &#160;&#160;&#160;&#160;&#160;<a id="{{ category.id }}"  class="ajaxBtnDelCategory font-15pt text-danger" title="Удалить"><i class="fas fa-trash-alt"></i></a>
             {% endif %}
+
             {% if category.children %}
                 <ul>
                     {{ _self.tree(category.children) }}

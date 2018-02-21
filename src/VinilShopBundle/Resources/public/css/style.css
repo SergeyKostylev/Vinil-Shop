@@ -136,7 +136,7 @@ body {
     width: 500px;
     height: 300px; /* Рaзмеры дoлжны быть фиксирoвaны */
     border-radius: 10px;
-    border: 3px #000 solid;
+    /*border: 3px #000 solid;*/
     /*background: #dadada;*/
     position: fixed; /* чтoбы oкнo былo в видимoй зoне в любoм месте */
     top: 45%; /* oтступaем сверху 45%, oстaльные 5% пoдвинет скрипт */
@@ -149,13 +149,7 @@ body {
     padding: 20px 10px;
 
 }
-/*#modal_form #modal_close {*/
-    /*width: 100px;*/
-    /*position: absolute;*/
-    /*bottom: 15px;*/
-    /*text-align: center;*/
-    /*right: 15px;*/
-/*}*/
+
 
 #overlay {
     z-index:3; /* пoдлoжкa дoлжнa быть выше слoев элементoв сaйтa, нo ниже слoя мoдaльнoгo oкнa */
