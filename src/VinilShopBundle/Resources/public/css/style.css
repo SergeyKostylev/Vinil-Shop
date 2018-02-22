@@ -46,6 +46,11 @@ body {
 {
     font-size: 15pt;
 }
+.font-12pt
+{
+    font-size: 12pt;
+}
+
 .height120px
 {
     height: 120px;
@@ -63,9 +68,41 @@ body {
 {
     margin-bottom: 15px;
 }
+.margin-top-15px
+{
+    margin-top: -150px;
+}
 .padding-left20px
 {
     padding-left: 20px;
+}
+.padding-right20px
+{
+    padding-right: 20px;
+}
+.padding-left9px
+{
+    padding-left: 9px;
+}
+.padding-left40px
+{
+    padding-left: 40px;
+}
+.padding-top0
+{
+    padding-top: 0;
+}
+.padding-top15px
+{
+    padding-top: 15px;
+}
+.padding15px
+{
+    padding: 15px;
+}
+.height5px
+{
+    height: 5px;
 }
 .border-left-info
 {
@@ -123,6 +160,20 @@ body {
     /*bottom: 15px;*/
     /*right: 15px;*/
 /*}*/
+
+.category-list{
+    height: auto;
+    max-height: 390px;
+    width: auto;
+    max-width: 390px;
+    overflow-y: scroll;
+    border: 1px #77b300 solid;
+    border-radius: 5px;
+    margin: -13px auto 25px auto;
+    padding: auto auto auto 9px;
+    z-index: 3;
+    position: absolute;
+}
 
 .attrib_list{
     height: 200px;

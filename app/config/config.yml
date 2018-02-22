@@ -10,6 +10,7 @@ parameters:
     locale: en
     img_entities_directory: '%kernel.project_dir%/web/images/images_of_entities'
     gallery_img: '%kernel.project_dir%/web/images/gallery'
+    category_title_imgs: '%kernel.project_dir%/web/images/category_title_image'
 framework:
     #esi: ~
     #translator: { fallbacks: ['%locale%'] }
@@ -44,6 +45,7 @@ twig:
     globals:
         images_of_entities: 'images/images_of_entities/'
         gallery_images: 'images/gallery/'
+        category_title_img: 'images/category_title_image/'
 
 # Doctrine Configuration
 doctrine:

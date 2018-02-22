@@ -7,52 +7,46 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-
     <title>Shop</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="{{ asset('bundles/vinilshop/css/bootstrap.css') }}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
+    {#<link href="{{ asset('bundles/vinilshop/css/bootstrap.css') }}" rel="stylesheet">#}
+    <link href="{{ asset('bundles/vinilshop/css/bootstrap-vinil-shop.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/vinilshop/css/style.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ asset('bundles/vinilshop/css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/vinilshop/css/fa-brands.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/vinilshop/css/fa-regular.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/vinilshop/css/fa-solid.css') }}">
 </head>
 
-<body>
+<body class="padding-top0">
+<div class="bg-primary height5px"></div>
+<div class="bg-warning height5px"></div>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<main role="main" class="container ">
+    <div class="row">
+        <div class="col-12 col-md-8 border border-dark">222</div>
+        <div class="col-12 col-md-4 bg-white  padding15px border border-info">
+            <div class="float-right">
+                <a href="#" class="font-15pt text-success">Вход</a>
+                &#160;&#160;&#160;
+                <a href="#" class="font-15pt">Регистрация</a>
+            </div>
+            <br>
+            <br>
+            <div class="float-right padding-top15px padding-right20px">
+                <i class="far fa-envelope font-15pt text-danger"></i> <span class="font-12pt">s03540@gmail.com</span>
+                <br>
+                <i class="fas fa-phone-volume font-15pt text-danger"></i> <span class="font-12pt">+38(099)-40-34-758</span>
+                <br>
+                <i class="fas fa-map-marker font-15pt text-danger"></i> <span class="font-12pt">г.Киев Спортивная площадь, 1a</span>
+                <br>
+                <span class="font-12pt">Пн-Пт: 10:30-19:00 / Сб: 12:00-17:00</span>
+            </div>
 
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        </div>
     </div>
-</nav>
 
-<main role="main" class="container">
 
     {% block body %}
 
@@ -62,13 +56,10 @@
 
 </main><!-- /.container -->
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script src="{{ asset('bundles/vinilshop/js/shop.js') }}"></script>
-<script src="{{ asset('bundles/vinilshop/js/popper.min.js') }}"></script>
+{#<script src="{{ asset('bundles/vinilshop/js/popper.min.js') }}"></script>#}
 <script src="{{ asset('bundles/vinilshop/js/bootstrap.min.js') }}"></script>
 </body>
 </html>

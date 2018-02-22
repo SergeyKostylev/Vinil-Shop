@@ -37,18 +37,25 @@ class ProductController extends Controller
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Product')
             ->findAll();
+        $categores = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Category')
+            ->findTree();
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $products, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
+            $page,
+//            $request->query->getInt('page', 1)/*page number*/,
             10,
                     ['defaultSortFieldName' => $sort,
                 'defaultSortDirection' => $direction]
         );
 
         return[
-            'pagination' => $pagination];
+            'pagination' => $pagination,
+            'categores'=>$categores
+        ];
     }
 
     /**
@@ -108,27 +115,34 @@ class ProductController extends Controller
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Product')
             ->findByCategory($id);
+
+        $categores = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Category')
+            ->findTree();
+
         $category = $this
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Category')
             ->find($id);
 
+
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $products, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
+            $page,
+//            $request->query->getInt('page', 1)/*page number*/,
             10,
             ['defaultSortFieldName' => $sort,
                 'defaultSortDirection' => $direction]
         );
         return [
             'pagination' => $pagination,
+            'categores' => $categores,
             'category' => $category
         ];
 
     }
-
-
 
 
     /**

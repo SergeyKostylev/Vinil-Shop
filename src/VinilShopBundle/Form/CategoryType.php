@@ -6,6 +6,7 @@ namespace VinilShopBundle\Form;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use VinilShopBundle\Entity\Attribute_name;
@@ -20,6 +21,7 @@ class CategoryType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $required_file = $options['required_file'];
         $builder
             ->add('parent',EntityType::class,[
                 'choice_label'=>'name',
@@ -40,6 +42,13 @@ class CategoryType extends AbstractType
                 'label' => false,
                 'class'=> Attribute_name::class])
             ->add('lastCategory')
+            ->add('titleImage',FileType::class,
+                [
+                    'label' => 'Титульное изображение',
+                    'data_class' => null,
+                    'required' => $required_file
+
+                ])
             ;
     }/**
      * {@inheritdoc}
@@ -47,7 +56,8 @@ class CategoryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'VinilShopBundle\Entity\Category'
+            'data_class' => 'VinilShopBundle\Entity\Category',
+            'required_file' => false
         ));
     }
 

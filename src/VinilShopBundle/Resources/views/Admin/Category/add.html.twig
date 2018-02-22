@@ -13,6 +13,7 @@
                     {{ form_row(form.name, {'label': 'Название категории:'}) }}
                     {{ form_row(form.lastCategory, {'label': 'Категория не может иметь подкатегорий','attr' : {'class':'last_categ_chek'}}) }}
                     {{ form_row(form.attributeNames,{'attr' : {'class':'attrib_list disp-none'}})}}
+                    {{ form_row(form.titleImage, {'label': 'Титульное изображение', 'attr' : {'class' : 'btn btn-outline-primary'}}) }}
                     {{ form_row(form.submit, {'label': 'Создать'}) }}
                 {{ form_end(form) }}
             </div>
@@ -22,6 +23,8 @@
                 <b>1.</b>Категория может не входить не в одну из существующих. Для этого поле "Родительская категория" нужно оставить пустым.
                 <br>
                 <b>2.</b> Харектеристики может иметь толь "заключительна" категория.
+                <br>
+                <b>3.</b> Титульное изображение должно иметь соотношение сторон 1х1.
             </div>
         </div>
     </div>

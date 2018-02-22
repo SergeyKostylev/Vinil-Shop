@@ -22,6 +22,19 @@ $(document).ready(function () {
 
     };
 
+    var $categoryListBtn = $('.category-list-btn');
+    var $categoryList = $('.category-list');
+    $(document).mousedown(function () {
+        if ($categoryList.is(":visible")){
+        $categoryList.fadeOut(120);}
+    });
+
+    $categoryListBtn.on('click',function () {
+        if ($categoryList.is(":hidden")){
+        $categoryList.fadeIn(120);}
+
+    });
+
     var $galleryImageToggleButton =$('.gallery-image-toggle-button');
     $galleryImageToggleButton.on('click',function () {
         var $this = $(this);

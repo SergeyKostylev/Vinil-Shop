@@ -4,6 +4,7 @@ namespace VinilShopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Category
@@ -40,6 +41,14 @@ class Category
     private $name;
 
     /**
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     *@Assert\File(maxSize = "7024k", mimeTypes={ "image/jpeg" })
+     */
+    private $titleImage;
+
+    /**
      * @var string
      *
      * @ORM\OneToMany(targetEntity="VinilShopBundle\Entity\Product", mappedBy="category")
@@ -52,6 +61,22 @@ class Category
      * @ORM\ManyToMany(targetEntity="VinilShopBundle\Entity\Attribute_name", inversedBy="categoryes")
      */
     private $attribute_names;
+
+    /**
+     * @return mixed
+     */
+    public function getTitleImage()
+    {
+        return $this->titleImage;
+    }
+
+    /**
+     * @param mixed $titleImage
+     */
+    public function setTitleImage($titleImage)
+    {
+        $this->titleImage = $titleImage;
+    }
 
 
     /**

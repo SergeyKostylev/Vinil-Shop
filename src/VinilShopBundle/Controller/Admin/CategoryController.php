@@ -6,10 +6,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use VinilShopBundle\Entity\Category;
 use VinilShopBundle\Form\CategoryType;
 use Symfony\Component\HttpFoundation\Response;
+use VinilShopBundle\Service\FileUploader;
 
 class CategoryController extends Controller
 {
@@ -33,11 +35,16 @@ class CategoryController extends Controller
     public function addAction(Request $request)
     {
         $category = new Category();
-        $form = $this->createForm(CategoryType::class,$category);
+        $form = $this->createForm(CategoryType::class,$category,['required_file' => true]);
         $form->add('submit',SubmitType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $fileUploader = new FileUploader($this->getParameter('category_title_imgs'));
+            $file = $category->getTitleImage();
+            $fileName = $fileUploader->upload($file);
+            $category->setTitleImage($fileName);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->flush();
@@ -64,10 +71,30 @@ class CategoryController extends Controller
 
         $form = $this->createForm(CategoryType::class,$category);
         $form->add('submit',SubmitType::class);
+
+        $currentFile = $category->getTitleImage();
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
 
+            /**
+             * @var UploadedFile $file
+             */
+            $file = $form['titleImage']->getData();
+            if(!empty($file)) {
+                $fileUploader = new FileUploader($this->getParameter('category_title_imgs'));
+                $file = $category->getTitleImage();
+                $fileName = $fileUploader->upload($file);
+                $category->setTitleImage($fileName);
+                if (!empty($currentFile)){
+                    @unlink($this->getParameter('category_title_imgs') . '/' .$currentFile);
+                }
+            }else{
+                if (!empty($currentFile)){
+                    $category->setTitleImage($currentFile);
+                }
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->flush();

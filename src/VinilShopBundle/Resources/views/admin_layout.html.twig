@@ -29,35 +29,21 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto ">
             <li class="nav-item active">
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
 
-
-            {#<li class="nav-item dropdown">#}
-                {#<a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Добавить</a>#}
-                {#<div class="dropdown-menu" aria-labelledby="dropdown01">#}
-                    {#<a class="dropdown-item" href="{{ path('add_category') }}">Категорию</a>#}
-                    {#<a class="dropdown-item" href="{{ path('add_manufacturer') }}">Производителя</a>#}
-                    {#<a class="dropdown-item" href="{{ path('add_product') }}">Товар</a>#}
-                {#</div>#}
-            {#</li>#}
         </ul>
-
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
-            <a class="d-flex align-items-center text-muted" href="#">
-                <span data-feather="plus-circle"></span>
-            </a>
     </div>
 </nav>
 
-<div class="container-fluid">
+<div class="container-fluid" style="min-width: 900px">
     <div class="row">
 
 
@@ -102,7 +88,7 @@
             </ul>
         </nav>
 
-        <main role="main" class="col-md-9 col-lg-9 col-xl-9 ml-sm-auto pt-3 px-4">
+        <main role="main" class="col-9 col-md-9 col-lg-9 col-xl-9 ml-sm-auto pt-3 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
 
                 <h1 class="h2">{% block titleMenu %}
@@ -133,13 +119,6 @@
     </div>
 
     {#Модальное окно#}
-    {#<div id="modal_form">#}
-        {#<div id="error_message">#}
-            {#Сообщение#}
-        {#</div>#}
-        {#<button id="modal_close" class="">OK</button>#}
-    {#</div>#}
-    {#<div id="overlay"></div>#}
     <div id="modal_form" class="modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -168,10 +147,6 @@
 
 </div>
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-{#<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>#}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="{{ asset('bundles/vinilshop/js/bootstrap.min.js') }}"></script>
 <!-- Icons -->
@@ -179,8 +154,6 @@
 <script src="{{ asset('bundles/vinilshop/js/shop.js') }}"></script>
 <script>
     feather.replace();
-
-
 </script>
 
 

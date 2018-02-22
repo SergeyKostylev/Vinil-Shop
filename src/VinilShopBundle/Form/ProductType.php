@@ -29,9 +29,7 @@ class ProductType extends AbstractType
                 [
                     'label' => 'Титульное изображение',
                     'data_class' => null,
-//                    'mapped' => false,
                     'required' => $required_file
-//                    'required' => false,
 
                 ])
             ->add('otherImages', FileType::class,

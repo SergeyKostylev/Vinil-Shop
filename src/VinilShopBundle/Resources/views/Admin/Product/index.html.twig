@@ -1,20 +1,27 @@
 {% extends '@VinilShop/admin_layout.html.twig' %}
 {% block titleMenu %}
-    Товары
+    Все товары
 {% endblock %}
 {% block body %}
-    <div class="col-12 border-left-info height-max-content">
-    <b>Примечание:</b>
-         В этой таблице приведены все товары. Для того чтобы просмотреть товары определенной категории необходимо
-        выбрать ее в <a href="{{ path('categoryes') }}">списке категорий</a>.
-    </div>
-    <br>
+
+
 
     <div class="pagination justify-content-center">
         <div class="navigation">
             {{ knp_pagination_render(pagination) }}
         </div>
     </div>
+
+<button type="button" class="category-list-btn btn btn-success margin-bottom15px">Товары по категориям <i class="fas fa-angle-double-down"></i></button>
+<div  class="bg-dark category-list" style="display: none">
+    {#<a href="{{ path('products') }}" class="font-15px padding-left40px">ВСЕ ТОВАРЫ</a>#}
+    {% import _self as macros %}
+    <ul class="font-15px">
+        {{ macros.tree(categores)  }}
+    </ul>
+</div>
+
+
 
 <table class="table">
     <thead class="table-active">
@@ -30,6 +37,7 @@
     </tr>
     </thead>
     <tbody>
+
     {% for product in pagination %}
     <tr>
         <td>{{ product.id }}</td>
@@ -39,13 +47,14 @@
         <td>{{ product.name }}</td>
         <td>{{ product.price }}</td>
         <td>
-            <div class="text-center">
+            <div class="text-center ">
                 {% if product.isActive %}
                     <i class="fas fa-check text-success font-15pt"></i>
                 {% else %}
                     <i class="fas fa-times text-danger font-15pt"></i>
                 {% endif %}
             </div>
+
         </td>
         <td>{{ product.category.name }}</td>
         <td>{{ product.manufacturer.name }}</td>
@@ -67,7 +76,17 @@
         </div>
     </div>
 
-
-
 {% endblock %}
 
+{% macro tree(categores) %}
+    {% for category in categores %}
+        <li>
+            <a href="{{ path('product_by_category' , {id: category.id}) }}">{{ category.name }}</a>
+            {% if category.children %}
+                <ul>
+                    {{ _self.tree(category.children) }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endmacro %}
