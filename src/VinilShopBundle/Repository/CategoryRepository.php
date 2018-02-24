@@ -31,4 +31,13 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function firstParentCategories()
+    {
+        return $this
+            ->createQueryBuilder('category')
+            ->Where('category.parent is Null')
+            ->getQuery()
+            ->getResult();
+    }
 }

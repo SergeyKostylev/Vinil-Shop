@@ -1,0 +1,26 @@
+{% extends '@VinilShop/layout.html.twig' %}
+{% block body %}
+
+
+    {#{% if category.children|length > 0 %}#}
+    {#Есть дети{% else %}#}
+    {#нет детей{% endif %}#}
+
+    {% for category in categoryes %}
+        <div class="margin-top20px margin-right20px float-left ">
+            <div class="gallery cf">
+                <div>
+                    <div class="text-center font-12pt">
+                        <a href="#" ><img src="{{ asset(category_title_img) }}{{ category.titleImage }}"></a>
+                    <br>
+                        <div class="name-field-in-category-list">
+                         {{ category.name }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+
+{% endblock %}

@@ -73,8 +73,12 @@
             </div>
         </div>
     </div>
-    {#{{ form_row(form.$galleryImages.id) }}#}
-    {#{{ dump(form.$galleryImages.id) }}#}
+    <div class="border-left-info padding-left20px margin-bottom15px">
+        <b>Примечание:</b>
+        <br>
+        В "Описании" для форматирования текста можно использовать HTML теги
+        (&#60;br&#62;, &#60;b&#62;, &#60;i&#62;, ...).
+    </div>
     {{ form_row(form.description, {'label': 'Описание', 'attr' : {'class' : 'height120px'}}) }}
     <div class="card border-primary mb-3">
         <div class="card-header">Изображения галереи
@@ -86,11 +90,11 @@
         <div class="card-body" >
 
             {% for image in product.galleryImages %}
-                <div class="gallery">
+                <div class="gallery position-relative">
                     <a target="_blank" class="float-left">
                         <img src="{{ asset(gallery_images) }}{{ image.name }}" alt="Fjords" width="300" height="200">
                     </a>
-                    <div class="desc">
+                    <div class="position-absolute" style="bottom: 3px; right: 3px">
                         <span class="image-id" data-image-id="{{ image.id }}"></span>
                         <button type="button" title="Удалить" class="gallery-image-button btn-sm btn-outline-danger margin-top10px" id="{{ image.id }}"><i class="fas fa-trash"></i></button>
                     </div>

@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ManufacturerController extends Controller
 {
     /**
-     * @Route("/admin/manufacturer", name = "manufacturers")
+     * @Route("/admin/manufacturer", name = "admin_manufacturers")
      * @Template()
      */
 
@@ -74,7 +74,7 @@ class ManufacturerController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($manufacturer);
             $em->flush();
-            return $this->redirectToRoute('manufacturers');
+            return $this->redirectToRoute('admin_manufacturers');
         }
 
         return[ 'manufacturer'=>$manufacturer,

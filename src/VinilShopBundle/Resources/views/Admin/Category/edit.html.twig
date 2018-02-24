@@ -26,8 +26,8 @@
             </div>
     {{ form_row(form.parent, {'label': 'Родительская категория'}) }}
     {{ form_row(form.name, {'label': 'Название категории'}) }}
-    {{ form_row(form.lastCategory, {'label': 'Категория не может иметь подкатегорий','attr' : {'class':'last_categ_chek'}}) }}
-    {{ form_row(form.attributeNames, {'attr' : {'class':'attrib_list disp-none'}}) }}
+    {{ form_row(form.lastCategory, {'label': 'Категория не может иметь подкатегорий','attr' : {'class':'last_categ_chek edit_last_categ_chek'}}) }}
+    {{ form_row(form.attributeNames, {'attr' : {'class':'attrib_list edit_attrib_list disp-none'}}) }}
     {{ form_row(form.submit, {'label': 'Редактировать'}) }}
     {{ form_end(form) }}
         </div>

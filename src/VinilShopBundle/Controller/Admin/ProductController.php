@@ -28,7 +28,7 @@ use VinilShopBundle\Service\FileUploader;
 class ProductController extends Controller
 {
     /**
-     * @Route("/admin/product/list/{page}/{sort}/{direction}", name = "products")
+     * @Route("/admin/product/list/{page}/{sort}/{direction}", name = "admin_products")
      * @Template()
      */
     public function indexAction(Request $request, $page =1 , $sort = 'name', $direction='asc')
@@ -116,16 +116,15 @@ class ProductController extends Controller
             ->getRepository('VinilShopBundle:Product')
             ->findByCategory($id);
 
-        $categores = $this
-            ->getDoctrine()
-            ->getRepository('VinilShopBundle:Category')
-            ->findTree();
-
         $category = $this
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Category')
             ->find($id);
 
+        $categores = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Category')
+            ->findTree();
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -138,8 +137,8 @@ class ProductController extends Controller
         );
         return [
             'pagination' => $pagination,
-            'categores' => $categores,
-            'category' => $category
+            'category' => $category,
+            'categores' => $categores
         ];
 
     }
@@ -218,7 +217,7 @@ class ProductController extends Controller
             }
             $em->persist($product);
             $em->flush();
-            return $this->redirectToRoute('products');
+            return $this->redirectToRoute('admin_products');
         }
         return [
             'product' => $product,

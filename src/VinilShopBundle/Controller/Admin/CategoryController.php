@@ -16,7 +16,7 @@ use VinilShopBundle\Service\FileUploader;
 class CategoryController extends Controller
 {
     /**
-     * @Route("/admin/category", name = "categoryes")
+     * @Route("/admin/category", name = "admin_categoryes")
      * @Template()
      */
 
@@ -98,7 +98,7 @@ class CategoryController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->flush();
-            return $this->redirectToRoute('categoryes');
+            return $this->redirectToRoute('admin_categoryes');
         }
 
         return[ 'category'=>$category,

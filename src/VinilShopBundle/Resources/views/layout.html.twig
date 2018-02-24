@@ -17,13 +17,14 @@
     <link rel="stylesheet" href="{{ asset('bundles/vinilshop/css/fa-brands.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/vinilshop/css/fa-regular.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/vinilshop/css/fa-solid.css') }}">
+
 </head>
 
 <body class="padding-top0">
 <div class="bg-primary height5px"></div>
 <div class="bg-warning height5px"></div>
 
-<main role="main" class="container ">
+<main role="main" class="container">
     <div class="row">
         <div class="col-12 col-md-8 border border-dark">222</div>
         <div class="col-12 col-md-4 bg-white  padding15px border border-info">
@@ -39,7 +40,7 @@
                 <br>
                 <i class="fas fa-phone-volume font-15pt text-danger"></i> <span class="font-12pt">+38(099)-40-34-758</span>
                 <br>
-                <i class="fas fa-map-marker font-15pt text-danger"></i> <span class="font-12pt">г.Киев Спортивная площадь, 1a</span>
+                <i class="fas fa-map-marker-alt font-15pt text-danger"></i> <span class="font-12pt">г.Киев Спортивная площадь, 1a</span>
                 <br>
                 <span class="font-12pt">Пн-Пт: 10:30-19:00 / Сб: 12:00-17:00</span>
             </div>
@@ -47,20 +48,28 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-12 col-sm-4 col-md-3 border border-dark">
+
+            {{ knp_menu_render('VinilShopBundle:Builder:mainMenu' ) }}
+
+        </div>
+        <div class="col-12 col-sm-8 col-md-9 border border-danger">
 
     {% block body %}
 
-
     {% endblock %}
+        </div>
+    </div>
 
-
-</main><!-- /.container -->
+</main>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-
+<script src="{{ asset('bundles/vinilshop/js/popper.min.js') }}"></script>
+<script src="{{ asset('bundles/vinilshop/js/bootstrap.js') }}"></script>
 <script src="{{ asset('bundles/vinilshop/js/shop.js') }}"></script>
-{#<script src="{{ asset('bundles/vinilshop/js/popper.min.js') }}"></script>#}
-<script src="{{ asset('bundles/vinilshop/js/bootstrap.min.js') }}"></script>
+
+
 </body>
 </html>
 

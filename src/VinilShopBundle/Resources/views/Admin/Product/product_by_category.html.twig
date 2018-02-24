@@ -14,7 +14,7 @@
 
     <button type="button" class="category-list-btn btn btn-success margin-bottom15px">Товары по категориям <i class="fas fa-angle-double-down"></i></button>
     <div  class="bg-dark category-list" style="display: none">
-        <a href="{{ path('products') }}" class="font-15px padding-left40px">ВСЕ ТОВАРЫ</a>
+        <a href="{{ path('admin_products') }}" class="font-15px padding-left40px">ВСЕ ТОВАРЫ</a>
         {% import _self as macros %}
         <ul class="font-15px">
             {{ macros.tree(categores)  }}

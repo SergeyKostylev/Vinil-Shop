@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>Admin menu</title>
 
     <link href="{{ asset('bundles/vinilshop/css/Admin/bootstrap-for-admin.min.css') }}" rel="stylesheet">
 
@@ -24,7 +24,7 @@
 
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand col-md-3 col-lg-3" href="#">Admin menu</a>
+    <a class="navbar-brand col-md-3 col-lg-3" href="{{ path('admin_default') }}">Admin menu</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -43,6 +43,8 @@
     </div>
 </nav>
 
+
+
 <div class="container-fluid" style="min-width: 900px">
     <div class="row">
 
@@ -52,13 +54,13 @@
 
                 <li class="nav-item">
 
-                    <a class="nav-link font-link" href="{{ path('categoryes') }}"><i class="fab fa-steam-symbol nav-icons"></i> &#160;Категории</a>
+                    <a class="nav-link font-link" href="{{ path('admin_categoryes') }}"><i class="fab fa-steam-symbol nav-icons"></i> &#160;Категории</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link font-link" href="{{ path('manufacturers') }}"><i class="fab fa-connectdevelop nav-icons fa-1x"></i> &#160;Производители</a>
+                    <a class="nav-link font-link" href="{{ path('admin_manufacturers') }}"><i class="fab fa-connectdevelop nav-icons fa-1x"></i> &#160;Производители</a>
                 </li>
                 <li class="nav-item bg">
-                    <a class="nav-link font-link" href="{{ path('products') }}"><i class="fas fa-archive nav-icons"></i> &#160;Товары</a>
+                    <a class="nav-link font-link" href="{{ path('admin_products') }}"><i class="fas fa-archive nav-icons"></i> &#160;Товары</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link font-link" href="{{ path('attributes') }}"><i class="fas fa-assistive-listening-systems nav-icons"></i> &#160;Характеристики</a>
@@ -113,6 +115,10 @@
             {% block body %}
 
 
+
+
+
+
             {% endblock %}
         </main>
 
@@ -148,8 +154,8 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="{{ asset('bundles/vinilshop/js/bootstrap.min.js') }}"></script>
-<!-- Icons -->
+<script src="{{ asset('bundles/vinilshop/js/popper.min.js') }}"></script>
+<script src="{{ asset('bundles/vinilshop/js/bootstrap.js') }}"></script>
 <script src="{{ asset('bundles/vinilshop/js/feather.min.js') }}"></script>
 <script src="{{ asset('bundles/vinilshop/js/shop.js') }}"></script>
 <script>
