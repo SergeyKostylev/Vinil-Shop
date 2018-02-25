@@ -2,8 +2,11 @@
 namespace VinilShopBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
+use Knp\Menu\Renderer\ListRenderer;
+use Knp\Menu\Matcher\Matcher;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use VinilShopBundle\Entity\Category;
 
 
 class Builder implements ContainerAwareInterface
@@ -14,26 +17,42 @@ class Builder implements ContainerAwareInterface
     {
         $menu = $factory->createItem('root', array(
             'childrenAttributes'    => array(
-                'class'             => 'list-group',
+                'class'             => 'list-group li-marker-none',
             )));
 
+        $linkClasses = 'list-group-item btn btn-secondary link-main-menu-style';
+
+
+
         $em = $this->container->get('doctrine')->getManager();
+        $menu->addChild('<i class="fas fa-home"></i> В начало', [
+                'route' => 'home_page',
+                'extras' => array('safe_label' => true)
+            ])
+            ->setLinkAttribute('class', $linkClasses)
 
-        $category = $em->getRepository('VinilShopBundle:Category')->find(22);
+
+        ;
 
 
-        $menu->addChild('Аккустические гитары', array(
-            'route' => 'admin_categoryes',
-            'routeParameters' => array('id' => $category->getId())
 
-        ))->setAttribute('class', 'list-group-item');
+        $categoryes = $em->getRepository('VinilShopBundle:Category')->firstParentCategories();
+        /**
+         * @var Category $category
+         */
+        foreach ($categoryes as $category){
+            $childrenAmount = count($category->getChildren());
+            $parameters =
+                $childrenAmount ?
+                ['route' => 'children_categotyes', 'routeParameters' => ['id' => $category->getId() ] ] :
+                ['route' => 'products_by_category', 'routeParameters' => ['id' => $category->getId() ]];
+            $menu
+                ->addChild($category->getName(),$parameters)
+                ->setLinkAttribute('class', $linkClasses)
+            ;
+        }
 
-//        $menu['Аккустические гитары']-> setLinkAttribute ('class' , 'list-group-item');
-//        $menu -> setChildrenAttribute ( 'class', 'list-group-item' );
-        // create another menu item
-//        $menu->addChild('About Me', array('route' => 'about'));
-        // you can also add sub level's to your menu's as follows
-//        $menu['About Me']->addChild('Edit profile', array('route' => 'edit_profile'));
+
 
 
         return $menu;

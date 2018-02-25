@@ -40,4 +40,14 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function childrenCategories($id)
+    {
+        return $this
+            ->createQueryBuilder('category')
+            ->Where('category.parent =:id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
 }

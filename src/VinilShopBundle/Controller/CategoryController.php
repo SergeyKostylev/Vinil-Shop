@@ -26,4 +26,18 @@ class CategoryController extends Controller
         return['categoryes'=>$categoryes];
     }
 
+    /**
+     * @Route("/categoryes/parent/{id}", name = "children_categotyes")
+     * @Template()
+     */
+
+    public function childrenCategoryesAction(Request $request, $id)
+    {
+        $categoryes = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Category')
+            ->childrenCategories($id);
+
+        return ['categoryes' => $categoryes];
+    }
 }
