@@ -6,21 +6,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class DefaultController extends Controller
+class ManufacturerController extends Controller
 {
     /**
-     * @Route("/", name="home_page")
+     * @Route("/manufacturers/list", name="manufacturers-list")
      * @Template()
      */
 
     public function indexAction()
     {
-        $products = $this
+        $manufacturers = $this
             ->getDoctrine()
-            ->getRepository('VinilShopBundle:Product')
-            ->productRandLimin();
+            ->getRepository('VinilShopBundle:Manufacturer')
+            ->findBy([],['name'=>'asc']);
 
-        return ['products' => $products];
+        return ['manufacturers' => $manufacturers];
     }
 
 

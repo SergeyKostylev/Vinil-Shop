@@ -67,7 +67,6 @@ class ProductController extends Controller
         $product = new Product();
         $form = $this->createForm(ProductType::class,$product,['required_file' => true]);
         $form->add('submit',SubmitType::class);
-        $form->add('new_manufacturer', ManufacturerType::class, ['mapped' => false, 'required' => false]);
         $form->add('attributes', CollectionType::class,array(
             'entry_type' => AttributeType::class,
             'allow_add' => true,
@@ -92,11 +91,6 @@ class ProductController extends Controller
             $fileName = $fileUploader->upload($file);
             $product->setTitleImage($fileName);
 
-            $newManufacturer= $form->get('new_manufacturer')->getData();
-            if ($newManufacturer){
-                $product->setManufacturer($newManufacturer);
-                $em->persist($newManufacturer);
-            }
             $em->persist($product);
             $em->flush();
             return $this->redirectToRoute('add_product');
@@ -105,6 +99,84 @@ class ProductController extends Controller
             'form' => $form->createView()
         ];
     }
+
+
+    /**
+     * @Route("/admin/product/edit/{id}", name = "edit_product")
+     * @Template()
+     */
+    public function editAction(Request $request, $id)
+    {
+        $product = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Product')
+            ->find($id);
+        $category_id = $product->getCategory()->getID();
+
+        $attributes = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Attribute_name')
+            ->attributesOfCategory($category_id);
+        $amount_attributes = count($attributes);
+
+        if(!$product) {
+            throw  $this->createNotFoundException('Товар не найден');
+        }
+        $form =$this->createForm(ProductType::class, $product);
+        $form->add('attributes', CollectionType::class,array(
+            'entry_type' => AttributeType::class,
+            'allow_add' => true,
+            'label' => false,
+            'allow_delete' => true,
+            'entry_options'=> array(
+                'category_id' => $product->getCategory()->getId()
+            )));
+        $form->add('submit', SubmitType::class);
+        $form->remove('category');
+        $currentFile = $product->getTitleImage();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+
+            $galleryFiles = $form['otherImages']->getData();
+            $em = $this->getDoctrine()->getManager();
+
+            foreach($galleryFiles as $file){
+                $fileUploader = new FileUploader($this->getParameter('gallery_img'));
+                $fileName = $fileUploader->upload($file);
+                $gallery_image = new GalleryImages();
+                $gallery_image->setName($fileName)->setProduct($product);;
+                $em->persist($gallery_image);
+            }
+
+            /**
+             * @var UploadedFile $file
+             */
+            $file = $form['titleImage']->getData();
+            if(!empty($file)) {
+                $fileUploader = new FileUploader($this->getParameter('img_entities_directory'));
+                $file = $product->getTitleImage();
+                $fileName = $fileUploader->upload($file);
+                $product->setTitleImage($fileName);
+                if (!empty($currentFile)){
+                    @unlink($this->getParameter('img_entities_directory') . '/' .$currentFile);
+                }
+            }else{
+                if (!empty($currentFile)){
+                    $product->setTitleImage($currentFile);
+                }
+            }
+            $em->persist($product);
+            $em->flush();
+            return $this->redirectToRoute('admin_products');
+        }
+        return [
+            'product' => $product,
+            'amount_attributes' => $amount_attributes,
+            'form' => $form->createView()
+        ];
+    }
+
     /**
      * @Route("/admin/product/category/{id}/{page}/{sort}/{direction}", name = "product_by_category")
      * @Template()
@@ -142,92 +214,6 @@ class ProductController extends Controller
         ];
 
     }
-
-
-    /**
-     * @Route("/admin/product/edit/{id}", name = "edit_product")
-     * @Template()
-     */
-    public function editAction(Request $request, $id)
-    {
-        $product = $this
-            ->getDoctrine()
-            ->getRepository('VinilShopBundle:Product')
-            ->find($id);
-        $category_id = $product->getCategory()->getID();
-
-        $attributes = $this
-            ->getDoctrine()
-            ->getRepository('VinilShopBundle:Attribute_name')
-            ->attributesOfCategory($category_id);
-        $amount_attributes = count($attributes);
-
-        if(!$product) {
-            throw  $this->createNotFoundException('Товар не найден');
-        }
-        $form =$this->createForm(ProductType::class, $product);
-        $form->add('new_manufacturer', ManufacturerType::class, ['mapped' => false, 'required' => false ]);
-        $form->add('attributes', CollectionType::class,array(
-            'entry_type' => AttributeType::class,
-            'allow_add' => true,
-            'label' => false,
-            'allow_delete' => true,
-            'entry_options'=> array(
-                'category_id' => $product->getCategory()->getId()
-            )));
-        $form->add('submit', SubmitType::class);
-        $form->remove('category');
-        $currentFile = $product->getTitleImage();
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()){
-
-            $galleryFiles = $form['otherImages']->getData();
-            $em = $this->getDoctrine()->getManager();
-
-            foreach($galleryFiles as $file){
-                $fileUploader = new FileUploader($this->getParameter('gallery_img'));
-                $fileName = $fileUploader->upload($file);
-                $gallery_image = new GalleryImages();
-                $gallery_image->setName($fileName)->setProduct($product);;
-                $em->persist($gallery_image);
-            }
-
-            /**
-             * @var UploadedFile $file
-             */
-            $file = $form['titleImage']->getData();
-            if(!empty($file)) {
-                $fileUploader = new FileUploader($this->getParameter('img_entities_directory'));
-                $file = $product->getTitleImage();
-                $fileName = $fileUploader->upload($file);
-                $product->setTitleImage($fileName);
-                if (!empty($currentFile)){
-                   @unlink($this->getParameter('img_entities_directory') . '/' .$currentFile);
-                }
-            }else{
-                if (!empty($currentFile)){
-                    $product->setTitleImage($currentFile);
-                }
-            }
-            $newManufacturer= $form->get('new_manufacturer')->getData();
-            if ($newManufacturer){
-                $product->setManufacturer($newManufacturer);
-                $em->persist($newManufacturer);
-            }
-            $em->persist($product);
-            $em->flush();
-            return $this->redirectToRoute('admin_products');
-        }
-        return [
-            'product' => $product,
-            'amount_attributes' => $amount_attributes,
-            'form' => $form->createView()
-        ];
-    }
-
-
-
 
 
 

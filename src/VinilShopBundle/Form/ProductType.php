@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use VinilShopBundle\Entity\Category;
 use VinilShopBundle\Repository\CategoryRepository;
-
+use VinilShopBundle\Repository\ManufacturerRepository;
 
 
 class ProductType extends AbstractType
@@ -50,7 +50,19 @@ class ProductType extends AbstractType
                             ->Where('c.lastCategory = true');
                         }
             ])
-            ->add('manufacturer', null, ['choice_label'=>'name','label' => false]);
+            ->add('manufacturer', null, [
+                'choice_label'=>'name',
+                'label' => false,
+                'placeholder' => 'Выберите производителя',
+                'required' => true,
+                'query_builder'=> function(ManufacturerRepository $repository) {
+                    return
+                        $repository
+                            ->createQueryBuilder('manuf')
+                            ->orderBy('manuf.name', 'ASC');
+                }
+
+            ]);
 
     }/**
      * {@inheritdoc}

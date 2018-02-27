@@ -5,12 +5,14 @@ namespace VinilShopBundle\Controller\Admin;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use VinilShopBundle\Entity\Manufacturer;
 use VinilShopBundle\Form\ManufacturerType;
 use Symfony\Component\HttpFoundation\Response;
+use VinilShopBundle\Service\FileUploader;
 
 
 class ManufacturerController extends Controller
@@ -25,7 +27,7 @@ class ManufacturerController extends Controller
         $manufacturers = $this
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Manufacturer')
-            ->findAll();
+            ->findBy([],['name'=>'ASC']);
         return['manufacturers'=>$manufacturers];
     }
     /**
@@ -35,11 +37,17 @@ class ManufacturerController extends Controller
     public function addAction(Request $request)
     {
         $manufacturer = new Manufacturer();
-        $form = $this->createForm(ManufacturerType::class,$manufacturer);
+        $form = $this->createForm(ManufacturerType::class,$manufacturer,['required_file' => true]);
         $form->add('submit',SubmitType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $fileUploader = new FileUploader($this->getParameter('manufacturer_log'));
+            $file = $manufacturer->getTitleImage();
+            $fileName = $fileUploader->upload($file);
+            $manufacturer->setTitleImage($fileName);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($manufacturer);
             $em->flush();
@@ -67,9 +75,29 @@ class ManufacturerController extends Controller
 
         $form = $this->createForm(ManufacturerType::class,$manufacturer);
         $form->add('submit',SubmitType::class);
+
+        $currentFile = $manufacturer->getTitleImage();
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
+            /**
+             * @var UploadedFile $file
+             */
+            $file = $form['titleImage']->getData();
+            if(!empty($file)) {
+                $fileUploader = new FileUploader($this->getParameter('manufacturer_log'));
+                $file = $manufacturer->getTitleImage();
+                $fileName = $fileUploader->upload($file);
+                $manufacturer->setTitleImage($fileName);
+                if (!empty($currentFile)){
+                    @unlink($this->getParameter('manufacturer_log') . '/' .$currentFile);
+                }
+            }else{
+                if (!empty($currentFile)){
+                    $manufacturer->setTitleImage($currentFile);
+                }
+            }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($manufacturer);

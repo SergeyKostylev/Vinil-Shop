@@ -55,7 +55,29 @@ class CategoryController extends Controller
             //no child categories
             return $this->redirectToRoute('products_by_category', ['id' => $id]);
         }
+    }
 
+    /**
+     * @Route("/categoryes/manufacturer/{id}/", name = "categoryes_manufacturer")
+     * @Template()
+     */
+    public function catergoryesByManufacturerAction(Request $request, $id)
+    {
+        $manufacturer = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Manufacturer')
+            ->find($id);
 
+        if (!$manufacturer) {
+            throw  $this->createNotFoundException('Производитель не найден');
+        }
+        $categoryes = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Category')
+            ->categoryByManufacturer($id);
+        return [
+            'categoryes' => $categoryes,
+            'manufacturer' => $manufacturer
+        ];
     }
 }

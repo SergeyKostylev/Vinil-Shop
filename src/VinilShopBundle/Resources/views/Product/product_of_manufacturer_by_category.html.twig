@@ -1,0 +1,79 @@
+{% extends '@VinilShop/layout.html.twig' %}
+
+{% block pathTree %}
+    <div>
+        <a href="{{ path('home_page') }}" class="btn btn-secondary path-tree-button"><i class="fas fa-home"></i> Главная</a>
+        &#160;
+        <a href="{{ path('manufacturers-list') }}" class="btn btn-secondary path-tree-button">&#9899; Производители</a>
+        {% if pagination.items %}
+            &#160;
+            <a href="{{ path('categoryes_manufacturer', { id : pagination.items[0].manufacturer.id }) }}" class="btn btn-secondary path-tree-button">&#9899;
+                {{ pagination.items[0].manufacturer.name }}
+            </a>
+            &#160;
+            <a class="btn btn-secondary path-tree-button">
+                &#9899; {{ pagination.items[0].category.name }}
+            </a>
+        {% endif %}
+    </div>
+
+
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="margin-top5px">Сортировать по:</div>
+    <div  class="btn-group btn-group-toggle margin-top5px">
+        {{ knp_pagination_sortable(pagination, 'Увеличение цены', 'price',{'class' : 'btn-sm btn-primary', 'type':'button'}, {'direction': 'asc'}) }}
+        {{ knp_pagination_sortable(pagination, 'Уменьшение цены', 'price',{'class' : 'btn-sm btn-success', 'type':'button'}, {'direction': 'desc'}) }}
+        {{ knp_pagination_sortable(pagination, 'Наличие', 'isActive',{'class' : 'btn-sm btn-info', 'type':'button'}, {'direction': 'desc'}) }}
+        {{ knp_pagination_sortable(pagination, 'Название', 'name',{'class' : 'btn-sm btn-warning', 'type':'button'}, {'direction': 'asc'}) }}
+    </div>
+
+<hr>
+
+    {#{% if pagination.items %}#}
+    {#{{ dump(pagination) }}#}
+    {#{% endif %}#}
+    <div class="container">
+        <div class="row justify-content-center">
+        {% for product in pagination %}
+            <div class="margin-top20px margin-right20px float-left">
+                <div class="gallery cf position-relative">
+                    <div>
+                        <div class="text-center font-12pt">
+                            <a href="{{ path('product_show' , {id: product.id}) }}">
+                                <img src="{{ asset(images_of_entities) }}{{ product.titleImage }}" style="max-width: 190px">
+                            </a>
+                            <br>
+                            {#<div class="name-field-in-category-list float-left">#}
+                            <div class="name-field-in-category-list" style="position: absolute; bottom: 3px;">
+                                {{ product.name|slice(0,20) }}{% if product.name|length >20 %}...{% endif %}
+
+                                <div class="font-15pt text-success text-right margin-right20px">
+                                    <b>{{ product.price|number_format(0, '', ' ') }} грн.</b>
+                                </div>
+                                {% if not product.isActive %}
+                                    <div class="font-15pt grey-color text-right margin-right20px position-absolute bottom50px opacity07 right0">
+                                        <b>Нет в наличии</b>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="pagination justify-content-center">
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+
+
+{% endblock %}

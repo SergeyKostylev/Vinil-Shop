@@ -40,6 +40,7 @@ class CategoryController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $fileUploader = new FileUploader($this->getParameter('category_title_imgs'));
             $file = $category->getTitleImage();
             $fileName = $fileUploader->upload($file);

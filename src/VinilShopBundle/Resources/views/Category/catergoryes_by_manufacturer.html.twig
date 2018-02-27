@@ -1,0 +1,33 @@
+{% extends '@VinilShop/layout.html.twig' %}
+
+{% block pathTree %}
+    <div >
+        <a href="{{ path('home_page') }}" class="btn btn-secondary path-tree-button"><i class="fas fa-home"></i> Главная</a>
+        &#160;
+        <a href="{{ path('manufacturers-list') }}" class="btn btn-secondary path-tree-button">&#9899; Производители</a>
+        &#160;
+        <a class="btn btn-secondary path-tree-button">&#9899; {{ manufacturer.name }}</a>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div>
+        {% for category in categoryes %}
+            <div class="margin-top20px margin-right20px float-left ">
+                <div class="gallery cf">
+                    <div>
+                        <div class="text-center font-12pt">
+                            <a href="{{ path('product_manufacturer_by_categoty', {categoryId : category.id, manufacturerId : manufacturer.id}) }}" >
+                                <img src="{{ asset(category_title_img) }}{{ category.titleImage }}">
+                            </a>
+                            <br>
+                            <div class="name-field-in-category-list">
+                             {{ category.name }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

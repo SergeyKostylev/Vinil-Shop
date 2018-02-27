@@ -3,6 +3,7 @@
 namespace VinilShopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Manufacturer
@@ -34,6 +35,22 @@ class Manufacturer
      * @ORM\OneToMany(targetEntity="VinilShopBundle\Entity\Product", mappedBy="manufacturer")
      */
     private $products;
+
+    /**
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     *@Assert\File(maxSize = "7024k", mimeTypes={ "image/jpeg" , "image/png" })
+     */
+    private $titleImage;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -68,12 +85,21 @@ class Manufacturer
     {
         return $this->name;
     }
+
     /**
-     * Constructor
+     * @return mixed
      */
-    public function __construct()
+    public function getTitleImage()
     {
-        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->titleImage;
+    }
+
+    /**
+     * @param mixed $titleImage
+     */
+    public function setTitleImage($titleImage)
+    {
+        $this->titleImage = $titleImage;
     }
 
     /**

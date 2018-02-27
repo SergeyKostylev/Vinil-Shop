@@ -63,14 +63,14 @@ class Product
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      *
-     * @Assert\File(maxSize = "7024k", mimeTypes={ "image/jpeg" })
+     * @Assert\File(maxSize = "7024k", mimeTypes={ "image/jpeg" , "image/png" })
      *
      */
     private $titleImage;
 
     /**
      * @var File[]
-     * @Assert\All(@Assert\File(maxSize = "7024k", mimeTypes={ "image/jpeg" }))
+     * @Assert\All(@Assert\File(maxSize = "7024k", mimeTypes={ "image/jpeg" , "image/png" }))
      *
      */
     private $otherImages;

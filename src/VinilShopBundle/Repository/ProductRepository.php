@@ -37,7 +37,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
-    public function productRandLimin($limit)
+    public function productRandLimin($limit = 9)
     {
 
         return $this

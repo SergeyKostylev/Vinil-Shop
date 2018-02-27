@@ -13,6 +13,7 @@
             {% if product.category.parent.children %}
                 &#160;
                 <a href="{{ path('products_by_category', {id: product.category.id}) }}" class="btn btn-secondary path-tree-button">&#9899; {{ product.category.name }}</a>
+
             {% endif %}
         {% else %}
             &#160;
@@ -125,7 +126,7 @@
     {#HIGH SLIDER#}
     <div class="high-slider" style="display: none">
         <div class="bg-white show-high-gallery-slider">
-            <div class="close-high-slider-button"><i class="far fa-3x fa-window-close"></i></div>
+            <div class="close-high-slider-button btn-font"><i class="far fa-3x fa-times-circle"></i></div>
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner high-carousel-inner-height">
                     <div class="carousel-item active text-center"  >

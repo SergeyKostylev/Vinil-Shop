@@ -5,13 +5,14 @@ namespace VinilShopBundle\Form;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use VinilShopBundle\Entity\Attribute_name;
 use VinilShopBundle\Entity\Category;
 use VinilShopBundle\Repository\CategoryRepository;
+
+use VinilShopBundle\Repository\Attribute_nameRepository;
 
 
 class CategoryType extends AbstractType
@@ -40,7 +41,12 @@ class CategoryType extends AbstractType
                 'multiple' =>true,
                 'expanded' => true,
                 'label' => false,
-                'class'=> Attribute_name::class])
+                'class'=> Attribute_name::class,
+                'query_builder' => function (Attribute_nameRepository $er) {
+                    return $er->createQueryBuilder('att')
+                        ->orderBy('att.name', 'ASC');
+                },
+            ])
             ->add('lastCategory')
             ->add('titleImage',FileType::class,
                 [

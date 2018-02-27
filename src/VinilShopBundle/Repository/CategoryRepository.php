@@ -50,4 +50,16 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function categoryByManufacturer($id)
+    {
+        return $this
+            ->createQueryBuilder('cat')
+            ->join('cat.products','prod')
+            ->andWhere('prod.manufacturer = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+
+    }
 }
