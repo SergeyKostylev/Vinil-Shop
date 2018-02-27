@@ -33,11 +33,29 @@ class CategoryController extends Controller
 
     public function childrenCategoryesAction(Request $request, $id)
     {
-        $categoryes = $this
+        $category = $this
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Category')
-            ->childrenCategories($id);
+            ->find($id);
+        if (!$category){
+            throw  $this->createNotFoundException('Категория не найдена');
+        }
 
-        return ['categoryes' => $categoryes];
+        if (count($category->getChildren())){
+
+            //there are child categories
+            $categoryes = $this
+                ->getDoctrine()
+                ->getRepository('VinilShopBundle:Category')
+                ->childrenCategories($id);
+            return ['categoryes' => $categoryes];
+        }
+        else{
+
+            //no child categories
+            return $this->redirectToRoute('products_by_category', ['id' => $id]);
+        }
+
+
     }
 }

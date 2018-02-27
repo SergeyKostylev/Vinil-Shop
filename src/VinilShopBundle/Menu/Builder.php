@@ -2,8 +2,6 @@
 namespace VinilShopBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
-use Knp\Menu\Renderer\ListRenderer;
-use Knp\Menu\Matcher\Matcher;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use VinilShopBundle\Entity\Category;
@@ -22,19 +20,13 @@ class Builder implements ContainerAwareInterface
 
         $linkClasses = 'list-group-item btn btn-secondary link-main-menu-style';
 
-
-
         $em = $this->container->get('doctrine')->getManager();
-        $menu->addChild('<i class="fas fa-home"></i> В начало', [
+        $menu->addChild('<i class="fas fa-home"></i> Главная', [
                 'route' => 'home_page',
                 'extras' => array('safe_label' => true)
             ])
             ->setLinkAttribute('class', $linkClasses)
-
-
         ;
-
-
 
         $categoryes = $em->getRepository('VinilShopBundle:Category')->firstParentCategories();
         /**
@@ -51,9 +43,6 @@ class Builder implements ContainerAwareInterface
                 ->setLinkAttribute('class', $linkClasses)
             ;
         }
-
-
-
 
         return $menu;
     }

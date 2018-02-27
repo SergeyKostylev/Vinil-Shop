@@ -18,15 +18,23 @@
     <link rel="stylesheet" href="{{ asset('bundles/vinilshop/css/fa-regular.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/vinilshop/css/fa-solid.css') }}">
 
+    {% block style %}
+
+    {% endblock %}
+
 </head>
 
 <body class="padding-top0">
+
 <div class="bg-primary height5px"></div>
 <div class="bg-warning height5px"></div>
 
-<main role="main" class="container">
+<main role="main" class="container" style="height: 100vh;">
+
     <div class="row">
-        <div class="col-12 col-md-8 border border-dark">222</div>
+
+        <div class="col-12 col-md-8 border border-dark">222
+        </div>
         <div class="col-12 col-md-4 bg-white  padding15px border border-info">
             <div class="float-right">
                 <a href="#" class="font-15pt text-success">Вход</a>
@@ -38,18 +46,22 @@
             <div class="float-right padding-top15px padding-right20px">
                 <i class="far fa-envelope font-15pt text-danger"></i> <span class="font-12pt">s03540@gmail.com</span>
                 <br>
-                <i class="fas fa-phone-volume font-15pt text-danger"></i> <span class="font-12pt">+38(099)-40-34-758</span>
+                <i class="fas fa-phone-volume font-15pt text-danger margin-top5px"></i> <span class="font-12pt">+38(099)-40-34-758</span>
                 <br>
-                <i class="fas fa-map-marker-alt font-15pt text-danger"></i> <span class="font-12pt">г.Киев Спортивная площадь, 1a</span>
+                <i class="fas fa-map-marker-alt font-15pt text-danger margin-top5px"></i> <span class="font-12pt">г.Киев Спортивная площадь, 1a</span>
                 <br>
-                <span class="font-12pt">Пн-Пт: 10:30-19:00 / Сб: 12:00-17:00</span>
+                <i class="far fa-clock font-15pt text-danger margin-top5px"></i> <span class="font-12pt">Пн-Пт: 10:30-19:00 / Сб: 12:00-17:00</span>
             </div>
-
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-12 col-sm-4 col-md-3 border border-dark">
+
+        {% block slider %}
+        {% endblock %}
+
+
+    <div class="row" id="main-menu-row">
+        <div class="col-12 col-sm-4 col-md-3 border border-dark" id="main-menu-col">
 
             <div class="margin-top20px">
                 {#{{ knp_menu_render('VinilShopBundle:Builder:mainMenu',{'allow_‌​safe_labels': true})|raw }}#}
@@ -57,11 +69,14 @@
             </div>
 
         </div>
-        <div class="col-12 col-sm-8 col-md-9 border border-danger">
+        <div class="col-12 col-sm-8 col-md-9 border border-dark">
+            {% block pathTree %}
 
-    {% block body %}
+            {% endblock %}
 
-    {% endblock %}
+            {% block body %}
+
+            {% endblock %}
         </div>
     </div>
 
@@ -71,7 +86,9 @@
 <script src="{{ asset('bundles/vinilshop/js/popper.min.js') }}"></script>
 <script src="{{ asset('bundles/vinilshop/js/bootstrap.js') }}"></script>
 <script src="{{ asset('bundles/vinilshop/js/shop.js') }}"></script>
+{% block scripts %}
 
+{% endblock %}
 
 </body>
 </html>

@@ -15,7 +15,12 @@ class DefaultController extends Controller
 
     public function indexAction()
     {
-        return [];
+        $products = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Product')
+            ->productRandLimin(30);
+
+        return ['products' => $products];
     }
 
 

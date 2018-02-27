@@ -37,6 +37,19 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
+    public function productRandLimin($limit)
+    {
+
+        return $this
+            ->createQueryBuilder('prod')
+            ->addSelect('RAND() as HIDDEN rand')
+            ->orderBy('rand')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+
+    }
+
     public function findByCategory($id)
     {
         $last_category = $this

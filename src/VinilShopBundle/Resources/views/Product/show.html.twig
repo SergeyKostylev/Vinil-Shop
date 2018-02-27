@@ -1,7 +1,29 @@
 {% extends '@VinilShop/layout.html.twig' %}
 
-{% block body %}
+{% block pathTree %}
+    <div>
+        <a href="{{ path('home_page') }}" class="btn btn-secondary path-tree-button"><i class="fas fa-home"></i> Главная</a>
+        &#160;
+        <a href="{{ path('categotyes_list') }}" class="btn btn-secondary path-tree-button">&#9899; Категории</a>
+        {% if product.category.parent %}
+            &#160;
+            <a href="{{ path('children_categotyes', {id: product.category.parent.id }) }}" class="btn btn-secondary path-tree-button">
+                &#9899; {{ product.category.parent.name }}
+            </a>
+            {% if product.category.parent.children %}
+                &#160;
+                <a href="{{ path('products_by_category', {id: product.category.id}) }}" class="btn btn-secondary path-tree-button">&#9899; {{ product.category.name }}</a>
+            {% endif %}
+        {% else %}
+            &#160;
+            <a href="{{ path('products_by_category', {id: product.category.id}) }}" class="btn btn-secondary path-tree-button">
+                &#9899; {{ product.category.name }}
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}
 
+{% block body %}
     <div class="row margin-top20px">
         <div class="col-12 col-lg-6 ">
             <div class="text-center">
@@ -132,5 +154,4 @@
     {#END HIGH SLIDER#}
 
     <hr>
-
 {% endblock %}

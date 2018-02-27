@@ -22,9 +22,31 @@ $(document).ready(function () {
 
     };
 
+
+    var $sliderFrame = $('#sliderFrame');
+    $sliderFrame.fadeIn(300);
+    var $mainMenuCol = $('#main-menu-col');
+
+    function review() {
+        if ($("div").is('#sliderFrame') && $(window).width() >= 768){
+            $mainMenuCol.addClass('margin-top-70px');
+        }
+        if ($("div").is('#sliderFrame') && $(window).width() < 768){
+            $mainMenuCol.removeClass('margin-top-70px');
+        }
+    }
+    review();
+
+    window.onresize = function (ev) {
+
+        review();
+    };
+
+
+
     var $editLastCategChek = $('.edit_last_categ_chek');
     var $editAttribList = $('.edit_attrib_list');
-    console.log($editLastCategChek.attr("checked"));
+    // console.log($editLastCategChek.attr("checked"));
     if ($editLastCategChek.attr("checked") === 'checked')
     {$editAttribList.fadeIn();}
 
@@ -110,7 +132,7 @@ $(document).ready(function () {
                 $this.parent().toggle(230);
             })
             .fail(function (r) {
-                    var $message = 'Невозможно удалить категорию товары которой существуют в базе.';
+                    var $message = 'Невозможно удалить категорию товары которой существуют в базе или у которой есть дочерние категории.';
                     $.errorModalWindow($message);
 
             });

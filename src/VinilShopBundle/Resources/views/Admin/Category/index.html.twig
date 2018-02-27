@@ -8,7 +8,7 @@
     <div class="border-left-info padding-left20px margin-bottom15px">
             <b>Примечание:</b>
             <br>
-            Невозможно удалить категорию если она имеет или может иметь дочерние категории
+        Невозможно удалить категорию если она имеет ИЛИ может иметь дочерние категории.
     </div>
     {% import _self as macros %}
     <ul class="main-menu">
@@ -19,7 +19,7 @@
 
 {% macro tree(categores) %}
     {% for category in categores %}
-        <li>
+        <li class="li-marker-none">
             <a href="{{ path('product_by_category' , {id: category.id}) }}" class="font-15pt">{{ category.name }}</a>
             &#160;&#160;&#160;<a href="{{ path('edit_category', {id: category.id}) }}" class="text-warning font-15pt" title="Редактировать"><i class="fas fa-pencil-alt"></i></a>
 

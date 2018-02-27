@@ -11,20 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * @Route("/products/list", name = "products_list")
-     * @Template()
-     */
 
-    public function indexAction(Request $request)
-    {
-        $products = $this
-            ->getDoctrine()
-            ->getRepository('VinilShopBundle:Product')
-            ->findAll();
-//        dump($products);
-        return['products'=>$products];
-    }
 
     /**
      * @Route("/products/category/{id}/{page}/{sort}/{direction}", name = "products_by_category")

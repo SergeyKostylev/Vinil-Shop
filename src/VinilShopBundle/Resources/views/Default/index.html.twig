@@ -1,37 +1,78 @@
 {% extends '@VinilShop/layout.html.twig' %}
+
+{% block slider %}
+    <div class="row justify-content-center offset-md-3">
+        <div id="sliderFrame"  style="display: none">
+            <div id="slider">
+
+                <img src="http://s57.radikal.ru/i156/1012/b5/f070150bbb07.png" />
+                <img src="http://www.volgar-gazprom.ru/modules/VG/images/gbook.gif"/>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
 {% block body %}
 
-    <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+    <div class="row">
+        <div class="col-4">
+            <br>
+            <hr class="border-info">
+        </div>
+        <div class="col-4">
+            <h2 class="text-center">Наши<br>рекомендации</h2>
+        </div>
+        <div class="col-4">
+            <br>
+            <hr class="border-info">
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for product in products %}
+                <div class="margin-top20px margin-right20px float-left">
+                    <div class="gallery cf position-relative">
+                        <div>
+                            <div class="text-center font-12pt" >
+                                <a href="{{ path('product_show' , {id: product.id}) }}">
+                                    <img src="{{ asset(images_of_entities) }}{{ product.titleImage }}" style="max-width: 190px">
+                                </a>
+                                <br>
+                                {#<div class="name-field-in-category-list float-left">#}
+                                <div class="name-field-in-category-list" style="position: absolute; bottom: 3px;">
+                                    {{ product.name|slice(0,20) }}{% if product.name|length >20 %}...{% endif %}
+
+                                    <div class="font-15pt text-success text-right margin-right20px">
+                                        <b>{{ product.price|number_format(0, '', ' ') }} грн.</b>
+                                    </div>
+                                    {% if not product.isActive %}
+                                        <div class="font-15pt grey-color text-right margin-right20px position-absolute bottom50px opacity07 right0">
+                                            <b>Нет в наличии</b>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
     <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
 
+
+
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ asset('bundles/vinilshop/slider/js-image-slider.css') }}">
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ asset('bundles/vinilshop/slider/js-image-slider.js') }}"></script>
 {% endblock %}

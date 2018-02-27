@@ -80,7 +80,7 @@
 
 {% macro tree(categores) %}
     {% for category in categores %}
-        <li>
+        <li class="li-marker-none">
             <a href="{{ path('product_by_category' , {id: category.id}) }}">{{ category.name }}</a>
             {% if category.children %}
                 <ul>

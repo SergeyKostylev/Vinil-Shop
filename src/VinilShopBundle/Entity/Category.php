@@ -49,6 +49,13 @@ class Category
     private $titleImage;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="last_category", type="boolean")
+     */
+    private $lastCategory;
+
+    /**
      * @var string
      *
      * @ORM\OneToMany(targetEntity="VinilShopBundle\Entity\Product", mappedBy="category")
@@ -130,12 +137,7 @@ class Category
         $this->lastCategory = $lastCategory;
     }
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="last_category", type="boolean")
-     */
-    private $lastCategory;
+
 
 
     public function __construct()

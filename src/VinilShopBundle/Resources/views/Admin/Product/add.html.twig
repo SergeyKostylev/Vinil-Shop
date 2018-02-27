@@ -32,6 +32,14 @@
     {#End template#}
 
     <div class="container-fluid">
+        <div class="border-left-info padding-left20px margin-bottom15px">
+            <b>Примечания:</b>
+            <br>
+            <b>1.</b> В "Описании" для форматирования текста можно использовать HTML теги
+            (&#60;br&#62;, &#60;b&#62;, &#60;i&#62;, ...).
+            <br>
+            <b>2.</b> Желательно чтобы высота титульного изображения была больше его ширины.
+        </div>
         <div class="row">
             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
 
@@ -91,12 +99,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="border-left-info padding-left20px margin-bottom15px">
-                    <b>Примечание:</b>
-                    <br>
-                    В "Описании" для форматирования текста можно использовать HTML теги
-                    (&#60;br&#62;, &#60;b&#62;, &#60;i&#62;, ...).
-                </div>
+
                 {{ form_row(form.description, {'label': 'Описание', 'attr' : {'class' : 'height120px'}}) }}
             </div>
         </div>
