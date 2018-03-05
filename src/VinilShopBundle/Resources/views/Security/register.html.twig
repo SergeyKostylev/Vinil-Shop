@@ -1,0 +1,36 @@
+{% extends '@VinilShop/layout.html.twig' %}
+
+{% block body %}
+    <div class="margin-top30px">
+        {% if message %}
+            <div class="row justify-content-center">
+                <div class="card border-danger mb-3" style="width: 500px; display: block">
+                    <div class="card-body">
+                        <h4 class="card-title"><i class="fas text-danger fa-exclamation-triangle"></i> Ошибка</h4>
+                        <p class="card-text">{{ message }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="conteiner">
+            <div class="row">
+                <div class="col-1">
+                </div>
+                <div class="col-10 margin-top30px">
+                    {{ form_start(form) }}
+                        {{ form_row(form.username) }}
+                        {{ form_row(form.email) }}
+                        {{ form_row(form.plainPassword.first) }}
+                        {{ form_row(form.plainPassword.second) }}
+                        {{ form_row(form.submit) }}
+                    {{ form_end(form) }}
+                </div>
+                <div class="col-1">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

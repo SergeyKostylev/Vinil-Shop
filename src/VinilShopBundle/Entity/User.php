@@ -4,7 +4,7 @@ namespace VinilShopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -47,14 +47,14 @@ class User implements UserInterface, \Serializable
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(name="is_active", type="boolean", options={"default" : 1})
      */
     private $isActive;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="role", type="string", length=255)
+     * @ORM\Column(name="role", type="string", length=255, options={"default" : "ROLE_USER"})
      */
     private $role;
 
@@ -65,6 +65,12 @@ class User implements UserInterface, \Serializable
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
     }
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
 
     /**
      * Get id
@@ -122,6 +128,16 @@ class User implements UserInterface, \Serializable
     public function getEmail()
     {
         return $this->email;
+    }
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password)
+    {
+        $this->plainPassword = $password;
     }
 
     /**
@@ -206,6 +222,7 @@ class User implements UserInterface, \Serializable
     public function getRoles()
     {
         return [$this->role];
+//        return array('ROLE_ADMIN');
     }
 
     public function eraseCredentials()

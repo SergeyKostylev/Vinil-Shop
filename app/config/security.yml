@@ -3,7 +3,7 @@
 security:
 
     encoders:
-        VimilShopBundle\Entity\User:
+        VinilShopBundle\Entity\User:
             algorithm: bcrypt
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
@@ -11,19 +11,8 @@ security:
     providers:
         our_db_provider:
             entity:
-                class: VimilShopBundle:User
-                property: username
-#    providers:
-#        in_memory:
-#            memory: ~
-#                  users:
-#                      ryan:
-#                          password: ryanpass
-#                          roles: 'ROLE_USER'
-#                      admin:
-#                          password: kitten
-#                          roles: 'ROLE_ADMIN'
-
+                class: VinilShopBundle:User
+                property: email
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
@@ -32,6 +21,11 @@ security:
 
         main:
             anonymous: ~
+            logout:
+                path: /logout
+            form_login:
+                login_path: login
+                check_path: login
             # activate different ways to authenticate
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate

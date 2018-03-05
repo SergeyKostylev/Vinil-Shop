@@ -2,6 +2,7 @@
 
 namespace VinilShopBundle\Repository;
 
+
 /**
  * UserRepository
  *
@@ -10,4 +11,13 @@ namespace VinilShopBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function loadUserByUsername($username)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.username = :username OR u.email = :email')
+            ->setParameter('username', $username)
+            ->setParameter('email', $username)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

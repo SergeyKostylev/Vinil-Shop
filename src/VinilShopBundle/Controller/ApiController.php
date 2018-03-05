@@ -27,24 +27,6 @@ class ApiController extends Controller
         $message = $request->get('message');
         $captcha = (int)$request->get('captcha');
 
-////        dump($this->get('session')->get('feedback_captcha'));
-////        $qwe = $this->get('session')->get('feedback_captcha');
-////
-////        die;
-////        $q='not ok';
-////        if ($captcha == $this->get('session')->get('feedback_captcha')){
-////            $q='ok';
-////        }
-//
-//            return  new JsonResponse([
-//                'answer' => $this->get('session')->get('feedback_captcha'),
-////                'answer' => 123,
-//                'itemBlock' => $captcha
-//            ],403);
-//
-//
-//        die;
-
         if ($captcha != $this->get('session')->get('feedback_captcha')){
             return  new JsonResponse([
                 'answer' => 'Неверное контрольное число',

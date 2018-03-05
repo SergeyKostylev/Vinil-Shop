@@ -36,13 +36,14 @@
         <div class="col-12 col-md-8 border border-dark">
             <a href="#" class="btn-sm btn-info">Вопросы и ответы</a>
             <a href="{{ path('feedback') }}" class="btn-sm btn-info">Обратная связь</a>
+            <a href="{{ path('logout') }}" class="btn-sm btn-info">ВЫХОД</a>
 
         </div>
         <div class="col-12 col-md-4 bg-white  padding15px border border-info">
             <div class="float-right">
-                <a href="#" class="font-15pt text-success">Вход</a>
+                <a href="{{ path('login') }}" class="font-15pt text-success">Вход</a>
                 &#160;&#160;&#160;
-                <a href="#" class="font-15pt">Регистрация</a>
+                <a href="{{ path('register') }}" class="font-15pt">Регистрация</a>
             </div>
             <br>
             <br>
