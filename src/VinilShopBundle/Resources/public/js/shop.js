@@ -23,6 +23,143 @@ $(document).ready(function () {
     };
 
 
+    //////////FEEDBACK
+     var $submitFeedbackBtn = $('.submit-feedback-btn');
+     var $captchaBtn = $('#captcha-btn');
+
+    $captchaBtn.on('click', function () {
+       var $this = $(this);
+       var $old = $this.attr('src');
+       $this.attr('src', $old + '?1');
+
+    });
+
+    $submitFeedbackBtn.on('click', function () {
+
+        var $feedbackForm = $('#feedback-form');
+
+        var $email = $('#sender-email');
+        var $name = $('#sender-name');
+        var $title = $('#sender-message-title');
+        var $message = $('#sender-message');
+        var $captcha = $('#captcha');
+
+        var $blockRequestWindows = $('.block-request-windows');
+        $blockRequestWindows.find('#text-reqeust-message').text('');
+
+        $email.on('click',function () {
+            $email.parent().removeClass('has-danger');
+            $blockRequestWindows.fadeOut(300);
+        });
+        $name.on('click',function () {
+            $name.parent().removeClass('has-danger');
+            $blockRequestWindows.fadeOut(300);
+        });
+        $title.on('click',function () {
+            $title.parent().removeClass('has-danger');
+        });
+        $message.on('click',function () {
+            $message.parent().removeClass('has-danger');
+            $blockRequestWindows.fadeOut(300);
+        });
+        $captcha.on('click',function () {
+            $captcha.parent().removeClass('has-danger');
+            $blockRequestWindows.fadeOut(300);
+        });
+
+        if(!$email.val() || !$name.val() || !$title.val() || !$message.val() ||  !$captcha.val()){
+
+        if (!$email.val())
+        {
+            $email.parent().addClass('has-danger');
+        }
+        if (!$name.val())
+        {
+            $name.parent().addClass('has-danger');
+        }
+        if (!$title.val())
+        {
+            $title.parent().addClass('has-danger');
+        }
+        if (!$message.val())
+        {
+            $message.parent().addClass('has-danger');
+        }
+        if (!$captcha.val())
+        {
+            $captcha.parent().addClass('has-danger');
+        }
+
+        }else{
+
+            var $spiner = $('#feedback-spiner');
+            $.post('/feedback/create',{
+                    email: $email.val(),
+                    name: $name.val(),
+                    title: $title.val(),
+                    message: $message.val(),
+                    captcha: $captcha.val()
+            },'json')
+                .done(function (r) {
+                    $blockRequestWindows.find('#bad-icon').fadeOut();
+
+                    var $feedbackForm = $('#feedback-form');
+                    // $blockRequestWindows.find('#ok-icon').remove();
+                    $blockRequestWindows.find('#bad-icon').remove();
+
+                    $feedbackForm.fadeOut();
+
+                    $spiner.fadeIn();
+                    $blockRequestWindows.fadeIn(700);
+                    setTimeout(function () {
+                        $spiner.remove();
+                        $blockRequestWindows.find('#ok-icon').fadeIn();
+                        $blockRequestWindows.find('#text-reqeust-message').text(r.answer);
+
+                    },1000);
+
+                })
+                .fail(function (r) {
+
+                    var $answer = r.responseJSON.answer;
+                    var $itemBlock = r.responseJSON.itemBlock;
+                    console.log($answer);
+                    console.log($itemBlock);
+                    $blockRequestWindows.find('#ok-icon').fadeOut();
+                    $blockRequestWindows.find('#bad-icon').fadeIn();
+                    $blockRequestWindows.find('#text-reqeust-message').text($answer);
+                    $captcha.val('');
+                        var $old = $captchaBtn.attr('src');
+                        $captchaBtn.attr('src', $old + '?1');
+
+                    setTimeout(function () {
+                        $blockRequestWindows.fadeIn(700);
+                    },300);
+
+
+                });
+
+        }
+    });
+
+
+    var $feedbackDeleteBtn = $('.feedback-delete-btn');
+    $feedbackDeleteBtn.on('click', function () {
+        var $this = $(this);
+        var $id = $this.siblings().filter('.feedback-id').data('feedback-id');
+
+        $.get('/admin/feedback/delete/' + $id)
+            .done(function () {
+                var $row = $this.parent().parent();
+                $row.fadeOut(300);
+                setTimeout(
+                   function () {
+                       $row.remove();
+                   }, 500);
+            })
+    });
+
+
     var $sliderFrame = $('#sliderFrame');
     $sliderFrame.fadeIn(300);
     var $mainMenuCol = $('#main-menu-col');
@@ -104,6 +241,29 @@ $(document).ready(function () {
             })
             .fail(function (r) {
             });
+    });
+
+    var $advSlidrDelBtn = $('.adv-slidr-del-btn');
+
+    $advSlidrDelBtn.on('click', function () {
+        var $this =$(this);
+        var $imageId = $this.siblings().filter('.item-id').data('item-id');
+        var $imageBlock = $this.parent().parent();
+
+
+
+        $.get('/admin/advertising/delete/' + $imageId, function (r) {})
+            .done(function (r) {
+                $imageBlock.fadeOut(300);
+                setTimeout(function () {
+                    $imageBlock.remove();
+                },700);
+            })
+            .fail(function (r) {
+            });
+
+
+
     });
 
 

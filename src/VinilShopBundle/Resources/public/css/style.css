@@ -80,6 +80,10 @@ body {
 {
     margin-top: -70px;
 }
+.margin-top3px
+{
+    margin-top: 3px;
+}
 .margin-top5px
 {
     margin-top: 5px;
@@ -87,6 +91,10 @@ body {
 .margin-top10px
 {
     margin-top: 10px;
+}
+.margin-top12px
+{
+    margin-top: 12px;
 }
 .margin-bottom15px
 {
@@ -96,7 +104,18 @@ body {
 {
     margin-top: -150px;
 }
-
+.margin-top-5px
+{
+    margin-top: -5px;
+}
+.margin-top2px
+{
+    margin-top: 2px;
+}
+.margin-top7px
+{
+margin-top: 7px;
+}
 .margin-top20px
 {
     margin-top: 20px
@@ -128,6 +147,10 @@ body {
     margin-left: 10px;
 }
 
+.paddin3px
+{
+    padding: 3px;
+}
 .padding-left20px
 {
     padding-left: 20px;
@@ -196,6 +219,12 @@ body {
 
 /*}*/
 
+.feedback-delete-btn
+{
+    height: 25px;
+    padding: 1px 10px 1px 10px;
+
+}
 
 
 .li-marker-none
@@ -208,6 +237,11 @@ body {
     text-align: left;
     font-size: 11pt;
 }
+
+.text-transform-none{
+    text-transform: none;
+}
+
 .path-tree-button
 {
     text-transform: none;
@@ -248,7 +282,7 @@ body {
 .main-image
 {
     max-height: 390px;
-    max-width: 345px;
+    max-width: 100%;
 
 }
 
@@ -279,6 +313,10 @@ body {
 .max-height30px
 {
     max-height: 30px;
+}
+.max-height50px
+{
+    max-height: 50px;
 }
 /*@media screen and (min-width:768px) and (#sliderFrame) {*/
     /*#main-menu-col {*/
@@ -338,6 +376,12 @@ body {
     /*display:none;*/
 }
 
+.block-request-windows
+{
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.3);
+}
 
 
 .gallery-image
@@ -387,6 +431,13 @@ body {
 
     opacity: 0.5;
 
+}
+.adv-slidr-del-btn
+{
+    position: absolute;
+    z-index: 3;
+    bottom: 3px;
+    right: 3px;
 }
 
 .manufacturer-log

@@ -1,17 +1,18 @@
 {% extends '@VinilShop/layout.html.twig' %}
 
 {% block slider %}
-    <div class="row justify-content-center offset-md-3">
-        <div id="sliderFrame"  style="display: none">
-            <div id="slider">
 
-                <img src="http://s57.radikal.ru/i156/1012/b5/f070150bbb07.png" />
-                <img src="http://www.volgar-gazprom.ru/modules/VG/images/gbook.gif"/>
-
+    {% if slider %}
+        <div class="row justify-content-center offset-md-3">
+            <div id="sliderFrame"  style="display: none">
+                <div id="slider">
+                    {% for item in slider %}
+                        <img src="{{ asset(dvertising_slider_images) }}{{ item.image }}" />
+                    {% endfor %}
+                </div>
             </div>
-
         </div>
-    </div>
+    {% endif %}
 
 {% endblock %}
 
@@ -70,9 +71,9 @@
 {% endblock %}
 
 {% block style %}
-    <link rel="stylesheet" href="{{ asset('bundles/vinilshop/slider/js-image-slider.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/vinilshop/slider of advertising/js-image-slider.css') }}">
 {% endblock %}
 
 {% block scripts %}
-    <script src="{{ asset('bundles/vinilshop/slider/js-image-slider.js') }}"></script>
+    <script src="{{ asset('bundles/vinilshop/slider of advertising/js-image-slider.js') }}"></script>
 {% endblock %}

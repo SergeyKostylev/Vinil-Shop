@@ -3,25 +3,16 @@
 namespace VinilShopBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use VinilShopBundle\Entity\Attribute;
-use VinilShopBundle\Entity\Attribute_name;
 use VinilShopBundle\Entity\GalleryImages;
 use VinilShopBundle\Entity\Product;
-use VinilShopBundle\Form\Attribute_nameType;
 use VinilShopBundle\Form\AttributeType;
-use VinilShopBundle\Form\ManufacturerType;
 use VinilShopBundle\Form\ProductType;
-use VinilShopBundle\Repository\AttributeRepository;
 use VinilShopBundle\Service\FileUploader;
 
 

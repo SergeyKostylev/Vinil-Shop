@@ -1,0 +1,83 @@
+{% extends '@VinilShop/layout.html.twig' %}
+
+
+{% block body %}
+
+
+    <div class="container">
+
+        <div class="row">
+            <div class="offset-2 font-20pt">Обратная связь</div>
+        </div>
+        <hr class="margin-top-5px">
+
+        <div class="row justify-content-center">
+
+            <div class="block-request-windows border border-info" style="width: 90%; max-width: 500px; display: none">
+                <div class="float-left" id="ok-icon" style="display: none">
+                    <i class="fas text-success fa-2x fa-check-circle" style="margin-top: 3px"></i>
+                </div>
+                <div class="float-left" id="bad-icon"  style="display: none">
+                    <i class="fas text-danger fa-2x fa-ban margin-top3px"></i>
+                </div>
+                <div class="font-15pt" >
+                    <span>
+                        &#160;
+                    </span>
+                    <div id="feedback-spiner" class="float-left" style="display: none">
+                        <i class="fas fa-spin font-20pt fa-spinner"></i>
+                    </div>
+                    <span id="text-reqeust-message">
+
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+
+            <form style="width: 90%; max-width: 500px;" id="feedback-form">
+
+
+
+                <div class="form-group">
+                    <input type="email" class="form-control" id="sender-email" placeholder="Email:" value="dss@sdds.com">
+                    <small class="form-text text-muted">На этот email будет отправлени ответ</small>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="sender-name" placeholder="Имя отправителя:" value="Вася">
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="sender-message-title" placeholder="Тема:" value="темаХ">
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
+                    <textarea class="form-control" id="sender-message" placeholder="Введите сообщение . . .">ТЕКСТ СООБЩЕНИЯТЕКСТ СООБЩЕНИЯ</textarea>
+                </div>
+                <div>
+                    <div class="form-group float-left">
+                        <input type="text"  class="form-control" id="captcha" placeholder="Введите число ...">
+                    </div>
+                    <div class="btn btn-secondary paddin3px margin-left20px">
+                        <img src="{{ path('feedback_captcha') }}" id="captcha-btn" >
+                        &#160;
+                        <div class="float-right margin-top2px">
+                            <i class="fas fa-sync-alt font-20pt text-info"></i> &#160;
+                        </div>
+                    </div>
+                </div>
+                <div class="margin-top30px float-right">
+                    <button type="button" class="btn btn-outline-success text-transform-none submit-feedback-btn ">Отправить</button>
+                </div>
+
+            </form>
+
+
+        </div>
+    </div>
+
+
+{% endblock %}
+
+

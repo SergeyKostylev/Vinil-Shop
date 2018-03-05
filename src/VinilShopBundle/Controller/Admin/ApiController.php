@@ -115,8 +115,62 @@ class ApiController extends Controller
         return new Response(    'Content',
             Response::HTTP_OK);
 
+    }
+
+    /**
+     * @Route("/admin/advertising/delete/{id}", name = "delete_advertising_image")
+     */
+
+    public function deleteAdvertisingSlidrImageAction(Request $request, $id)
+    {
+        $image = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Advertising_slider')
+            ->find($id);
+
+        if (!$image) {
+            throw  $this->createNotFoundException('Изображение не найдено');
+            return new Response(    'Ops',
+                Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        $nameImage = $image->getImage();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($image);
+        $em->flush();
+        @unlink($this->getParameter('advertising_slider_images') . '/' .$nameImage);
+
+        return new Response(    'Ок',
+            Response::HTTP_OK);
 
     }
+    /**
+     * @Route("/admin/feedback/delete/{id}", name = "delete_feedback")
+     */
+
+    public function deleteFeedbackAction(Request $request, $id)
+    {
+        $feedback = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Feedback')
+            ->find($id);
+
+
+        if (!$feedback) {
+            throw  $this->createNotFoundException('Изображение не найдено');
+            return new Response(    'Ops',
+                Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($feedback);
+        $em->flush();
+        return new Response(    'Ок',
+            Response::HTTP_OK);
+
+    }
+
 
 
 
