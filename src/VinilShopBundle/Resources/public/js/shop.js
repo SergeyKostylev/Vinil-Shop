@@ -143,6 +143,28 @@ $(document).ready(function () {
     });
 
 
+    var $addCartButton = $('#add-cart-button');
+
+    $addCartButton.on('click', function () {
+        var $this = $(this);
+        var $id = $this.siblings().filter('.in-cart').data('in-cart-id');
+
+        $.get('/app_dev.php/cart/add/product/' + $id)                          //////////////////ИЗМЕНИТЬ ПУТЬ
+            .done(function (r) {
+                console.log(r.answer);
+
+                var $inCartButton = $('#in-cart-button');
+                $addCartButton.fadeOut(100);
+                setTimeout(function () {
+                    $inCartButton.fadeIn(1200)
+                },120);
+            })
+            .fail(function (r) {
+                console.log(r.responseJSON.answer);
+            });
+
+    });
+
     var $feedbackDeleteBtn = $('.feedback-delete-btn');
     $feedbackDeleteBtn.on('click', function () {
         var $this = $(this);

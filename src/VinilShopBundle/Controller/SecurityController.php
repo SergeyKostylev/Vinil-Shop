@@ -57,53 +57,22 @@ class SecurityController extends Controller
 
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
-        $form->add('submit',SubmitType::class);
+        $form->add('submit',SubmitType::class, [
+                                                'label' => 'Регистрация',
+                                                ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-
-            //check for uniqueness
-            if (!preg_match('/^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/', $form->get('email')->getData())){
-                return [
-                    'message' => 'Некорректный email'
-                ];
-            }
-
-            $email = $this->getDoctrine()->getRepository('VinilShopBundle:User')->findBy(['email' => $form->get('username')->getData()]);
-
-            if($email){
-                return [
-                    'message' => ' Пользователь с таким email уже зарегистрирован'
-                ];
-            }
-            $login = $this
-                ->getDoctrine()
-                ->getRepository('VinilShopBundle:User')
-                ->findBy(['username' => $form->get('username')->getData()]);
-            if($login){
-                return [
-                    'form' => $form->createView(),
-                    'message' => 'Пользователь с таким логином уже зарегистрирован'
-                ];
-            }
-            //end check
-
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
-
-            $user->setIsActive(true);
-            $user->setRole('ROLE_USER');
-
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('home_page');
-
+            return $this->redirectToRoute('login');
         }
-
         return [
             'form' => $form->createView(),
             'message' => $message

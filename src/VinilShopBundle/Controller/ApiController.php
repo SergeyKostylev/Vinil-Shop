@@ -8,7 +8,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use VinilShopBundle\Entity\Cart;
 use VinilShopBundle\Entity\Feedback;
+use VinilShopBundle\Entity\Product;
+use VinilShopBundle\Entity\User;
 
 
 class ApiController extends Controller
@@ -95,8 +98,79 @@ class ApiController extends Controller
             'answer' => 'Сообщение отправлено',
         ],200);
 
-
     }
 
+    /**
+     * @Route("/cart/add/product/{product_id}", name="cart_user_add")
+     *
+     */
 
+    public function addToUserCart(Request $request, $product_id)
+    {
+        $product = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Product')
+            ->find($product_id);
+
+        if(!$product){
+            return  new JsonResponse([
+                'answer' => 'Товар не найден'
+            ],403);
+        }
+
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+
+        if(!$user){
+            $session = new Session();
+//            $session->remove('cart');die;
+            if ($session->has('cart')){
+
+                $cart = $session->get('cart');
+                if(!array_key_exists($product_id, $cart))
+                {
+                    $cart[$product_id] = 1;
+                    $session->set('cart', $cart);
+                }
+
+            }else{
+
+                $cart =[$product_id => 1];
+                $session->set('cart', $cart);
+            }
+//            dump($cart);
+            return  new JsonResponse([
+                'answer' => 'Товар добавлен в корзину'
+            ],200);
+        }
+
+
+        $cart =  $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Cart')
+            ->findBy([
+                'user' => $user->getId(),
+                'product' => $product->getId()
+            ]);
+        if ($cart){
+            return  new JsonResponse([
+                'answer' => 'Товар уже в корзине'
+            ],200);
+        }
+
+        $cart = new Cart();
+        $cart
+            ->setUser($user)
+            ->setProduct($product);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($cart);
+        $em->flush();
+
+        return  new JsonResponse([
+            'answer' => 'Добалнено в корзину',
+        ],200);
+    }
 }

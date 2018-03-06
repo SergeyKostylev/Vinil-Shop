@@ -6,7 +6,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\HttpFoundation\Session\Session;
+use VinilShopBundle\Entity\User;
 
 
 class ProductController extends Controller
@@ -26,8 +27,27 @@ class ProductController extends Controller
             throw  $this->createNotFoundException('Товар не найден');
         }
 
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+
+        if($user) {
+            $inCart = $this
+                ->getDoctrine()
+                ->getRepository('VinilShopBundle:Cart')
+                ->findBy([
+                    'user' => $user->getId(),
+                    'product' => $id
+                ]);
+        }else{
+            $session = new Session();
+            $cart = $session->get('cart');
+            $inCart = array_key_exists($id, $cart) ? true : false;
+        }
         return [
-            'product' => $product
+            'product' => $product,
+            'inCart' => $inCart
         ];
     }
 

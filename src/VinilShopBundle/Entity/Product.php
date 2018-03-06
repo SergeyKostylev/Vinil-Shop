@@ -96,8 +96,12 @@ class Product
      * @ORM\ManyToMany(targetEntity="VinilShopBundle\Entity\Attribute", inversedBy="products", cascade={"persist"})
      */
     private $attributes;
-
-
+    /**
+     * @var string
+     *
+     * @ORM\OneToMany(targetEntity="VinilShopBundle\Entity\Cart", mappedBy="product")
+     */
+    private $carts;
 
     /**
      * @return string
@@ -345,6 +349,25 @@ class Product
     {
         return $this->isActive;
     }
+
+    /**
+     * @return string
+     */
+    public function getCarts()
+    {
+        return $this->carts;
+    }
+
+    /**
+     * @param string $carts
+     */
+    public function setCarts($carts)
+    {
+        $this->carts = $carts;
+    }
+
+
+
     /**
      * Constructor
      */

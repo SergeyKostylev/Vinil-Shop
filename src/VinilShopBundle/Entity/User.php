@@ -5,12 +5,15 @@ namespace VinilShopBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * User
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="VinilShopBundle\Repository\UserRepository")
+ * @UniqueEntity("email", message="Такой Email уже существует")
+ * @UniqueEntity("username", message="Такой логин уже используется")
  */
 class User implements UserInterface, \Serializable
 {
@@ -34,6 +37,7 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @Assert\Email( message = "Email '{{ value }}' некорректный" )
      */
     private $email;
 
@@ -49,14 +53,21 @@ class User implements UserInterface, \Serializable
      *
      * @ORM\Column(name="is_active", type="boolean", options={"default" : 1})
      */
-    private $isActive;
+    private $isActive = true;
+
+    /**
+     * @var string
+     *
+     * @ORM\OneToMany(targetEntity="VinilShopBundle\Entity\Cart", mappedBy="user")
+     */
+    private $carts;
 
     /**
      * @var string
      *
      * @ORM\Column(name="role", type="string", length=255, options={"default" : "ROLE_USER"})
      */
-    private $role;
+    private $role = 'ROLE_USER';
 
 
     public function __construct()

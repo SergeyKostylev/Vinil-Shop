@@ -323,7 +323,12 @@ margin-top: 7px;
         /*margin-top: -70px;*/
     /*}*/
 /*}*/
-
+.register-form
+{
+    min-width: 200px;
+    max-width: 270px;
+    padding: 20px;
+}
 .blue-ua
 {
     background: #005bbb;

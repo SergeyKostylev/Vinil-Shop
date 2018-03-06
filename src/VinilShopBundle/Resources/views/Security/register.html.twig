@@ -14,23 +14,24 @@
         {% endif %}
 
         <div class="conteiner">
-            <div class="row">
-                <div class="col-1">
+            <div class="row justify-content-center">
+                <div class="col-1 col-sm-1 col-md-2">
                 </div>
-                <div class="col-10 margin-top30px">
-                    {{ form_start(form) }}
-                        {{ form_row(form.username) }}
-                        {{ form_row(form.email) }}
-                        {{ form_row(form.plainPassword.first) }}
-                        {{ form_row(form.plainPassword.second) }}
-                        {{ form_row(form.submit) }}
-                    {{ form_end(form) }}
+                <div class="col-10 col-sm-8 col-md-7 col-lg-5 margin-top30px">
+                    <div class="card border-primary register-form">
+                        {{ form_start(form) }}
+                            {{ form_row(form.username, {'label':'Логин' , 'attr' : {'placeholder':'Логин'}}) }}
+                            {{ form_row(form.email, {'attr' : {'placeholder':'Email'}}) }}
+                            {{ form_row(form.plainPassword.first, {'attr' : {'placeholder':'Пароль'}}) }}
+                            {{ form_row(form.plainPassword.second,{'label':false , 'attr' : {'placeholder':'Повторите пароль'}}) }}
+                            {{ form_row(form.submit,{'attr': {'class': 'btn btn-primary btn-lg '}}) }}
+                        {{ form_end(form) }}
+                    </div>
                 </div>
                 <div class="col-1">
                 </div>
             </div>
         </div>
-
     </div>
 
 {% endblock %}

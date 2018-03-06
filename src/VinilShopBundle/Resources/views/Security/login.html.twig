@@ -1,31 +1,39 @@
 {% extends '@VinilShop/layout.html.twig' %}
 
 {% block body %}
-{#{% if error %}#}
-    {#<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
-{#{% endif %}#}
 
-<div class="conteiner">
-    <div class="row">
-        <div class="col-1">
-        </div>
-        <div class="col-10 margin-top30px">
 
-            <form  action="{{ path('login') }}" method="post">
-                <div class="form-group" >
-                    <input type="email" id="username" name="_username" value="{{ last_username }}"  placeholder="Email" style="width: 250px">
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div class="row justify-content-center">
+            <div class="card border-success mb-3 margin-top30px" style="width: 90%">
+                <div style="padding: 20px">
+                    <div class="font-15pt"><i class="fas text-success fa-check-circle"></i> Авторизация уже пройдена.</div>
                 </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" id="password" name="_password" placeholder="Пароль" style="width: 250px">
+            </div>
+        </div>
+    {% else %}
+        <div class="conteiner">
+            <div class="row">
+                <div class="col-1">
                 </div>
-                <button class="btn btn-success btn-lg" type="submit">Вход</button>
-            </form>
+                <div class="col-10 margin-top30px">
 
+                    <form  action="{{ path('login') }}" method="post">
+                        <div class="form-group" >
+                            <input type="email" id="username" name="_username" value="{{ last_username }}"  placeholder="Email" style="width: 250px">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="password" name="_password" placeholder="Пароль" style="width: 250px">
+                        </div>
+                        <button class="btn btn-success btn-lg" type="submit">Вход</button>
+                    </form>
+
+                </div>
+                <div class="col-1">
+                </div>
+            </div>
         </div>
-        <div class="col-1">
-        </div>
-    </div>
-</div>
+    {% endif %}
 
 
 
