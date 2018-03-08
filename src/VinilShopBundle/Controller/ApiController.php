@@ -12,6 +12,7 @@ use VinilShopBundle\Entity\Cart;
 use VinilShopBundle\Entity\Feedback;
 use VinilShopBundle\Entity\Product;
 use VinilShopBundle\Entity\User;
+use VinilShopBundle\Service\PriceSumInCart;
 
 
 class ApiController extends Controller
@@ -146,7 +147,6 @@ class ApiController extends Controller
             ],200);
         }
 
-
         $cart =  $this
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Cart')
@@ -173,4 +173,235 @@ class ApiController extends Controller
             'answer' => 'Добалнено в корзину',
         ],200);
     }
+
+
+    /**
+     * @Route("/cart/delete/user/product/{id}", name="cart_delete_user")
+     *
+     */
+
+    public function cartDeleteUserProductAction(Request $request, $id)
+    {
+        $user= $this->getUser();
+
+        if(!$user){
+            return  new JsonResponse([
+                'answer' => 'Пользователь отсутствует'
+            ],403);
+        }
+        $cart = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Cart')
+            ->findBy([
+                    'product' => $id,
+                    'user' => $user->getId()
+                ]
+            );
+        if(!$cart){
+            return  new JsonResponse([
+                'answer' => 'Товар в корзине не найден'
+            ],403);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($cart[0]);
+        $em->flush();
+
+        $products_in_cart = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Cart')
+            ->findBy([
+                'user' => $user->getId()
+            ]);
+        $sum = PriceSumInCart::getSumInCarts($products_in_cart);
+
+
+        return  new JsonResponse([
+            'answer' => 'Товар удален из корзины',
+            'sum' => $sum
+        ],200);
+    }
+
+
+
+    /**
+     * @Route("/cart/delete/anon/product/{id}", name="cart_delete_anon")
+     *
+     */
+
+    public function cartDeleteAnonProductAction(Request $request, $id)
+    {
+        $session = new Session();
+        if($session->has('cart')){
+
+            $session_cart = $session->get('cart');
+            unset($session_cart[$id]);
+            $session->set('cart',$session_cart);
+
+            $sum = 0;
+            foreach ($session_cart as $product_id => $amount){
+                $product = $this
+                    ->getDoctrine()
+                    ->getRepository('VinilShopBundle:Product')
+                    ->find($product_id );
+                if($product->getIsActive()){
+                $sum+= $product->getPrice() * $amount;
+                }
+
+            }
+            return  new JsonResponse([
+                'answer' => 'Товар уделен из корзиный',
+                'sum' => $sum
+            ],200);
+        }
+
+        return  new JsonResponse([
+            'answer' => 'Корзина отсутствует'
+        ],200);
+    }
+
+
+    /**
+     * @Route("/cart/set-amount/user/product/{id}/{act}", name="cart_up_amount_user")
+     *
+     */
+
+    public function setCartAmountUserAction(Request $request, $id, $act = 1)
+    {
+        $user= $this->getUser();
+
+        if(!$user){
+            return  new JsonResponse([
+                'answer' => 'Пользователь отсутствует'
+            ],403);
+        }
+        $cart = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Cart')
+            ->findBy([
+                    'product' => $id,
+                    'user' => $user->getId()
+                ]
+            );
+        if(!$cart){
+            return  new JsonResponse([
+                'answer' => 'Товар в корзине не найден'
+            ],403);
+        }
+
+        $cart = $cart[0];
+        $amount = $cart->getAmount();
+        if($act == 1){
+            $cart->setAmount(++$amount);
+        }
+        if($act == -1 && $amount > 1 ){
+        $cart->setAmount(--$amount);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($cart);
+        $em->flush();
+
+        $products_in_cart = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Cart')
+            ->findBy([
+                'user' => $user->getId()
+                ]);
+        $sum = PriceSumInCart::getSumInCarts($products_in_cart);
+
+        return  new JsonResponse([
+            'amount' => $cart->getAmount(),
+            'sum' => $sum
+        ],200);
+    }
+
+    /**
+     * @Route("/cart/set-amount/anon/product/{id}/{act}", name="cart_up_amount_anon")
+     *
+     */
+
+    public function setCartAmountAnonAction(Request $request,$id, $act = 1)
+    {
+        $session = new Session();
+        if($session->has('cart')){
+
+            $session_cart = $session->get('cart');
+
+            if(isset($session_cart[$id]))
+            {
+                $amount = $session_cart[$id];
+                if($act == 1){
+                    $session_cart[$id] ++;
+                }
+                if($act == -1 && $amount > 1 ){
+                    $session_cart[$id] --;
+                }
+            }
+            $session->set('cart',$session_cart);
+            $sum = 0;
+            foreach ($session_cart as $product_id => $amount){
+                $product = $this
+                    ->getDoctrine()
+                    ->getRepository('VinilShopBundle:Product')
+                    ->find($product_id );
+                if($product->getIsActive()){
+                    $sum+= $product->getPrice() * $amount;
+                }
+            }
+            return  new JsonResponse([
+                'answer' => 'Товар уделен из корзиный',
+                'sum' => $sum,
+                'amount' => $session_cart[$id]
+            ],200);
+        }
+
+        return  new JsonResponse([
+            'answer' => 'Корзина отсутствует'
+        ],200);
+    }
+
+    /**
+     * @Route("/amount-product-in-cart", name="one")
+     *
+     */
+
+    public function oneTwoAction()
+    {
+        $amount = 0;
+        $user = $this->getUser();
+        if($user)
+        {
+            $carts = $this
+                ->getDoctrine()
+                ->getRepository('VinilShopBundle:Cart')
+                ->findBy([
+                    'user' => $user->getId()
+                ]);
+
+            foreach ($carts as $cart){
+                $amount+= $cart->getAmount();
+            }
+            return  new JsonResponse([
+                'amount' => $amount
+            ],200);
+        }
+
+        $session = new Session();
+        if($session->has('cart')){
+            $cart = $session->get('cart');
+            foreach ($cart as $product_id => $product_count){
+                $amount+= $product_count;
+            }
+            return  new JsonResponse([
+                'amount' => $amount
+            ],200);
+        }
+
+        return  new JsonResponse([
+            'amount' => $amount
+        ],200);
+
+    }
+
+
 }

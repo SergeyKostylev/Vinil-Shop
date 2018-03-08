@@ -31,27 +31,38 @@ class DefaultController extends Controller
         ];
     }
 
+    /**
+     * @Route("/payment", name="payment_page")
+     * @Template()
+     */
 
+    public function paymentAction()
+    {
 
-//    /**
-//     * @Route("/ww", name="ww")
-//     * @Template()
-//     */
-//
-//    public function wwAction()
-//    {
-//
-//        $message = \Swift_Message::newInstance()
-//            ->setSubject('Contact from symblog')
-//            ->setFrom($this->container->getParameter('mailer_user'))
-//            ->setTo('s03540@gmail.com')
-//            ->setBody('1212');
-//        $this->get('mailer')->send($message);
-//
-//
-//        return $this->redirectToRoute('home_page');
-//    }
+        return [];
+    }
 
+    /**
+     * @Route("/delivery", name="delivery_page")
+     * @Template()
+     */
+
+    public function deliveryAction()
+    {
+
+        return [];
+    }
+
+    /**
+     * @Route("/info", name="info_page")
+     * @Template()
+     */
+
+    public function infoAction()
+    {
+
+        return [];
+    }
 
 
 

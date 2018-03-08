@@ -16,6 +16,11 @@ class UserController extends Controller
      */
     public function officeAction(Request $request, $id)
     {
+        $user = $this->getUser();
+        if(!$user)
+        {
+            return $this->redirectToRoute('home_page');
+        }
         $user = $this
             ->getDoctrine()
             ->getRepository('VinilShopBundle:User')
@@ -26,6 +31,6 @@ class UserController extends Controller
         }
         return [];
 
-
     }
+
 }

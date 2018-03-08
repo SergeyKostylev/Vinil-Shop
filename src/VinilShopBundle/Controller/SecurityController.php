@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use VinilShopBundle\Entity\User;
 use VinilShopBundle\Form\UserType;
 
@@ -18,6 +19,11 @@ class SecurityController extends Controller
      */
     public function loginAction(Request $request)
     {
+        $user = $this->getUser();
+        if($user){
+            return $this->redirectToRoute('home_page');
+        }
+
         $authUtils = $this->get('security.authentication_utils');
 
         // get the login error if there is one
@@ -25,7 +31,6 @@ class SecurityController extends Controller
 
         // last username entered by the user
         $lastUsername = $authUtils->getLastUsername();
-
 
         return [
             'last_username' => $lastUsername,

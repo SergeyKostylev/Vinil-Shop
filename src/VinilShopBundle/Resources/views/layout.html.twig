@@ -24,40 +24,65 @@
 
 </head>
 
-<body class="padding-top0">
+<body class="body-style">
 
 <div class="blue-ua height5px"></div>
 <div class="yellow-ua height5px"></div>
 
-<main role="main" class="container" style="height: 100vh;">
+<main role="main" class="container main-body bg-white" style="">
 
     <div class="row">
 
-        <div class="col-12 col-md-6 col-lg-7 border border-dark">
-            <a href="#" class="btn-sm btn-info">Вопросы и ответы</a>
-            <a href="{{ path('feedback') }}" class="btn-sm btn-info">Обратная связь</a>
+        <div class="col-12 col-md-6 col-lg-7">
+            <div class="row">
+                <div class="col-7 col-md-7 col-lg-7">
+                    <a href="{{ path('home_page') }}">
+                        <img src="{{ asset(shop_logo) }}" class="shop-logo">
+                    </a>
+                </div>
+                <div class="col-5 col-md-5 col-lg-5 text-right">
+                    <div class="margin-top3px">
+                        <a href="{{ path('info_page') }}" class="font-12pt"><i class="fas font-15pt fa-info-circle"></i> О магазине</a>
+                        <br>
+                        <br>
+                        <a href="{{ path('delivery_page') }}" class="font-12pt"><i class="fas font-15pt fa-truck"></i> Доставка</a>
+                        <br>
+                        <br>
+                        <a href="{{ path('payment_page') }}" class="font-12pt"><i class="fas font-15pt fa-dollar-sign"></i> Оплата</a>
+                        <br>
+                        <br>
+                        <a href="{{ path('feedback') }}" class="font-12pt"><i class="far font-15pt fa-comments"></i> Обратная связь</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="col-12 col-md-6 col-lg-5 bg-white  padding15px border border-info">
-            <div class="float-right">
+        <div class="col-12 col-md-6 col-lg-5 padding15px">
+            <div>
                 {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <a href="{{ path('login') }}" class="font-15pt text-success">Вход</a>
-                    &#160;&#160;&#160;
-                    <a href="{{ path('register') }}" class="font-15pt">Регистрация</a>
-                    <br>
-                    <a href="#" class="font-15pt float-right"><i class="fas fa-shopping-cart"></i></a>
+                    <div class="text-right">
+                        <a href="{{ path('login') }}" class="font-15pt text-success">Вход</a>
+                        &#160;&#160;&#160;
+                        <a href="{{ path('register') }}" class="font-15pt">Регистрация</a>
+                        <br>
+                    </div>
                     {% else %}
-
-                        <div>
-                            <a href="{{ path('private_office', {id : app.user.id}) }}" class="font-12pt"><i class="fas fa-user-circle"></i>{{ app.user.username }}</a>
-                            <a href="#" class="font-15pt"><i class="fas fa-shopping-cart"></i></a>
-                            <br>
-                            <a href="{{ path('logout') }}" class="float-right">ВЫХОД <i class="fas fa-sign-out-alt"></i></a>
+                        <div class="text-right">
+                            <a href="{{ path('private_office', {id : app.user.id}) }}" class="font-15pt"><i class="fas fa-user-circle"></i>{{ app.user.username }}</a>
+                            &#160;&#160;&#160;
+                            <a href="{{ path('logout') }}" class="font-10pt">ВЫХОД <i class="fas fa-sign-out-alt"></i></a>
                         </div>
                 {% endif %}
+                <div class="float-right">
+                    <div class="position-relative float-right">
+                        <a href="{{ path('cart-list') }}" class="fa-3x float-right"><i class="fas fa-shopping-cart"></i></a>
+                        <div id="cart-icon" class="position-absolute bg-danger  badge badge-primary badge-pill" style="top: 5px; right: 0; display: none">
+                            0
+                        </div>
+                    </div>
+                </div>
             </div>
-            <br>
-            <br>
+
             <div class="float-right padding-top15px padding-right20px">
                 <i class="far fa-envelope font-15pt text-danger"></i> <span class="font-12pt">s03540@gmail.com</span>
                 <br>
@@ -76,35 +101,34 @@
 {#{{ dump(app.session.get('name')) }}#}
 
     <div class="row" id="main-menu-row">
-        <div class="col-12 col-sm-5 col-md-4 col-lg-3 border border-dark" id="main-menu-col">
+        <div class="col-12 col-sm-5 col-md-4 col-lg-3" id="main-menu-col">
 
             <div class="margin-top20px">
                 {{ knp_menu_render('VinilShopBundle:Builder:mainMenu',{'allow_safe_labels': true})|raw }}
             </div>
-
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         </div>
-        <div class="col-12 col-sm-7 col-md-8 col-lg-9 border border-dark">
+        <div class="col-12 col-sm-7 col-md-8 col-lg-9 ">
+            <br>
             {% block pathTree %}
 
             {% endblock %}
+    <hr>
 
             {% block body %}
 
             {% endblock %}
         </div>
     </div>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
+    <br>
+    <br>
+    <div class="row justify-content-center">
+        <a href="{{ path('home_page') }}">
+            <img src="{{ asset(footer_shop_logo) }}" class="footer-shop-logo">
+        </a>
+    </div>
 </main>
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="{{ asset('bundles/vinilshop/js/popper.min.js') }}"></script>

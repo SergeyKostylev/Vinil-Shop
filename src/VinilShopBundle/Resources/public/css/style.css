@@ -346,9 +346,30 @@ margin-top: 7px;
     margin: 5px 5px auto auto;
     z-index: 1001;
 }
+.main-body
+{
+    box-shadow: 0 2px 20px rgba(78,55,212,0.37);
+}
+.body-style
+{
+    padding-top: 0;
+    background: rgba(222,238,211,0.17);
+}
 .high-slider
 {
     /*display: none;*/
+}
+
+.shop-logo
+{
+    max-width: 100%;
+    max-height: 90%;
+    margin-left: 10%;
+}
+.footer-shop-logo
+{
+    height: 50px;
+    padding-bottom: 5px;
 }
 .show-high-gallery-slider
 {

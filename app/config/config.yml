@@ -52,6 +52,9 @@ twig:
         category_title_img: 'images/category_title_image/'
         manufacturer_log: 'images/manufacturer_title_log/'
         dvertising_slider_images: 'images/images_of_dvertising_slider/'
+        scr_image: 'images/src_images/'
+        shop_logo: 'images/src_images/shop_logo.jpg'
+        footer_shop_logo: 'images/src_images/footer_shop_logo.jpg'
 # Doctrine Configuration
 doctrine:
     dbal:

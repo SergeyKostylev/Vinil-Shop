@@ -43,7 +43,7 @@ class ProductController extends Controller
         }else{
             $session = new Session();
             $cart = $session->get('cart');
-            $inCart = array_key_exists($id, $cart) ? true : false;
+           @$inCart = array_key_exists($id, $cart) ? true : false;
         }
         return [
             'product' => $product,

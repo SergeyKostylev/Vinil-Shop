@@ -1,0 +1,143 @@
+{% extends '@VinilShop/layout.html.twig' %}
+
+
+
+{% block body %}
+<br>
+
+
+
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <ul id="cart-list" class="list-group" style="min-width: 300px">
+        {% for item in cart %}
+            <li class="list-group-item d-flex text-dark justify-content-between align-items-center border border-left-0 border-right-0">
+                <img class="float-left" src="{{ asset(images_of_entities) }}{{ item.product.titleImage }}" style="height: 50px">
+                <div class="font-12pt text-left">
+                    <a href="{{ path('product_show', {id : item.product.id}) }}">
+                        {{ item.product.name }}
+                    </a>
+                </div>
+                <div class="amount-in-cart">
+                    <span class="badge  badge-pill font-12pt">
+                        <span class="product-id" data-product-id="{{ item.product.id }}"></span>
+                        <a class="btn btn-link text-primary minus-amount-user">
+                            <i class="fas fa-angle-left font-15pt"></i>
+                        </a>
+                        <span class="amount">
+                            {{ item.amount }}
+                        </span>
+                        <a class="btn btn-link text-primary plus-amount-user">
+                            <i class="fas fa-angle-right font-15pt"></i>
+                        </a>
+                        <a class="btn btn-link text-danger font-15pt delete-in-cart-user">
+                            <i class="fas fa-times-circle"></i>
+                        </a>
+                    </span>
+                    <div class="text-center text-success font-12pt">
+                        {{ item.product.price|number_format(0,'',' ') }} грн/шт.
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <ul id="cart-list" class="list-group" style="min-width: 300px">
+            {% for item in cart %}
+                <li class="list-group-item d-flex text-dark justify-content-between align-items-center border border-left-0 border-right-0">
+                    <img class="float-left" src="{{ asset(images_of_entities) }}{{ item.product.titleImage }}" style="height: 50px">
+                    <div class="font-12pt text-left">
+                        <a href="{{ path('product_show', {id : item.product.id}) }}">
+                            {{ item.product.name }}
+                        </a>
+                    </div>
+                    <div class="amount-in-cart">
+                        <span class="badge  badge-pill font-12pt">
+                            <span class="product-id" data-product-id="{{ item.product.id }}"></span>
+                            <a class="btn btn-link text-primary minus-amount-anon">
+                                <i class="fas fa-angle-left font-15pt"></i>
+                            </a>
+                            <span class="amount">
+                                {{ item.amount }}
+                            </span>
+                            <a class="btn btn-link text-primary plus-amount-anon">
+                                <i class="fas fa-angle-right font-15pt"></i>
+                            </a>
+                            <a class="btn btn-link text-danger font-15pt delete-in-cart-anon">
+                                <i class="fas fa-times-circle"></i>
+                            </a>
+                        </span>
+                            <div class="text-center text-success font-12pt">
+                                {{ item.product.price|number_format(0,'',' ') }} грн/шт.
+                            </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+{% endif %}
+
+
+
+    <div id="sun-field" class="text-right margin-top20px" {% if cart|length == 0 %}style="display: none"{% endif %}>
+        <span class="font-12pt">Сумма к оплате: </span>
+        <span id="sum" class="text-success font-20pt margin-right20px">{{ sum }}</span>
+        <span class="text-success font-20pt margin-right20px">грн.</span>
+        <div>
+            <a href="{{ path('order_create') }}">
+                <button type="button" class="btn-lg btn-success margin-top20px margin-right20px">
+                    <i class="far fa-clipboard"></i> Оформить заказ
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <div id="empty-cart" {% if cart|length != 0 %}style="display: none"{% endif %}>
+        <div class="card-body text-center">
+            <span class="font-15pt">КОРЗИНА ПУСТА</span> <i class="fab fa-2x fa-opencart"></i>
+        </div>
+    </div>
+        <div>
+
+        </div>
+        {#//////////////////////////////////////////////////////////////////////////////////////////////////////  Доделать#}
+
+
+    <br>
+    <br>
+    {% if notActive %}
+    <hr>
+    <h3>Нет в наличии:</h3>
+    <ul class="list-group opacity07">
+        {% for item in notActive %}
+            <li class="list-group-item d-flex text-dark justify-content-between align-items-center border border-left-0 border-right-0">
+                <img class="float-left" src="{{ asset(images_of_entities) }}{{ item.product.titleImage }}" style="height: 50px">
+                <div class="font-12pt text-left">
+                    <a href="{{ path('product_show', {id : item.product.id}) }}">
+                        {{ item.product.name }}
+                    </a>
+                </div>
+                <div class="text-center text-success font-12pt">
+                    {{ item.product.price|number_format(0,'',' ') }} грн/шт.
+                </div>
+                <div>
+                    <span class="badge  badge-pill font-12pt">
+                        <span class="product-id" data-product-id="{{ item.product.id }}"></span>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <a class="btn btn-link text-danger font-15pt delete-in-cart-user">
+                                <i class="fas fa-times-circle"></i>
+                            </a>
+                        {% else %}
+                            <a class="btn btn-link text-danger font-15pt delete-in-cart-anon">
+                                <i class="fas fa-times-circle"></i>
+                            </a>
+                        {% endif %}
+                    </span>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+{% endblock %}
+{#{% if is_granted('IS_AUTHENTICATED_FULLY') %}#}

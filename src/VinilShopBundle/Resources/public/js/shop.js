@@ -22,6 +22,20 @@ $(document).ready(function () {
 
     };
 
+    function  amountInCart() {
+
+        $.get('/app_dev.php/amount-product-in-cart')    ////////////////////////////////////////ИЗМЕНИТЬ ПУТЬ
+            .done(function (r) {
+                var $cartIcon = $('#cart-icon');
+
+                $cartIcon.text(r.amount);
+                $cartIcon.fadeIn();
+            })
+            .fail(function (r) {
+                console.log(r);
+            });
+
+    }
 
     //////////FEEDBACK
      var $submitFeedbackBtn = $('.submit-feedback-btn');
@@ -152,7 +166,7 @@ $(document).ready(function () {
         $.get('/app_dev.php/cart/add/product/' + $id)                          //////////////////ИЗМЕНИТЬ ПУТЬ
             .done(function (r) {
                 console.log(r.answer);
-
+                amountInCart();
                 var $inCartButton = $('#in-cart-button');
                 $addCartButton.fadeOut(100);
                 setTimeout(function () {
@@ -202,6 +216,154 @@ $(document).ready(function () {
     };
 
 
+    var $deleteInCartUserButton = $('.delete-in-cart-user');
+
+    $deleteInCartUserButton.on('click',function () {
+        var $this = $(this);
+        var $id = $this.siblings().filter('.product-id').data('product-id');
+        var $cartList = $('#cart-list');
+
+        $.get('/app_dev.php/cart/delete/user/product/' + $id)    ////////////////////////////////////////ИЗМЕНИТЬ ПУТЬ
+            .done(function (r) {
+                console.log(r.answer);
+                amountInCart();
+                var $sum = $('#sum');
+                var $line = $this.parent().parent().parent();
+                $sum.text(r.sum);
+                $line.fadeOut(333);
+                setTimeout(function () {
+                    $line.removeClass('d-flex');
+                }, 300);
+                setTimeout(function () {
+                    $line.remove();
+                    if(!$cartList.children().length) {
+                        var $sunField = $('#sun-field');
+                        var $emptyCart = $('#empty-cart');
+                        $sunField.remove();
+                        $emptyCart.fadeIn(500);
+                    }
+                }, 500);
+            })
+            .fail(function (r) {
+                console.log(r.responseJSON.answer);
+            });
+    });
+
+
+    var $deletInCartAnonButton = $('.delete-in-cart-anon');
+
+    $deletInCartAnonButton.on('click',function () {
+        var $this = $(this);
+        var $id = $this.siblings().filter('.product-id').data('product-id');
+        var $cartList = $('#cart-list');
+        console.log($id);
+
+
+        $.get('/app_dev.php/cart/delete/anon/product/' + $id)    ////////////////////////////////////////ИЗМЕНИТЬ ПУТЬ
+            .done(function (r) {
+                amountInCart();
+                console.log(r.answer);
+                var $line = $this.parent().parent().parent();
+                var $sum = $('#sum');
+                $sum.text(r.sum);
+                $line.fadeOut(333);
+                setTimeout(function () {
+                    $line.removeClass('d-flex');
+
+                }, 300);
+                setTimeout(function () {
+                    $line.remove();
+                    if(!$cartList.children().length){
+                        var $sunField = $('#sun-field');
+                        var $emptyCart = $('#empty-cart');
+                        $sunField.remove();
+                        $emptyCart.fadeIn(500);
+                    }
+                }, 500);
+            })
+            .fail(function (r) {
+                console.log(r.responseJSON.answer);
+            });
+    });
+
+
+
+
+    function  setAmountUser($this,$id, $act) {
+
+        $.get('/app_dev.php/cart/set-amount/user/product/' + $id + '/' + $act)    ////////////////////////////////////////ИЗМЕНИТЬ ПУТЬ
+            .done(function (r) {
+                amountInCart();
+                var $sum = $('#sum');
+                $this.siblings().filter('.amount').text(r.amount);
+                $sum.text(r.sum);
+            })
+            .fail(function (r) {
+                console.log(r.responseJSON.answer);
+            });
+
+    }
+
+    var $plusAmountUser = $('.plus-amount-user');
+
+    $plusAmountUser.on('click', function () {
+            var $this = $(this);
+            var $id = $this.siblings().filter('.product-id').data('product-id');
+            var $act = 1;
+            setAmountUser($this,$id,$act);
+
+    });
+
+    var $minusAmountUser = $('.minus-amount-user');
+
+    $minusAmountUser.on('click', function () {
+            var $this = $(this);
+            var $id = $this.siblings().filter('.product-id').data('product-id');
+            var $act = -1;
+            setAmountUser($this,$id,$act);
+
+    });
+
+    function  setAmountAnon($this,$id, $act) {
+
+        $.get('/app_dev.php/cart/set-amount/anon/product/' + $id + '/' + $act)    ////////////////////////////////////////ИЗМЕНИТЬ ПУТЬ
+            .done(function (r) {
+                amountInCart();
+                var $sum = $('#sum');
+                $this.siblings().filter('.amount').text(r.amount);
+                $sum.text(r.sum);
+            })
+            .fail(function (r) {
+                console.log(r.responseJSON.answer);
+            });
+
+    }
+
+    var $plusAmountAnon = $('.plus-amount-anon');
+
+    $plusAmountAnon.on('click', function () {
+        var $this = $(this);
+        var $id = $this.siblings().filter('.product-id').data('product-id');
+        var $act = 1;
+        setAmountAnon($this,$id,$act);
+
+    });
+
+    var $minusAmountAnon = $('.minus-amount-anon');
+
+    $minusAmountAnon.on('click', function () {
+        var $this = $(this);
+        var $id = $this.siblings().filter('.product-id').data('product-id');
+        var $act = -1;
+        setAmountAnon($this,$id,$act);
+
+    });
+
+
+
+
+
+    amountInCart();
 
     var $editLastCategChek = $('.edit_last_categ_chek');
     var $editAttribList = $('.edit_attrib_list');

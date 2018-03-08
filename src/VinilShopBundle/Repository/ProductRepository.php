@@ -13,17 +13,6 @@ namespace VinilShopBundle\Repository;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
-//    public function articleMaxValue()
-//    {
-//        $em = $this->getEntityManager();
-//        $dql   = "SELECT MAX(p.article) val  FROM VinilShopBundle:Product p";
-//        $query = $em->createQuery($dql);
-//        $max_article = $query->getResult();
-//
-//        return
-//            $max_article[0]['val'];
-//
-//    }
 
     public function productOfManufacturer($id)
     {
@@ -44,6 +33,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->createQueryBuilder('prod')
             ->addSelect('RAND() as HIDDEN rand')
             ->orderBy('rand')
+            ->andWhere('prod.isActive = true')
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();

@@ -104,6 +104,13 @@ class Product
     private $carts;
 
     /**
+     * @var Orders[]
+     *
+     * @ORM\ManyToMany(targetEntity="VinilShopBundle\Entity\Orders", inversedBy="products")
+     */
+    private $orders;
+
+    /**
      * @return string
      */
     public function getGalleryImages()
@@ -322,6 +329,8 @@ class Product
     public function setOtherImages($otherImages)
     {
         $this->otherImages = $otherImages;
+
+        return $this;
     }
 
 
@@ -364,7 +373,28 @@ class Product
     public function setCarts($carts)
     {
         $this->carts = $carts;
+
+        return $this;
     }
+
+    /**
+     * @return Orders[]
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+
+    /**
+     * @param Orders[] $orders
+     */
+    public function setOrders($orders)
+    {
+        $this->orders = $orders;
+
+        return $this;
+    }
+
 
 
 
