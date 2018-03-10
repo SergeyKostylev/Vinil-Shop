@@ -10,8 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use VinilShopBundle\Entity\Cart;
 use VinilShopBundle\Entity\Feedback;
+use VinilShopBundle\Entity\Orders;
 use VinilShopBundle\Entity\Product;
+use VinilShopBundle\Entity\ProductInOrder;
+use VinilShopBundle\Entity\State;
 use VinilShopBundle\Entity\User;
+use VinilShopBundle\Service\OrderNumberGenerator;
 use VinilShopBundle\Service\PriceSumInCart;
 
 
@@ -404,4 +408,202 @@ class ApiController extends Controller
     }
 
 
+    /**
+     * @Route("/api/order/create", name="order_create_api")
+     *
+     */
+
+    public function apiOrderCreateAction(Request $request)
+    {
+
+        $name = $request->get('name');
+        $email = $request->get('email');
+        $phone = $request->get('phone');
+        $address = $request->get('address');
+        $description = $request->get('description');
+
+        if (!preg_match('/^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/',$email)){
+
+            return  new JsonResponse([
+                'answer' => 'Некорректный email.',
+            ],403);
+        }
+
+        $em = $this
+            ->getDoctrine()
+            ->getManager();
+
+        $user = $this->getUser();
+
+        if($user){
+            $carts = $this
+                ->getDoctrine()
+                ->getRepository('VinilShopBundle:Cart')
+                ->findBy([
+                        'user' => $user->getId()
+                    ]);
+            if($carts){
+                $order = new Orders();
+                $state = $this
+                    ->getDoctrine()
+                    ->getRepository('VinilShopBundle:State')
+                    ->find(1);
+
+                $number_order = OrderNumberGenerator::getOrderNumber();
+                $order
+                    ->setNumber($number_order)
+                    ->setBuyerName($name)
+                    ->setPhone($phone)
+                    ->setAddress($address)
+                    ->setEmail($email)
+                    ->setUser($user)
+                    ->setState($state)
+                    ->setPrice(PriceSumInCart::getSumInCarts($carts))
+                    ->setDescription($description)
+                ;
+                $em->persist($order);
+
+                foreach ($carts as $cart)
+                {
+                    /**
+                     * @var Cart $cart
+                     */
+                    if($cart->getProduct()->getIsActive()) {
+                        $productInOrder = new ProductInOrder();
+                        $productInOrder
+                            ->setOrder($order)
+                            ->setProduct($cart->getProduct())
+                            ->setAmount($cart->getAmount())
+                            ->setPriceForOne($cart->getProduct()->getPrice());
+                        $em->persist($productInOrder);
+                        $em->remove($cart);
+                    }
+                }
+                $em->flush();
+            }else{
+                return  new JsonResponse([
+                    'answer' => 'Корзина пуста'
+                ],403);
+            }
+        }else{
+
+            $session = new Session();
+            if($session->has('cart')){
+
+                $cart = $session->get('cart');
+                if(count($cart)){
+                     $product_to_order =[];
+                     $order_price = 0;
+
+                    foreach ($cart as $product_id => $amount){
+                        /**
+                         * @var Product $product
+                         */
+                        $product = $this
+                            ->getDoctrine()
+                            ->getRepository('VinilShopBundle:Product')
+                            ->find($product_id);
+                        if($product->getIsActive()){
+                            $order_price+= $product->getPrice() * $amount;
+                            $product_to_order[] = [
+                                'product' => $product,
+                                'amount' => $amount
+                            ];
+                        }
+                    }
+                    if (count($product_to_order)) {
+
+                        $order = new Orders();
+                        $state = $this
+                            ->getDoctrine()
+                            ->getRepository('VinilShopBundle:State')
+                            ->find(1);
+                        $number_order = OrderNumberGenerator::getOrderNumber();
+                        $order
+                            ->setNumber($number_order)
+                            ->setBuyerName($name)
+                            ->setPhone($phone)
+                            ->setAddress($address)
+                            ->setEmail($email)
+                            ->setState($state)
+                            ->setPrice($order_price)
+                            ->setDescription($description);
+                        $em->persist($order);
+
+                        foreach ($product_to_order as $product){
+
+                            $productInOrder = new ProductInOrder();
+                            $productInOrder
+                                ->setOrder($order)
+                                ->setProduct($product['product'])
+                                ->setAmount($product['amount'])
+                                ->setPriceForOne($product['product']->getPrice());
+                            $em->persist($productInOrder);
+                            unset($cart[$product['product']->getId()]);
+                        }
+                    }
+                    $em->flush();
+                    $session->set('cart', $cart);
+                }
+            }
+
+        }
+
+        return  new JsonResponse([
+            'answer' => 'Заказ оформлен',
+            'number_order' => $number_order
+        ],200);
+
+    }
+
+
+//    /**
+//     * @Route("/two", name="two")
+//     *
+//     */
+//    public function twoAction()
+//    {
+////        $session = new Session;
+////        $cart = $session->get('cart');
+////        $cart['55']=1;
+////        $session->set('cart',$cart);
+////        dump( $session->get('cart'));die;
+//
+//        $message = \Swift_Message::newInstance()
+//            ->setFrom('s03540@ukr.net')
+//            ->setTo('s03540@gmail.com')
+//            ->setSubject('Subject')
+//            ->setBody('Body','text/html')
+//
+//        ;
+//
+//        $this->get('mailer')
+//            ->send($message);
+//        return $this->redirectToRoute('home_page');
+//
+//
+//
+//
+//    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

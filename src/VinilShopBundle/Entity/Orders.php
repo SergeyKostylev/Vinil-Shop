@@ -21,12 +21,6 @@ class Orders
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="user_id", type="string", length=255)
-     */
-    private $user_id = 0;
 
     /**
      * @var string
@@ -72,12 +66,44 @@ class Orders
     private $state;
 
     /**
-     * @var Product[]
+     * @var User
      *
-     * @ORM\ManyToMany(targetEntity="VinilShopBundle\Entity\Product", mappedBy="orders")
+     * @ORM\ManyToOne(targetEntity="VinilShopBundle\Entity\User", inversedBy="orders")
      */
-    private $products;
+    private $user;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="price", type="integer")
+     */
+    private $price;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_create", type="date")
+     */
+    private $dateCreate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    public function __construct()
+    {
+        $this->dateCreate = new \DateTime();
+    }
+
+    /**
+     * @var string
+     *
+     * @ORM\OneToMany(targetEntity="VinilShopBundle\Entity\ProductInOrder", mappedBy="order")
+     */
+    protected $orderProducts;
 
     /**
      * Get id
@@ -87,24 +113,6 @@ class Orders
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUserId()
-    {
-        return $this->user_id;
-    }
-
-    /**
-     * @param string $user_id
-     */
-    public function setUserId($user_id)
-    {
-        $this->user_id = $user_id;
-
-        return $this;
     }
 
 
@@ -247,22 +255,98 @@ class Orders
     }
 
     /**
-     * @return Product[]
+     * @return string
      */
-    public function getProducts()
+    public function getPrice()
     {
-        return $this->products;
+        return $this->price;
     }
 
     /**
-     * @param Product[] $products
+     * @param string $price
      */
-    public function setProducts($products)
+    public function setPrice($price)
     {
-        $this->products = $products;
+        $this->price = $price;
 
         return $this;
     }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderProducts()
+    {
+        return $this->orderProducts;
+    }
+
+    /**
+     * @param string $orderProducts
+     */
+    public function setOrderProducts($orderProducts)
+    {
+        $this->orderProducts = $orderProducts;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateCreate()
+    {
+        return $this->dateCreate;
+    }
+
+    /**
+     * @param \DateTime $dateCreate
+     */
+    public function setDateCreate($dateCreate)
+    {
+        $this->dateCreate = $dateCreate;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+
+
+
 
 
 }

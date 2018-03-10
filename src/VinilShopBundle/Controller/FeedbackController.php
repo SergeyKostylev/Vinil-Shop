@@ -35,8 +35,6 @@ class FeedbackController extends Controller
 
         $session->set('feedback_captcha', $number);
 
-//        dump($session->get('feedback_capthca'));die;
-
         $font = $this->getParameter('captcha_font_file');
 
         $captcha = new CapthaService($number,$font);

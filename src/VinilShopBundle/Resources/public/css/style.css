@@ -371,6 +371,10 @@ margin-top: 7px;
     height: 50px;
     padding-bottom: 5px;
 }
+.vertical-align-middle
+{
+    vertical-align: middle;
+}
 .show-high-gallery-slider
 {
     top: 50%;

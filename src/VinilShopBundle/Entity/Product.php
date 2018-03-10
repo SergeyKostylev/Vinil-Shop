@@ -103,12 +103,13 @@ class Product
      */
     private $carts;
 
+
     /**
-     * @var Orders[]
+     * @var string
      *
-     * @ORM\ManyToMany(targetEntity="VinilShopBundle\Entity\Orders", inversedBy="products")
+     * @ORM\OneToMany(targetEntity="VinilShopBundle\Entity\ProductInOrder", mappedBy="product")
      */
-    private $orders;
+    protected $orderProducts;
 
     /**
      * @return string
@@ -378,24 +379,22 @@ class Product
     }
 
     /**
-     * @return Orders[]
+     * @return string
      */
-    public function getOrders()
+    public function getOrderProducts()
     {
-        return $this->orders;
+        return $this->orderProducts;
     }
 
     /**
-     * @param Orders[] $orders
+     * @param string $orderProducts
      */
-    public function setOrders($orders)
+    public function setOrderProducts($orderProducts)
     {
-        $this->orders = $orders;
+        $this->orderProducts = $orderProducts;
 
         return $this;
     }
-
-
 
 
     /**

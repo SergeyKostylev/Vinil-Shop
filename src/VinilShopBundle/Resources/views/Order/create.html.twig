@@ -3,8 +3,130 @@
 
 {% block body %}
 
-ОФОРМИТЬ ЗАЗАЗ
 
+
+    <div id="good-message-oder-create-window" class="card border-success" style="display: none">
+        <div class="card-header font-15pt">
+            <i class="fas text-success fa-check-circle"></i>
+            Заказ оформлен
+        </div>
+        <div class="card-body">
+            <span class="font-20pt">Номер вашего заказа: </span>
+            <span id="order-number-field" class="font-20pt"></span>
+            <p class="card-text">Спасибо что выбрали нас.
+                <br>
+                Наши менеджеры свяжутся с вами в ближайшее время для подтверждения.
+            </p>
+        </div>
+    </div>
+
+    <div id="create-order-form">
+        <h2><i class="fas font-20pt fa-file-alt"></i> Оформление заказа</h2>
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col" class="text-center">Кол.</th>
+                <th class="text-right" scope="col">Цена/шт.</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in cart %}
+                <tr>
+                    <th  style="vertical-align: middle;">{{ loop.index }}</th>
+                    <td style="vertical-align: middle;">
+                        <img class="float-left" src="{{ asset(images_of_entities) }}{{ item['product'].titleImage }}" style="height: 50px">
+                    </td>
+                    <td style="vertical-align: middle;">
+                        <a href="{{ path('product_show', {id : item['product'].id}) }}" target="_blank">
+                            {{ item['product'].name }}
+                        </a>
+                    </td>
+                    <td style="vertical-align: middle;" class="text-center">
+                        {{ item['amount'] }} шт.
+                    </td>
+                    <td class="text-right" style="vertical-align: middle;">
+                        {{ item['product'].price|number_format(0,'',' ') }} грн.
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-right">
+            <span>
+                Сумма заказа: &#160;
+            </span>
+            <span class="font-20pt text-success margin-right20px">
+                {{ order_sum|number_format(0,'',' ') }} грн.
+            </span>
+        </div>
+        <br>
+        <div class="row justify-content-center">
+            <div style="max-width: 600px; min-width: 300px;">
+
+                <div id="bad-message-oder-create-window" class="card border-danger mb-3" style="display: none">
+                    <div class="card-body">
+                        <span class="font-20pt">
+                            <i class="fas text-danger fa-exclamation-triangle"></i>
+                        </span>&#160;
+                        <span id="bad-text-message" class="text-message font-20pt">
+
+                        </span>
+                    </div>
+                </div>
+
+                <form id="create_order-form" class="margin-top30px">
+                    <div class="form-group">
+                        <input id="order-sender-name" type="text" class="form-control margin-top-20px" placeholder="Имя и фамилия" value="Имя">
+                        <small class="form-text text-muted">Имя и фамилия получателя.</small>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <input id="order-email" type="email" class="form-control margin-top-20px" placeholder="Email" value="
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            {{ app.user.email }}
+                        {% endif %}
+                        ">
+                        <small class="form-text text-muted">На этот Email будет отправляться информация о заказе.</small>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <input id="order-phone" type="text" class="form-control margin-top-20px" placeholder="Телефон" value="0994034">
+                        <small class="form-text text-muted">Номер телефона нолучателя.</small>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <input id="order-address" type="text" class="form-control margin-top-20px" placeholder="Отделение Новой почты" value="Отделение НП">
+                        <small class="form-text text-muted"><b>Образец: </b>Киев Киевская обл. Отделение №19</small>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <textarea id="order-description" class="form-control" style="height: 100px" placeholder="Комментарий . . .">Сообщение</textarea>
+                    </div>
+
+                    <div class="form-check">
+                        <label class="form-check-label font-12pt">
+                            <input id="order-info" class="form-check-input" type="checkbox" >
+                            Я ознакомлен с условиями
+                            <a href="{{ path('delivery_page') }}">
+                                доставки
+                            </a>
+                            и
+                            <a href="{{ path('payment_page') }}">
+                                оплыты
+                            </a>
+                             товара.
+                        </label>
+                    </div>
+                    <br>
+                </form>
+
+                <button id="create-order-btn" type="button"  style="width: 100%" class="btn-lg btn-success">Готово</button>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 

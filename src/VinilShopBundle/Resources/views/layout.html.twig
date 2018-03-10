@@ -9,7 +9,6 @@
 
     <title>Shop</title>
 
-    {#<link href="{{ asset('bundles/vinilshop/css/bootstrap.css') }}" rel="stylesheet">#}
     <link href="{{ asset('bundles/vinilshop/css/bootstrap-vinil-shop.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/vinilshop/css/style.css') }}" rel="stylesheet">
 
@@ -37,11 +36,11 @@
             <div class="row">
                 <div class="col-7 col-md-7 col-lg-7">
                     <a href="{{ path('home_page') }}">
-                        <img src="{{ asset(shop_logo) }}" class="shop-logo">
+                        <img id="main-logo" src="{{ asset(shop_logo) }}" class="shop-logo">
                     </a>
                 </div>
                 <div class="col-5 col-md-5 col-lg-5 text-right">
-                    <div class="margin-top3px">
+                    <div class="margin-top10px">
                         <a href="{{ path('info_page') }}" class="font-12pt"><i class="fas font-15pt fa-info-circle"></i> О магазине</a>
                         <br>
                         <br>
@@ -130,10 +129,12 @@
 </main>
 
 
+{#Theme:     https://bootswatch.com/materia/#}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="{{ asset('bundles/vinilshop/js/popper.min.js') }}"></script>
 <script src="{{ asset('bundles/vinilshop/js/bootstrap.js') }}"></script>
 <script src="{{ asset('bundles/vinilshop/js/shop.js') }}"></script>
+<script src="{{ asset('bundles/vinilshop/js/maskinput.js') }}"></script>
 {% block scripts %}
 
 {% endblock %}

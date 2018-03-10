@@ -65,6 +65,13 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      *
+     * @ORM\OneToMany(targetEntity="VinilShopBundle\Entity\Orders", mappedBy="user")
+     */
+    private $orders;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="role", type="string", length=255, options={"default" : "ROLE_USER"})
      */
     private $role = 'ROLE_USER';

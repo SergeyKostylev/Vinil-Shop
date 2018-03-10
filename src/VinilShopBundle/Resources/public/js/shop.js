@@ -22,6 +22,7 @@ $(document).ready(function () {
 
     };
 
+
     function  amountInCart() {
 
         $.get('/app_dev.php/amount-product-in-cart')    ////////////////////////////////////////ИЗМЕНИТЬ ПУТЬ
@@ -36,6 +37,71 @@ $(document).ready(function () {
             });
 
     }
+
+    var $createOrderForm = $('#create_order-form');
+    var $badMessageOderCreateWindow = $('#bad-message-oder-create-window');
+    var $badMessageField = $('#bad-text-message');
+
+    $createOrderForm.on('click', function () {
+        $badMessageOderCreateWindow.fadeOut(500);
+    });
+
+
+    var $createOrderBtn = $('#create-order-btn');
+    $('#order-phone').mask("+38(999) 99-99-999");
+
+    $createOrderBtn.on('click', function () {
+        var $this = $(this);
+        var $orderSenderName = $('#order-sender-name');
+        var $orderEmail = $('#order-email');
+        var $orderPhone = $('#order-phone');
+        var $orderAddress = $('#order-address');
+        var $orderDescription = $('#order-description');
+        var $orderInfo = $('#order-info');
+
+        if($orderSenderName.val().length >= 2  &&
+            $orderEmail.val() &&
+            $orderPhone.val().length === 18 &&
+            $orderAddress.val().length >= 9 &&
+            $orderInfo.is(":checked")){
+
+            $.post('/app_dev.php/api/order/create',{     /////////////////////////////////////ИЗМЕНИТЬ ПУТЬ
+                name: $orderSenderName.val(),
+                email: $orderEmail.val(),
+                phone: $orderPhone.val(),
+                address: $orderAddress.val(),
+                description: $orderDescription.val()
+            },'json')
+                .done(function (r) {
+                    var $createOrderForm = $('#create-order-form');
+                    var $goodMessageOderCreateWindow = $('#good-message-oder-create-window');
+                    var $orderNumberField = $('#order-number-field');
+                    $createOrderForm.fadeOut();
+
+                    $orderNumberField.text(r.number_order);
+                    setTimeout(function () {
+                        $goodMessageOderCreateWindow.fadeIn(700);
+                    },700);
+                    console.log(r.answer);
+                    amountInCart();
+
+                })
+                .fail(function (r) {
+
+                    console.log(r.responseJSON.answer);
+                    $badMessageField.text(r.responseJSON.answer);
+                    $badMessageOderCreateWindow.fadeIn(700);
+                });
+
+        }else{
+            $badMessageField.text('Неверно заполнена форма.');
+            $badMessageOderCreateWindow.fadeIn(700);
+        }
+
+
+
+
+    });
 
     //////////FEEDBACK
      var $submitFeedbackBtn = $('.submit-feedback-btn');
