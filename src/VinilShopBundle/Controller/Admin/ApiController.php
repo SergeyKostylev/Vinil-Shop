@@ -26,8 +26,7 @@ class ApiController extends Controller
             ->find($id);
 
         if (!$product) {
-            throw  $this->createNotFoundException('Товар не найден');
-            return new Response(    'Ops',
+            return new Response(    'Товар не найден',
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }
         $titleImage = $product->getTitleImage();
@@ -54,7 +53,7 @@ class ApiController extends Controller
      */
     public function getAllAtyributesOfProductAction(Request $request, $category_id)
     {
-        $category = new Category();
+//        $category = new Category();
         $category = $this
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Category')
@@ -82,6 +81,7 @@ class ApiController extends Controller
                     'name' => $attrib->getName()
                 ]);
         }
+//        dump($collection);die;
         return new JsonResponse($collection
             ,200);
 
@@ -99,8 +99,7 @@ class ApiController extends Controller
             ->find($id);
 
         if (!$image) {
-            throw  $this->createNotFoundException('Изображение не найдено');
-            return new Response(    'Ops',
+            return new Response(    'Изображение не найдено',
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }
         $nameImage = $image->getName();
@@ -129,8 +128,7 @@ class ApiController extends Controller
             ->find($id);
 
         if (!$image) {
-            throw  $this->createNotFoundException('Изображение не найдено');
-            return new Response(    'Ops',
+            return new Response(    'Изображение не найдено',
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
@@ -159,8 +157,7 @@ class ApiController extends Controller
 
 
         if (!$feedback) {
-            throw  $this->createNotFoundException('Изображение не найдено');
-            return new Response(    'Ops',
+            return new Response(    'Изображение не найдено',
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }
         $em = $this->getDoctrine()->getManager();
@@ -171,7 +168,58 @@ class ApiController extends Controller
 
     }
 
+    /**
+     * @Route("/admin/odrer/status/edit/{order_id}/{status_id}", name = "order_status_edit")
+     */
 
+    public function editStatusOrder(Request $request, $order_id, $status_id)
+    {
+        $order = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Orders')
+            ->find($order_id);
 
+        $state = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:State')
+            ->find($status_id);
+
+        if (!$order || !$state) {
+            return new Response(    'Заказ/Статус не найден',
+                Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        $order->setState($state);
+
+        $active = (in_array($state->getId() , [5,7])) ? false : true ;
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($order);
+        $em->flush();
+
+        return new JsonResponse([
+                        'active' => $active
+            ],200);
+
+    }
+
+    /**
+     * @Route("/amount-active-feedback", name="amount_active_feedback")
+     *
+     */
+
+    public function amountInCart()
+    {
+        $feedbacks = $this
+            ->getDoctrine()
+            ->getRepository('VinilShopBundle:Feedback')
+            ->findBy([
+                'isActive' => true
+            ]);
+        $amount = count($feedbacks);
+            return  new JsonResponse([
+                'amount' => $amount
+            ],200);
+
+    }
 
 }

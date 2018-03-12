@@ -22,6 +22,54 @@ $(document).ready(function () {
 
     };
 
+    var $orderSelect = $('.order-select');
+    var $orderSelectSpiner = $('.order-select-spiner');
+    $orderSelectSpiner.remove();
+    $orderSelect.fadeIn(300);
+
+    $orderSelect.change(function () {
+        // alert('ew');
+        var $this = $(this);
+        var $orderId = $this.siblings().filter('.order-id-data').data('order-id');
+        var $status = $this.val();
+        var $statufField = $this.parent().parent().siblings('.status-field');
+        var $orderStateInShowPage = $('#order-state-in-show-page');
+
+        var $iconTrue = $('#active-true-icon').clone();
+        var $iconFalse = $('#active-false-icon').clone();
+        var $iconQuestion = $('#active-question-icon').clone();
+
+        $.get('/app_dev.php/admin/odrer/status/edit/' + $orderId +'/' + $status)           //////////////////////////////////ИЗМЕНИТЬ ПУТЬ
+            .done(function (r) {
+                var $active = r.active;
+
+                if ($('div').is('#status-icons-for-table')){
+                    if($active) {
+                        $statufField.text(' ').append($iconTrue.fadeIn(500));
+                    }else{
+                        $statufField.text(' ').append($iconFalse.fadeIn(500));
+                    }
+                }
+                if ($('div').is('#status-icons-for-order-page')){
+                    if($active) {
+                        $orderStateInShowPage.text(' ').append($iconTrue.fadeIn(500));
+                    }else{
+                        $orderStateInShowPage.text(' ').append($iconFalse.fadeIn(500));
+                    }
+                }
+            })
+            .fail(function (r) {
+                if ($('div').is('#status-icons-for-table')){
+                    $statufField.text(' ').append($iconQuestion.fadeIn(500));
+                }
+                if ($('div').is('#status-icons-for-order-page')){
+                    $orderStateInShowPage.text(' ').append($iconQuestion.fadeIn(500));
+                }
+            });
+
+    });
+
+
 
     function  amountInCart() {
 
@@ -37,6 +85,21 @@ $(document).ready(function () {
             });
 
     }
+
+    function  amountFeedback() {
+
+        $.get('/app_dev.php/amount-active-feedback')    ////////////////////////////////////////ИЗМЕНИТЬ ПУТЬ
+            .done(function (r) {
+                var $feedbacksIcon = $('#feedbacks-icon');
+
+                $feedbacksIcon.text(r.amount);
+                $feedbacksIcon.fadeIn();
+            })
+            .fail(function (r) {
+                console.log(r);
+            });
+    }
+    amountFeedback();
 
     var $createOrderForm = $('#create_order-form');
     var $badMessageOderCreateWindow = $('#bad-message-oder-create-window');
@@ -59,11 +122,21 @@ $(document).ready(function () {
         var $orderDescription = $('#order-description');
         var $orderInfo = $('#order-info');
 
+        // $createOrderBtn.append($spiner);
+        // var $spiner = $('#create-order-spiner').clone();
+        // $spiner.fadeIn();
+        // $createOrderBtn.text('');
+
         if($orderSenderName.val().length >= 2  &&
             $orderEmail.val() &&
             $orderPhone.val().length === 18 &&
             $orderAddress.val().length >= 9 &&
             $orderInfo.is(":checked")){
+
+            var $spiner = $('#create-order-spiner').clone();
+            $spiner.fadeIn();
+            $createOrderBtn.text('');
+            $createOrderBtn.append($spiner);
 
             $.post('/app_dev.php/api/order/create',{     /////////////////////////////////////ИЗМЕНИТЬ ПУТЬ
                 name: $orderSenderName.val(),
@@ -87,6 +160,8 @@ $(document).ready(function () {
 
                 })
                 .fail(function (r) {
+                    $spiner.remove();
+                    $createOrderBtn.text('Готово');
 
                     console.log(r.responseJSON.answer);
                     $badMessageField.text(r.responseJSON.answer);
@@ -537,7 +612,7 @@ $(document).ready(function () {
 
     $DelCategory.on('click',function () {
         var $this = $(this);
-        $.get('/admin/category/delete/'+ $(this).attr('id'),function (r){})
+        $.get('/app_dev.php/admin/category/delete/'+ $(this).attr('id'),function (r){}) /////////////////ИЗМЕНИТЬ ПУТЬ
             .done(function (r) {
                 $this.parent().toggle(230);
             })
@@ -666,16 +741,20 @@ $(document).ready(function () {
 
     }
 
+
     var $categorySelect = $('.categorySelect');
     $categorySelect.change(function(){
         if($(this).val() == 0) {return false;}
 
-        $.get('/admin/category/attributes/'+ $(this).val(),function (r){})
+        $.get('/app_dev.php/admin/category/attributes/'+ $(this).val(),function (r){})
             .done(function (r) {
+
                 var $IdsOfAttrib = [];
                 $.each(r,function (index,value) {
                     $IdsOfAttrib.push(value['id']);
                 });
+
+
                 var $amount_attributes = $IdsOfAttrib.length;
                 var $tempIdsOfAttrib = $IdsOfAttrib.slice();
                 $('.amount_attributes').data('amount-attributes' , $amount_attributes);
@@ -683,6 +762,7 @@ $(document).ready(function () {
                 $attrCollection.children().filter('.row.attribRow').remove();
                 $collectionHolder.data('index', 0);
                 $collectionHolder = $('div.collection');
+
                 for (i = 0; i < $amount_attributes; i++) {
 
                     var $curentAttr = $tempIdsOfAttrib.shift();
@@ -724,6 +804,18 @@ $(document).ready(function () {
     });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     var $menuadd = $('#menuadd');
     var $clikTime =true;
 
@@ -736,7 +828,7 @@ $(document).ready(function () {
         $clikTime = false;
         }
         setTimeout(function() {
-            console.log($menuAddItems.is(":visible"));
+
             if($menuAddItems.is(":visible"))
             {
                 $menuadd.addClass('activBg');
@@ -746,18 +838,12 @@ $(document).ready(function () {
                 $menuAddBorder.removeClass('menuAddBorder');
             }
 
-
             $clikTime=true;
         }, 330);
-
-
-
-
-
-
-
-
     });
+
+
+
 });
 
 

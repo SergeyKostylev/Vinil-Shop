@@ -13,9 +13,11 @@
         <div class="card-body">
             <span class="font-20pt">Номер вашего заказа: </span>
             <span id="order-number-field" class="font-20pt"></span>
-            <p class="card-text">Спасибо что выбрали нас.
+            <p class="card-text">Номер заказа отправлени на вашу почту.
                 <br>
                 Наши менеджеры свяжутся с вами в ближайшее время для подтверждения.
+                <br>
+                Спасибо что выбрали нас.
             </p>
         </div>
     </div>
@@ -79,7 +81,7 @@
 
                 <form id="create_order-form" class="margin-top30px">
                     <div class="form-group">
-                        <input id="order-sender-name" type="text" class="form-control margin-top-20px" placeholder="Имя и фамилия" value="Имя">
+                        <input id="order-sender-name" type="text" class="form-control margin-top-20px" placeholder="Имя и фамилия">
                         <small class="form-text text-muted">Имя и фамилия получателя.</small>
                     </div>
                     <br>
@@ -93,17 +95,17 @@
                     </div>
                     <br>
                     <div class="form-group">
-                        <input id="order-phone" type="text" class="form-control margin-top-20px" placeholder="Телефон" value="0994034">
+                        <input id="order-phone" type="text" class="form-control margin-top-20px" placeholder="Телефон" >
                         <small class="form-text text-muted">Номер телефона нолучателя.</small>
                     </div>
                     <br>
                     <div class="form-group">
-                        <input id="order-address" type="text" class="form-control margin-top-20px" placeholder="Отделение Новой почты" value="Отделение НП">
+                        <input id="order-address" type="text" class="form-control margin-top-20px" placeholder="Отделение Новой почты">
                         <small class="form-text text-muted"><b>Образец: </b>Киев Киевская обл. Отделение №19</small>
                     </div>
                     <br>
                     <div class="form-group">
-                        <textarea id="order-description" class="form-control" style="height: 100px" placeholder="Комментарий . . .">Сообщение</textarea>
+                        <textarea id="order-description" class="form-control" style="height: 100px" placeholder="Комментарий . . ."></textarea>
                     </div>
 
                     <div class="form-check">
@@ -122,8 +124,13 @@
                     </div>
                     <br>
                 </form>
+                <div id="create-order-spiner" class="text-center" style="display: none">
+                    <i class=" fa fa-spinner fa-pulse  fa-fw" ></i>
+                </div>
+                <button id="create-order-btn" type="button"  style="width: 100%" class="btn-lg btn-success">
 
-                <button id="create-order-btn" type="button"  style="width: 100%" class="btn-lg btn-success">Готово</button>
+                    Готово
+                </button>
             </div>
         </div>
     </div>

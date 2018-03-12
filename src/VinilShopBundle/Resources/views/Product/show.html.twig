@@ -65,7 +65,7 @@
                 {{ product.name }}
             </div>
             <div class="text-left margin-top10px">
-               <img class="max-height50px" src="{{ asset(manufacturer_log) }}{{ product.manufacturer.titleImage }}">
+               <img class="max-height50px" style="max-width: 100%" src="{{ asset(manufacturer_log) }}{{ product.manufacturer.titleImage }}">
             </div>
             <div class="text-right margin-top30px">
                 <h1 class="text-dark">{{ product.price|number_format(0,'',' ') }} грн</h1>

@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * advertising_slider
  *
  * @ORM\Table(name="advertising_slider")
- * @ORM\Entity(repositoryClass="VinilShopBundle\Repository\advertising_sliderRepository")
+ * @ORM\Entity(repositoryClass="VinilShopBundle\Repository\Advertising_sliderRepository")
  */
 class Advertising_slider
 {

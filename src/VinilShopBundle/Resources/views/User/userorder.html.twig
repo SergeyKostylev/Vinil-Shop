@@ -1,0 +1,96 @@
+{% extends '@VinilShop/layout.html.twig' %}
+
+{% block body %}
+    <div style="vertical-align: middle;">
+        {#<h3>#}
+           {#Заказ: {{ order.number }}#}
+            {#&#160;#}
+            {#&#160;#}
+            <div class="btn-group btn-group-toggle margin-right20px">
+                <a href="{{ path('private_office') }}">
+                    <button  type="button" class="btn-sm btn-primary margin-right10px">
+                        <i class="fas font-12pt fa-user-circle"></i> Личный кабинет
+                    </button>
+                </a>
+                <a href="{{ path('all_orders') }}">
+                <button  type="button" class="btn-sm btn-primary ">
+                    <i class="far font-12pt fa-copy"></i> Все заказы
+                </button>
+                </a>
+            </div>
+        {#</h3>#}
+    </div>
+    <hr>
+    <div class="container">
+
+        <h3>№: {{ order.number }} </h3>
+
+
+
+
+
+            <h5>Информация о заказе:</h5>
+            <div class="font-12pt">
+                <i class="fas text-success fa-truck"></i>
+                <span>Статус: </span><b>{{ order.state.name }}</b>
+            </div>
+            <div class="font-12pt">
+                <i class="far text-success fa-money-bill-alt"></i>
+                <span>Сумма заказа (без доставки): </span><b>{{ order.price|number_format(0,'',' ') }}</b> грн.
+            </div>
+            <div class="font-12pt">
+                <i class="fas text-success fa-user"></i>
+                <span>Получатель: </span><b>{{ order.buyerName }}</b>
+            </div>
+            <div class="font-12pt">
+                <i class="fas text-success fa-map-marker-alt"></i>
+                <span>Адрес доставки: </span><b>{{ order.address }}</b>
+            </div>
+            <div class="font-12pt">
+                <i class="far text-success fa-calendar-alt"></i>
+                <span>Дата заказа: </span><b>{{ order.dateCreate|date("d.m.Y") }}</b>
+            </div>
+            <div class="font-12pt">
+                <i class="fas text-success fa-file-alt"></i>
+                <span>Товары: </span>
+            </div>
+        <br>
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col" class="text-center">Кол.</th>
+                <th class="text-right" scope="col">Цена/шт.</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in order.orderProducts %}
+                <tr>
+                    <th  style="vertical-align: middle;">{{ loop.index }}</th>
+                    <td style="vertical-align: middle;">
+                        <img class="float-left" src="{{ asset(images_of_entities) }}{{ item.product.titleImage }}" style="height: 50px">
+                    </td>
+                    <td style="vertical-align: middle;">
+                        <a href="{{ path('product_show', {id :  item.product.id}) }}" target="_blank">
+                            {{ item.product.name }}
+                        </a>
+                    </td>
+                    <td style="vertical-align: middle;" class="text-center">
+                        {{  item.amount }} шт.
+                    </td>
+                    <td class="text-right" style="vertical-align: middle;">
+                        {{  item.priceForOne|number_format(0,'',' ') }} грн.
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+
+    </div>
+
+
+{% endblock %}

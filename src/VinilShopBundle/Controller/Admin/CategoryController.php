@@ -16,7 +16,7 @@ use VinilShopBundle\Service\FileUploader;
 class CategoryController extends Controller
 {
     /**
-     * @Route("/admin/category", name = "admin_categoryes")
+     * @Route("/admin/category/list", name = "admin_categoryes")
      * @Template()
      */
 

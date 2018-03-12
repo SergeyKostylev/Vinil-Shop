@@ -30,6 +30,10 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=255, unique=true)
+     * @Assert\Length(min=5, max=30,
+     *      minMessage = "Логин не может быть короче 5 символов",
+     *      maxMessage = "Логин не может быть длиннее 30 символов"
+     * )
      */
     private $username;
 
@@ -86,7 +90,10 @@ class User implements UserInterface, \Serializable
 
     /**
      * @Assert\NotBlank()
-     * @Assert\Length(max=4096)
+     * @Assert\Length(min=5, max=30,
+     *      minMessage = "Минимальная длина пароля 5 символов",
+     *      maxMessage = "Максимальная длина пароля 30 символов"
+     * )
      */
     private $plainPassword;
 
@@ -205,6 +212,45 @@ class User implements UserInterface, \Serializable
     {
         return $this->isActive;
     }
+
+    /**
+     * @return string
+     */
+    public function getCarts()
+    {
+        return $this->carts;
+    }
+
+    /**
+     * @param string $carts
+     */
+    public function setCarts($carts)
+    {
+        $this->carts = $carts;
+
+        return $this;
+
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+
+    /**
+     * @param string $orders
+     */
+    public function setOrders($orders)
+    {
+        $this->orders = $orders;
+
+        return $this;
+
+    }
+
 
     /**
      * Set role

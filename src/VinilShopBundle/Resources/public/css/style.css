@@ -59,6 +59,10 @@ body {
 {
     font-size: 20pt;
 }
+.font-45pt
+{
+    font-size: 45pt;
+}
 
 .height120px
 {
@@ -359,11 +363,14 @@ margin-top: 7px;
 {
     /*display: none;*/
 }
-
+.order-select
+{
+    max-width: 200px;
+}
 .shop-logo
 {
     max-width: 100%;
-    max-height: 90%;
+    max-height: 100%;
     margin-left: 10%;
 }
 .footer-shop-logo

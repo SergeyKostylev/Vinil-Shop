@@ -1,27 +1,31 @@
 {% extends '@VinilShop/layout.html.twig' %}
 
 {% block body %}
-    <div style="vertical-align: middle;">
-        <h3>
-           Личный кабинет
-            &#160;
-            &#160;
-            <a href="{{ path('all_orders') }}">
-                <button  type="button" class="btn-sm btn-primary">
-                    <i class="far font-12pt fa-copy"></i> Все заказы
-                </button>
-            </a>
-        </h3>
+    <div class="btn-group btn-group-toggle margin-right20px">
+        <a href="{{ path('private_office') }}">
+            <button  type="button" class="btn-sm btn-primary margin-right10px">
+                <i class="fas font-12pt fa-user-circle"></i> Личный кабинет
+            </button>
+        </a>
+        <a href="{{ path('all_orders') }}">
+            <button  type="button" class="btn-sm btn-primary margin-right20px">
+                <i class="far font-12pt fa-copy"></i> Все заказы
+            </button>
+        </a>
     </div>
     <hr>
     <div class="container">
 
-        {% if active_orders %}
-            <h3>Активные заказы</h3>
+        {% if orders %}
+<h3>Заказы</h3>
             <br>
             <div class="row justify-content-center">
-                {% for order in active_orders %}
-                    <div class="card text-white bg-success border border-success mb-3" style="min-width: 300px; width: 70%">
+                {% for order in orders %}
+                {%  if order.state.id in [1,2,3,4]%}
+                        <div class="card text-white bg-success border border-success mb-3" style="min-width: 300px; width: 70%">
+                         {% else %}
+                        <div class="card text-dark border bg-secondary mb-3" style="min-width: 300px; width: 70%">
+                    {% endif %}
 
                         <div class="card-header font-15pt">
                             {{ order.number }}
@@ -31,8 +35,7 @@
                             <h4 class="card-title">{{ order.state.name }}</h4>
                             <p class="card-text">
                                 <span class="font-12pt">
-                                    <i class="fas text-success fa-map-marker-alt"></i>
-                                    {{ order.address }}
+                                    <i class="fas text-success fa-map-marker-alt"></i> {{ order.address }}
                                 </span>
                                 <br>
                                 <span class="font-12pt">
@@ -51,7 +54,7 @@
                     </div>
                 {% endfor %}
             {% else %}
-                <h3>Нет активных заказов</h3>
+                <h3>У Вас еще нет заказов</h3>
             {% endif %}
 
 

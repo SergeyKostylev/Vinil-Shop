@@ -67,7 +67,7 @@
                     </div>
                     {% else %}
                         <div class="text-right">
-                            <a href="{{ path('private_office', {id : app.user.id}) }}" class="font-15pt"><i class="fas fa-user-circle"></i>{{ app.user.username }}</a>
+                            <a href="{{ path('private_office') }}" class="font-15pt"><i class="fas fa-user-circle"></i>{{ app.user.username }}</a>
                             &#160;&#160;&#160;
                             <a href="{{ path('logout') }}" class="font-10pt">ВЫХОД <i class="fas fa-sign-out-alt"></i></a>
                         </div>

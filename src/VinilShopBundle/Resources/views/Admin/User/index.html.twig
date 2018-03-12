@@ -1,0 +1,61 @@
+{% extends '@VinilShop/admin_layout.html.twig' %}
+{% block titleMenu %}
+    Пользователи
+{% endblock %}
+{% block body %}
+
+    <div class="pagination justify-content-center">
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+
+<table class="table">
+    <thead class="table-active">
+    <tr>
+        <th scope="col" style="vertical-align: middle; max-width: 7%" class="text-right">{{ knp_pagination_sortable(pagination, 'Код', 'id') }}</th>
+        <th scope="col" style="vertical-align: middle;">{{ knp_pagination_sortable(pagination, 'Логин', 'username') }}</th>
+        <th scope="col" style="vertical-align: middle;">{{ knp_pagination_sortable(pagination, 'Email', 'email') }}</th>
+        <th scope="col" style="vertical-align: middle; width: 10%"class="text-center">{{ knp_pagination_sortable(pagination, 'Актив.', 'isActive') }}</td>
+        <th scope="col" style="vertical-align: middle;" class="text-center">{{ knp_pagination_sortable(pagination, 'Роль', 'role') }}</th>
+        <th scope="col" style="vertical-align: middle;max-width: 7%" class="text-center">Кол.<br>заказов</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in pagination %}
+    <tr>
+        <td class="text-right">{{ user.id }}</td>
+        <td style="padding-left: 9px">{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+            <div class="text-center ">
+                {% if user.isActive %}
+                    <i class="fas fa-check text-success font-15pt"></i>
+                {% else %}
+                    <i class="fas fa-times text-danger font-15pt"></i>
+                {% endif %}
+            </div>
+        </td>
+        <td class="text-center" >{{ user.role|slice(5)}}</td>
+        <td class="text-center">
+            {% if  user.orders|length %}
+                <a href="{{ path('admin_user_orders', {id : user.id}) }}">
+                    {{ user.orders|length}}
+                </a>
+            {% else %}
+                    {{ user.orders|length}}
+            {% endif %}
+        </td>
+    </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+
+    <div class="pagination justify-content-center">
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+
+{% endblock %}

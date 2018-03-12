@@ -33,6 +33,7 @@ class OrderController extends Controller
                 ->findBy([
                     'user' => $user->getId()
                     ]);
+
             foreach ($carts as $item)
                 {
                     /**
@@ -46,6 +47,9 @@ class OrderController extends Controller
                         ];
                     }
                 }
+            if(!count($cart)){
+                return $this->redirectToRoute('home_page');
+            }
             $order_sum = PriceSumInCart::getSumInCarts($carts);
 
             return [
@@ -70,6 +74,9 @@ class OrderController extends Controller
                         $order_sum+= $product->getPrice() * $amount;
                     }
                 }
+            }
+            if(!count($cart)){
+                return $this->redirectToRoute('home_page');
             }
             return [
                 'cart' => $cart,

@@ -365,11 +365,11 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/amount-product-in-cart", name="one")
+     * @Route("/amount-product-in-cart", name="amount_product_in_cart")
      *
      */
 
-    public function oneTwoAction()
+    public function amountInCart()
     {
         $amount = 0;
         $user = $this->getUser();
@@ -549,8 +549,21 @@ class ApiController extends Controller
 
         }
 
+                $message = \Swift_Message::newInstance()
+            ->setFrom('s03540@ukr.net')
+            ->setTo($email)
+            ->setSubject('Покупка на Music shop')
+            ->setBody('Спасибо что выбрали наш магазин. <br>
+                                Наш манеджер свяжется с Вами в ближайшее время для подтверждения.<br>
+                                Номер вашего заказа <b>' . $number_order . '</b>.','text/html')
+
+            ;
+
+            $this->get('mailer')
+                ->send($message);
+
         return  new JsonResponse([
-            'answer' => 'Заказ оформлен',
+            'answer' => 'Заказ '. $number_order .' оформлен.',
             'number_order' => $number_order
         ],200);
 
