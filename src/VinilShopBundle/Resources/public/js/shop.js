@@ -28,7 +28,6 @@ $(document).ready(function () {
     $orderSelect.fadeIn(300);
 
     $orderSelect.change(function () {
-        // alert('ew');
         var $this = $(this);
         var $orderId = $this.siblings().filter('.order-id-data').data('order-id');
         var $status = $this.val();
@@ -39,7 +38,7 @@ $(document).ready(function () {
         var $iconFalse = $('#active-false-icon').clone();
         var $iconQuestion = $('#active-question-icon').clone();
 
-        $.get('/app_dev.php/admin/odrer/status/edit/' + $orderId +'/' + $status)           //////////////////////////////////ИЗМЕНИТЬ ПУТЬ
+        $.get('/admin/odrer/status/edit/' + $orderId +'/' + $status)
             .done(function (r) {
                 var $active = r.active;
 
@@ -69,11 +68,9 @@ $(document).ready(function () {
 
     });
 
-
-
     function  amountInCart() {
 
-        $.get('/app_dev.php/amount-product-in-cart')    ////////////////////////////////////////ИЗМЕНИТЬ ПУТЬ
+        $.get('/amount-product-in-cart')
             .done(function (r) {
                 var $cartIcon = $('#cart-icon');
 
@@ -88,7 +85,7 @@ $(document).ready(function () {
 
     function  amountFeedback() {
 
-        $.get('/app_dev.php/amount-active-feedback')    ////////////////////////////////////////ИЗМЕНИТЬ ПУТЬ
+        $.get('/amount-active-feedback')
             .done(function (r) {
                 var $feedbacksIcon = $('#feedbacks-icon');
 
@@ -109,7 +106,6 @@ $(document).ready(function () {
         $badMessageOderCreateWindow.fadeOut(500);
     });
 
-
     var $createOrderBtn = $('#create-order-btn');
     $('#order-phone').mask("+38(999) 99-99-999");
 
@@ -122,11 +118,6 @@ $(document).ready(function () {
         var $orderDescription = $('#order-description');
         var $orderInfo = $('#order-info');
 
-        // $createOrderBtn.append($spiner);
-        // var $spiner = $('#create-order-spiner').clone();
-        // $spiner.fadeIn();
-        // $createOrderBtn.text('');
-
         if($orderSenderName.val().length >= 2  &&
             $orderEmail.val() &&
             $orderPhone.val().length === 18 &&
@@ -138,7 +129,7 @@ $(document).ready(function () {
             $createOrderBtn.text('');
             $createOrderBtn.append($spiner);
 
-            $.post('/app_dev.php/api/order/create',{     /////////////////////////////////////ИЗМЕНИТЬ ПУТЬ
+            $.post('/api/order/create',{
                 name: $orderSenderName.val(),
                 email: $orderEmail.val(),
                 phone: $orderPhone.val(),
@@ -172,9 +163,6 @@ $(document).ready(function () {
             $badMessageField.text('Неверно заполнена форма.');
             $badMessageOderCreateWindow.fadeIn(700);
         }
-
-
-
 
     });
 
@@ -244,7 +232,6 @@ $(document).ready(function () {
         {
             $captcha.parent().addClass('has-danger');
         }
-
         }else{
 
             var $spiner = $('#feedback-spiner');
@@ -259,7 +246,6 @@ $(document).ready(function () {
                     $blockRequestWindows.find('#bad-icon').fadeOut();
 
                     var $feedbackForm = $('#feedback-form');
-                    // $blockRequestWindows.find('#ok-icon').remove();
                     $blockRequestWindows.find('#bad-icon').remove();
 
                     $feedbackForm.fadeOut();
@@ -270,7 +256,6 @@ $(document).ready(function () {
                         $spiner.remove();
                         $blockRequestWindows.find('#ok-icon').fadeIn();
                         $blockRequestWindows.find('#text-reqeust-message').text(r.answer);
-
                     },1000);
 
                 })
@@ -278,8 +263,6 @@ $(document).ready(function () {
 
                     var $answer = r.responseJSON.answer;
                     var $itemBlock = r.responseJSON.itemBlock;
-                    console.log($answer);
-                    console.log($itemBlock);
                     $blockRequestWindows.find('#ok-icon').fadeOut();
                     $blockRequestWindows.find('#bad-icon').fadeIn();
                     $blockRequestWindows.find('#text-reqeust-message').text($answer);
@@ -290,7 +273,6 @@ $(document).ready(function () {
                     setTimeout(function () {
                         $blockRequestWindows.fadeIn(700);
                     },300);
-
 
                 });
 
@@ -304,7 +286,7 @@ $(document).ready(function () {
         var $this = $(this);
         var $id = $this.siblings().filter('.in-cart').data('in-cart-id');
 
-        $.get('/app_dev.php/cart/add/product/' + $id)                          //////////////////ИЗМЕНИТЬ ПУТЬ
+        $.get('/cart/add/product/' + $id)
             .done(function (r) {
                 console.log(r.answer);
                 amountInCart();
@@ -336,7 +318,6 @@ $(document).ready(function () {
             })
     });
 
-
     var $sliderFrame = $('#sliderFrame');
     $sliderFrame.fadeIn(300);
     var $mainMenuCol = $('#main-menu-col');
@@ -352,7 +333,6 @@ $(document).ready(function () {
     review();
 
     window.onresize = function (ev) {
-
         review();
     };
 
@@ -364,7 +344,7 @@ $(document).ready(function () {
         var $id = $this.siblings().filter('.product-id').data('product-id');
         var $cartList = $('#cart-list');
 
-        $.get('/app_dev.php/cart/delete/user/product/' + $id)    ////////////////////////////////////////ИЗМЕНИТЬ ПУТЬ
+        $.get('/cart/delete/user/product/' + $id)
             .done(function (r) {
                 console.log(r.answer);
                 amountInCart();
@@ -397,10 +377,9 @@ $(document).ready(function () {
         var $this = $(this);
         var $id = $this.siblings().filter('.product-id').data('product-id');
         var $cartList = $('#cart-list');
-        console.log($id);
 
 
-        $.get('/app_dev.php/cart/delete/anon/product/' + $id)    ////////////////////////////////////////ИЗМЕНИТЬ ПУТЬ
+        $.get('/cart/delete/anon/product/' + $id)
             .done(function (r) {
                 amountInCart();
                 console.log(r.answer);
@@ -410,8 +389,8 @@ $(document).ready(function () {
                 $line.fadeOut(333);
                 setTimeout(function () {
                     $line.removeClass('d-flex');
-
                 }, 300);
+
                 setTimeout(function () {
                     $line.remove();
                     if(!$cartList.children().length){
@@ -427,12 +406,9 @@ $(document).ready(function () {
             });
     });
 
-
-
-
     function  setAmountUser($this,$id, $act) {
 
-        $.get('/app_dev.php/cart/set-amount/user/product/' + $id + '/' + $act)    ////////////////////////////////////////ИЗМЕНИТЬ ПУТЬ
+        $.get('/cart/set-amount/user/product/' + $id + '/' + $act)
             .done(function (r) {
                 amountInCart();
                 var $sum = $('#sum');
@@ -467,7 +443,7 @@ $(document).ready(function () {
 
     function  setAmountAnon($this,$id, $act) {
 
-        $.get('/app_dev.php/cart/set-amount/anon/product/' + $id + '/' + $act)    ////////////////////////////////////////ИЗМЕНИТЬ ПУТЬ
+        $.get('/cart/set-amount/anon/product/' + $id + '/' + $act)
             .done(function (r) {
                 amountInCart();
                 var $sum = $('#sum');
@@ -500,19 +476,13 @@ $(document).ready(function () {
 
     });
 
-
-
-
-
     amountInCart();
 
     var $editLastCategChek = $('.edit_last_categ_chek');
     var $editAttribList = $('.edit_attrib_list');
-    // console.log($editLastCategChek.attr("checked"));
+
     if ($editLastCategChek.attr("checked") === 'checked')
     {$editAttribList.fadeIn();}
-
-
 
     var $categoryListBtn = $('.category-list-btn');
     var $categoryList = $('.category-list');
@@ -524,7 +494,6 @@ $(document).ready(function () {
     $categoryListBtn.on('click',function () {
         if ($categoryList.is(":hidden")){
         $categoryList.fadeIn(120);}
-
     });
 
     var $openHighSlider = $('.little-slide-img, .main-image');
@@ -533,16 +502,12 @@ $(document).ready(function () {
         $highSlider.fadeIn();
     });
 
-
     var $closeHighSliderButton = $('.close-high-slider-button');
 
     $closeHighSliderButton.on('click',function () {
         var $highSlider = $('.high-slider');
         $highSlider.fadeOut();
     });
-
-
-
 
     var $galleryImageToggleButton =$('.gallery-image-toggle-button');
     $galleryImageToggleButton.on('click',function () {
@@ -575,8 +540,6 @@ $(document).ready(function () {
         var $imageId = $this.siblings().filter('.item-id').data('item-id');
         var $imageBlock = $this.parent().parent();
 
-
-
         $.get('/admin/advertising/delete/' + $imageId, function (r) {})
             .done(function (r) {
                 $imageBlock.fadeOut(300);
@@ -586,12 +549,7 @@ $(document).ready(function () {
             })
             .fail(function (r) {
             });
-
-
-
     });
-
-
 
     var $DelProd = $('.ajaxBtnDelProd');
 
@@ -612,7 +570,7 @@ $(document).ready(function () {
 
     $DelCategory.on('click',function () {
         var $this = $(this);
-        $.get('/app_dev.php/admin/category/delete/'+ $(this).attr('id'),function (r){}) /////////////////ИЗМЕНИТЬ ПУТЬ
+        $.get('/admin/category/delete/'+ $(this).attr('id'),function (r){})
             .done(function (r) {
                 $this.parent().toggle(230);
             })
@@ -640,9 +598,8 @@ $(document).ready(function () {
                     $.errorModalWindow($message);
                 }
             });
-
-
     });
+
     var $manufDispBtn = $('.manufDispBtn');
 
     $manufDispBtn.on('click',function () {
@@ -674,7 +631,6 @@ $(document).ready(function () {
             }
     });
 
-
         var $last_categ_chek =$('.last_categ_chek'),
             $attrib_list = $('.attrib_list');
 
@@ -694,8 +650,6 @@ $(document).ready(function () {
     $collectionHolder = $('div.collection');
     $collectionHolder.append($newrow);
     $collectionHolder.data('index',$collectionHolder.find('.row').length);
-    // var index = $collectionHolder.data('index');
-
 
     removeAttribRow = function () {
       var $this =$(this);
@@ -738,7 +692,6 @@ $(document).ready(function () {
             $.errorModalWindow($message);
         }
 
-
     }
 
 
@@ -746,14 +699,13 @@ $(document).ready(function () {
     $categorySelect.change(function(){
         if($(this).val() == 0) {return false;}
 
-        $.get('/app_dev.php/admin/category/attributes/'+ $(this).val(),function (r){})
+        $.get('/admin/category/attributes/'+ $(this).val(),function (r){})
             .done(function (r) {
 
                 var $IdsOfAttrib = [];
                 $.each(r,function (index,value) {
                     $IdsOfAttrib.push(value['id']);
                 });
-
 
                 var $amount_attributes = $IdsOfAttrib.length;
                 var $tempIdsOfAttrib = $IdsOfAttrib.slice();

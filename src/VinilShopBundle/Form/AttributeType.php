@@ -26,7 +26,6 @@ class AttributeType extends AbstractType
                 'label' => 'Характеристика',
                 'placeholder' =>'Не выбрано',
                 'query_builder' => function(Attribute_nameRepository $attribute) use ($category) {
-
                         $qb = $attribute->createQueryBuilder('a');
                         $qb->join('a.categoryes','c');
 
@@ -40,7 +39,6 @@ class AttributeType extends AbstractType
                 }
             ])
             ->add('value')
-//            ->add('products')
         ;
     }/**
      * {@inheritdoc}

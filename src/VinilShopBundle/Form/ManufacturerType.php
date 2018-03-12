@@ -42,5 +42,4 @@ class ManufacturerType extends AbstractType
         return 'vinilshopbundle_manufacturer';
     }
 
-
 }

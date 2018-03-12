@@ -16,49 +16,46 @@
     <hr>
     <div class="container">
 
-        {% if orders %}
-<h3>Заказы</h3>
-            <br>
-            <div class="row justify-content-center">
-                {% for order in orders %}
-                {%  if order.state.id in [1,2,3,4]%}
-                        <div class="card text-white bg-success border border-success mb-3" style="min-width: 300px; width: 70%">
-                         {% else %}
-                        <div class="card text-dark border bg-secondary mb-3" style="min-width: 300px; width: 70%">
-                    {% endif %}
+    {% if orders %}
+        <h3>Заказы</h3>
+        <br>
+        <div class="row justify-content-center">
+            {% for order in orders %}
+            {%  if order.state.id in [1,2,3,4]%}
+                    <div class="card text-white bg-success border border-success mb-3" style="min-width: 300px; width: 70%">
+                     {% else %}
+                    <div class="card text-dark border bg-secondary mb-3" style="min-width: 300px; width: 70%">
+                {% endif %}
 
-                        <div class="card-header font-15pt">
-                            {{ order.number }}
-                        </div>
-
-                        <div class="card-body bg-white text-dark">
-                            <h4 class="card-title">{{ order.state.name }}</h4>
-                            <p class="card-text">
-                                <span class="font-12pt">
-                                    <i class="fas text-success fa-map-marker-alt"></i> {{ order.address }}
-                                </span>
-                                <br>
-                                <span class="font-12pt">
-                                    <i class="far text-success fa-money-bill-alt"></i>
-                                    {{ order.price|number_format(0,'',' ') }} грн. + Доставка
-                                </span>
-                                <br>
-                                <span class="font-12pt">
-                                    <i class="far  text-success fa-calendar-alt"></i>
-                                    {{ order.dateCreate|date("d.m.Y") }}
-                                </span>
-
-                                <a href="{{ path('user_order', {id : order.id}) }}" class="float-right text-dark font-12pt"><i class="fas fa-info-circle"></i> Подробнее</a>
-                            </p>
-                        </div>
+                    <div class="card-header font-15pt">
+                        {{ order.number }}
                     </div>
-                {% endfor %}
-            {% else %}
-                <h3>У Вас еще нет заказов</h3>
-            {% endif %}
 
+                    <div class="card-body bg-white text-dark">
+                        <h4 class="card-title">{{ order.state.name }}</h4>
+                        <p class="card-text">
+                            <span class="font-12pt">
+                                <i class="fas text-success fa-map-marker-alt"></i> {{ order.address }}
+                            </span>
+                            <br>
+                            <span class="font-12pt">
+                                <i class="far text-success fa-money-bill-alt"></i>
+                                {{ order.price|number_format(0,'',' ') }} грн. + Доставка
+                            </span>
+                            <br>
+                            <span class="font-12pt">
+                                <i class="far  text-success fa-calendar-alt"></i>
+                                {{ order.dateCreate|date("d.m.Y") }}
+                            </span>
 
-
+                            <a href="{{ path('user_order', {id : order.id}) }}" class="float-right text-dark font-12pt"><i class="fas fa-info-circle"></i> Подробнее</a>
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h3>У Вас еще нет заказов</h3>
+        {% endif %}
         </div>
 
     </div>

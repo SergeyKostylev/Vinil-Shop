@@ -248,10 +248,9 @@ class User implements UserInterface, \Serializable
         $this->orders = $orders;
 
         return $this;
-
+        
     }
-
-
+    
     /**
      * Set role
      *
@@ -317,4 +316,3 @@ class User implements UserInterface, \Serializable
             ) = unserialize($serialized);
     }
 }
-

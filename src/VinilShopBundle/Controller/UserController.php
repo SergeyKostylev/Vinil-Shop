@@ -6,7 +6,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-
 class UserController extends Controller
 {
 
@@ -25,6 +24,7 @@ class UserController extends Controller
             ->getDoctrine()
             ->getRepository('VinilShopBundle:User')
             ->find($user->getId());
+
         $active_orders = $this
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Orders')
@@ -72,7 +72,6 @@ class UserController extends Controller
 
     }
 
-
     /**
      * @Route("/user/order/{id}", name="user_order")
      * @Template()
@@ -99,6 +98,6 @@ class UserController extends Controller
             'order' => $order
 
         ];
-
     }
+
 }

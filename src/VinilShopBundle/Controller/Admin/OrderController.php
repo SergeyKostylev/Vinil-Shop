@@ -16,7 +16,6 @@ class OrderController extends Controller
      * @Route("/admin/orders/list/{page}/{sort}/{direction}", name = "admin_orders_list")
      * @Template()
      */
-
     public function indexAction(Request $request, $page =1 , $sort = 'id', $direction='asc')
     {
         $search = $request->get('search');
@@ -52,7 +51,6 @@ class OrderController extends Controller
             'states' => $states
         ];
     }
-
 
     /**
      * @Route("/admin/orders/user/{id}/{page}/{sort}/{direction}", name = "admin_user_orders")
@@ -100,7 +98,6 @@ class OrderController extends Controller
      * @Route("/admin/order/show/{id}", name = "admin_order_show")
      * @Template()
      */
-
     public function showAction(Request $request, $id)
     {
         $order = $this
@@ -121,6 +118,5 @@ class OrderController extends Controller
             'states' => $states
         ];
     }
-
 
 }

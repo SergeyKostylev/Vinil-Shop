@@ -118,9 +118,7 @@ class Category
         $this->attribute_names = $attribute_names;
     }
 
-
-
-
+    
     /**
      * @return bool
      */
@@ -136,9 +134,6 @@ class Category
     {
         $this->lastCategory = $lastCategory;
     }
-
-
-
 
     public function __construct()
     {
@@ -198,7 +193,6 @@ class Category
 
         return $this;
     }
-
 
     /**
      * Get lastCategory

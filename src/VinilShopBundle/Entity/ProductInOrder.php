@@ -117,10 +117,5 @@ class ProductInOrder
 
         return $this;
     }
-
-
-
-
-
+    
 }
-

@@ -25,10 +25,8 @@ class ApiController extends Controller
      * @Route("/feedback/create", name="feedback_create")
      *
      */
-
     public function createFeedbackAction(Request $request)
     {
-
         $email= $request->get('email');
         $sender_name = $request->get('name');
         $title = $request->get('title');
@@ -41,7 +39,6 @@ class ApiController extends Controller
                 'itemBlock' => 'captcha'
             ],403);
         }
-
         if (!preg_match('/^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/',$email)){
 
             return  new JsonResponse([
@@ -102,14 +99,12 @@ class ApiController extends Controller
         return  new JsonResponse([
             'answer' => 'Сообщение отправлено',
         ],200);
-
     }
 
     /**
      * @Route("/cart/add/product/{product_id}", name="cart_user_add")
      *
      */
-
     public function addToUserCart(Request $request, $product_id)
     {
         $product = $this
@@ -122,7 +117,6 @@ class ApiController extends Controller
                 'answer' => 'Товар не найден'
             ],403);
         }
-
         /**
          * @var User $user
          */
@@ -130,7 +124,6 @@ class ApiController extends Controller
 
         if(!$user){
             $session = new Session();
-//            $session->remove('cart');die;
             if ($session->has('cart')){
 
                 $cart = $session->get('cart');
@@ -139,13 +132,10 @@ class ApiController extends Controller
                     $cart[$product_id] = 1;
                     $session->set('cart', $cart);
                 }
-
             }else{
-
                 $cart =[$product_id => 1];
                 $session->set('cart', $cart);
             }
-//            dump($cart);
             return  new JsonResponse([
                 'answer' => 'Товар добавлен в корзину'
             ],200);
@@ -178,12 +168,10 @@ class ApiController extends Controller
         ],200);
     }
 
-
     /**
      * @Route("/cart/delete/user/product/{id}", name="cart_delete_user")
      *
      */
-
     public function cartDeleteUserProductAction(Request $request, $id)
     {
         $user= $this->getUser();
@@ -226,13 +214,10 @@ class ApiController extends Controller
         ],200);
     }
 
-
-
     /**
      * @Route("/cart/delete/anon/product/{id}", name="cart_delete_anon")
      *
      */
-
     public function cartDeleteAnonProductAction(Request $request, $id)
     {
         $session = new Session();
@@ -251,7 +236,6 @@ class ApiController extends Controller
                 if($product->getIsActive()){
                 $sum+= $product->getPrice() * $amount;
                 }
-
             }
             return  new JsonResponse([
                 'answer' => 'Товар уделен из корзиный',
@@ -264,12 +248,10 @@ class ApiController extends Controller
         ],200);
     }
 
-
     /**
      * @Route("/cart/set-amount/user/product/{id}/{act}", name="cart_up_amount_user")
      *
      */
-
     public function setCartAmountUserAction(Request $request, $id, $act = 1)
     {
         $user= $this->getUser();
@@ -323,7 +305,6 @@ class ApiController extends Controller
      * @Route("/cart/set-amount/anon/product/{id}/{act}", name="cart_up_amount_anon")
      *
      */
-
     public function setCartAmountAnonAction(Request $request,$id, $act = 1)
     {
         $session = new Session();
@@ -368,7 +349,6 @@ class ApiController extends Controller
      * @Route("/amount-product-in-cart", name="amount_product_in_cart")
      *
      */
-
     public function amountInCart()
     {
         $amount = 0;
@@ -407,12 +387,10 @@ class ApiController extends Controller
 
     }
 
-
     /**
      * @Route("/api/order/create", name="order_create_api")
      *
      */
-
     public function apiOrderCreateAction(Request $request)
     {
 
@@ -566,38 +544,8 @@ class ApiController extends Controller
             'answer' => 'Заказ '. $number_order .' оформлен.',
             'number_order' => $number_order
         ],200);
-
     }
 
-
-//    /**
-//     * @Route("/two", name="two")
-//     *
-//     */
-//    public function twoAction()
-//    {
-////        $session = new Session;
-////        $cart = $session->get('cart');
-////        $cart['55']=1;
-////        $session->set('cart',$cart);
-////        dump( $session->get('cart'));die;
-//
-//        $message = \Swift_Message::newInstance()
-//            ->setFrom('s03540@ukr.net')
-//            ->setTo('s03540@gmail.com')
-//            ->setSubject('Subject')
-//            ->setBody('Body','text/html')
-//
-//        ;
-//
-//        $this->get('mailer')
-//            ->send($message);
-//        return $this->redirectToRoute('home_page');
-//
-//
-//
-//
-//    }
 }
 
 

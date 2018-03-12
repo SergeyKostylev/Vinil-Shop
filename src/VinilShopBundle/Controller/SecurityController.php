@@ -50,7 +50,6 @@ class SecurityController extends Controller
         return $this->redirectToRoute('home_page');
     }
 
-
     /**
      * @Route("/register", name="register")
      * @Template()

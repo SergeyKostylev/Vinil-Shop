@@ -14,7 +14,6 @@ class FeedbackController extends Controller
      * @Route("/admin/feedbacks/list/{page}/{sort}/{direction}", name="admin_feedbacks")
      * @Template()
      */
-
     public function indexAction(Request $request, $page =1 , $sort = 'id', $direction='asc')
     {
         $feedbacks = $this
@@ -23,9 +22,8 @@ class FeedbackController extends Controller
             ->findAll();
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $feedbacks, /* query NOT result */
+            $feedbacks,
             $page,
-//            $request->query->getInt('page', 1)/*page number*/,
             50,
             ['defaultSortFieldName' => $sort,
                 'defaultSortDirection' => $direction]
@@ -41,7 +39,6 @@ class FeedbackController extends Controller
      * @Route("/admin/feedback/show/{id}", name="admin_feedback_show")
      * @Template()
      */
-
     public function showAction(Request $request, $id)
     {
 

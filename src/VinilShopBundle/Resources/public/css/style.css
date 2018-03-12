@@ -216,20 +216,12 @@ margin-top: 7px;
     border-top: #dadada solid 2px;
 }
 
-
-/*.www*/
-/*{*/
-/*text-align: center;*/
-
-/*}*/
-
 .feedback-delete-btn
 {
     height: 25px;
     padding: 1px 10px 1px 10px;
 
 }
-
 
 .li-marker-none
 {
@@ -322,11 +314,7 @@ margin-top: 7px;
 {
     max-height: 50px;
 }
-/*@media screen and (min-width:768px) and (#sliderFrame) {*/
-    /*#main-menu-col {*/
-        /*margin-top: -70px;*/
-    /*}*/
-/*}*/
+
 .register-form
 {
     min-width: 200px;
@@ -439,11 +427,6 @@ margin-top: 7px;
     background-color: black;
 
 }
-/*.gallery-image-button*/
-/*{*/
-
-/*}*/
-
 
 .categorySelect option:first-child{
     display: none;
@@ -493,7 +476,12 @@ margin-top: 7px;
     max-height: 30px;
 
 }
+.image-in-error-page
+{
+    width: 300px;
+    margin: 100px auto auto 50px;
 
+}
 
 .gallery {
     width: max-content;
@@ -513,9 +501,6 @@ margin-top: 7px;
     float: left;
     padding: 5px;
 }
-
-
-
 
 .gallery > div > div > a > img {
     /*display: block;*/
@@ -552,13 +537,6 @@ margin-top: 7px;
     max-height: 250px;
     max-width: 300px;
 }
-
-/*.addAttributeButton{*/
-
-   /*text-align: right;*/
-    /*bottom: 15px;*/
-    /*right: 15px;*/
-/*}*/
 
 .category-list{
     height: auto;
@@ -599,7 +577,6 @@ margin-top: 7px;
     padding: 20px 10px;
 
 }
-
 
 #overlay {
     z-index:3; /* пoдлoжкa дoлжнa быть выше слoев элементoв сaйтa, нo ниже слoя мoдaльнoгo oкнa */

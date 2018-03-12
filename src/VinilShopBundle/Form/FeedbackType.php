@@ -35,5 +35,4 @@ class FeedbackType extends AbstractType
         return 'vinilshopbundle_feedback';
     }
 
-
 }

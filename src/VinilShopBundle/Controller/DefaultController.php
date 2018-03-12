@@ -35,10 +35,8 @@ class DefaultController extends Controller
      * @Route("/payment", name="payment_page")
      * @Template()
      */
-
     public function paymentAction()
     {
-
         return [];
     }
 
@@ -46,10 +44,8 @@ class DefaultController extends Controller
      * @Route("/delivery", name="delivery_page")
      * @Template()
      */
-
     public function deliveryAction()
     {
-
         return [];
     }
 
@@ -57,7 +53,6 @@ class DefaultController extends Controller
      * @Route("/info", name="info_page")
      * @Template()
      */
-
     public function infoAction()
     {
 

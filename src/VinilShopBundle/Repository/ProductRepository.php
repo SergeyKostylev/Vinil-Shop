@@ -13,17 +13,24 @@ namespace VinilShopBundle\Repository;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
-
     public function productOfManufacturer($id)
     {
-
         return $this
             ->createQueryBuilder('prod')
             ->where('prod.manufacturer = :manufacturer')
             ->setParameter('manufacturer', $id)
             ->getQuery()
             ->getResult();
+    }
 
+    public function serchForName($search)
+    {
+        return $this
+            ->createQueryBuilder('prod')
+            ->where('prod.name LIKE :name')
+            ->setParameter('name', '%' . $search . '%')
+            ->getQuery()
+            ->getResult();
     }
 
     public function productRandLimin($limit = 9)
@@ -37,7 +44,6 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
-
     }
 
     public function findByCategory($id)

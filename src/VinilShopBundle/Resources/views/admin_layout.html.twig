@@ -42,6 +42,8 @@
             <input class="form-control mr-sm-2" type="text" placeholder="Номер заказа:" name="search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i> Поиск</button>
         </form>
+        <a href="{{ path('logout') }}" class="btn btn-outline-primary ml-2">Выход</a>
+
     </div>
 </nav>
 
@@ -106,19 +108,10 @@
                 {% endblock %}</h1>
 
             </div>
-
-
-
             {% block body %}
-
-
-
-
-
 
             {% endblock %}
         </main>
-
     </div>
 
     {#Модальное окно#}
@@ -143,11 +136,6 @@
     <div id="overlay"></div>
     {#Конец модального окна#}
 
-
-
-
-
-
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -159,7 +147,5 @@
 <script>
     feather.replace();
 </script>
-
-
 </body>
 </html>

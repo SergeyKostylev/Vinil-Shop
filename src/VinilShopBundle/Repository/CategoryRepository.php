@@ -10,10 +10,8 @@ namespace VinilShopBundle\Repository;
  */
 class CategoryRepository extends \Doctrine\ORM\EntityRepository
 {
-
     public function findTree()
     {
-
         return $this
             ->createQueryBuilder('category')
             ->leftJoin('category.children','children')
@@ -62,4 +60,5 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
 
     }
+    
 }

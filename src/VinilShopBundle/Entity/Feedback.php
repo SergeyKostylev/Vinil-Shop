@@ -56,7 +56,6 @@ class Feedback
      */
     private $isActive;
 
-
     /**
      * Feedback constructor.
      * @param bool $isActive
@@ -65,7 +64,6 @@ class Feedback
     {
         $this->isActive = true;
     }
-
 
     /**
      * Get id

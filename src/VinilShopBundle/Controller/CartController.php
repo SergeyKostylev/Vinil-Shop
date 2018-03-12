@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use VinilShopBundle\Entity\Cart;
 use VinilShopBundle\Entity\User;
 
-
 class CartController extends Controller
 {
 
@@ -30,12 +29,6 @@ class CartController extends Controller
 
         if(!$user) {
             $session = new Session();
-//            $session_cart = $session->get('cart');
-//            unset($session_cart[51]);
-//            unset($session_cart[53]);
-//            $session_cart[55] =  1;
-//            $session->set('cart',$session_cart);
-//            dump($session->get('cart'));die;
             if ($session->has('cart'))
             {
                 $session_cart = $session->get('cart');
@@ -65,7 +58,6 @@ class CartController extends Controller
                 'sum' => $sum,
                 'notActive' => $notActive
             ];
-
         }
 
         $all_cart = $this
@@ -88,7 +80,6 @@ class CartController extends Controller
             'sum' => $sum,
             'notActive' => $notActive
         ];
-
     }
 
 }

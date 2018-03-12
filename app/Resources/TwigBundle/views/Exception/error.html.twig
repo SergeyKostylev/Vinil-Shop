@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <link href="{{ asset('bundles/vinilshop/css/bootstrap-vinil-shop.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/vinilshop/css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('bundles/vinilshop/css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/vinilshop/css/fa-regular.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/vinilshop/css/fa-solid.css') }}">
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div style="width: 900px; height: 600px">
+                <h1 class="text-primary">Иногда что-то идет не так но это не повод расстраиваться <i class="far fa-smile"></i></h1>
+
+
+                <img src="{{ asset(shop_logo) }}" class="image-in-error-page">
+
+                <a href="{{ path('home_page') }}" >
+                    <h5 style="margin:  auto auto 500px 500px"><i class="fas fa-home"></i> Вернуться обратно</h5>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

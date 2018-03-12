@@ -12,7 +12,6 @@ use VinilShopBundle\Entity\Category;
 
 class ApiController extends Controller
 {
-
     /**
      * @Route("/admin/product/delete/{id}", name = "delete_product")
      */
@@ -46,14 +45,13 @@ class ApiController extends Controller
         return new Response(    'Content',
             Response::HTTP_OK);
 
-
     }
+
     /**
      * @Route("/admin/category/attributes/{category_id}", name = "attributes_of_category")
      */
     public function getAllAtyributesOfProductAction(Request $request, $category_id)
     {
-//        $category = new Category();
         $category = $this
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Category')
@@ -81,7 +79,7 @@ class ApiController extends Controller
                     'name' => $attrib->getName()
                 ]);
         }
-//        dump($collection);die;
+
         return new JsonResponse($collection
             ,200);
 
@@ -144,6 +142,7 @@ class ApiController extends Controller
             Response::HTTP_OK);
 
     }
+
     /**
      * @Route("/admin/feedback/delete/{id}", name = "delete_feedback")
      */
@@ -154,7 +153,6 @@ class ApiController extends Controller
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Feedback')
             ->find($id);
-
 
         if (!$feedback) {
             return new Response(    'Изображение не найдено',

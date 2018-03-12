@@ -12,7 +12,6 @@ class ManufacturerController extends Controller
      * @Route("/manufacturers/list", name="manufacturers-list")
      * @Template()
      */
-
     public function indexAction()
     {
         $manufacturers = $this
@@ -22,6 +21,5 @@ class ManufacturerController extends Controller
 
         return ['manufacturers' => $manufacturers];
     }
-
 
 }

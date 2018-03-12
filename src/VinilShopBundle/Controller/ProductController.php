@@ -26,7 +26,6 @@ class ProductController extends Controller
         if(!$product) {
             throw  $this->createNotFoundException('Товар не найден');
         }
-
         /**
          * @var User $user
          */
@@ -124,9 +123,41 @@ class ProductController extends Controller
         ];
     }
 
+    /**
+     * @Route("/products/search/{page}/{sort}/{direction}", name = "products_search")
+     * @Template()
+     */
+    public function productsSearchAction(Request $request,  $page = 1, $sort = 'name', $direction='asc', $search = 'all')
+    {
+        $search = $request->get('search');
+        $search_active = ($search == 'all'  || $search == '') ? false : true;
 
+        if($search != 'all' && !preg_match('/^[ ]+$/ u', $search)){
 
+            $products = $this
+                ->getDoctrine()
+                ->getRepository('VinilShopBundle:Product')
+                ->serchForName($search);
+        }else{
+            $products = $this
+                ->getDoctrine()
+                ->getRepository('VinilShopBundle:Product')
+                ->findAll();
+        }
 
-
-
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $products,
+            $page,
+            9,
+            ['defaultSortFieldName' => $sort,
+                'defaultSortDirection' => $direction]
+        );
+        return [
+            'pagination' => $pagination,
+            'search_active' => $search_active
+        ];
+        
+    }
+    
 }

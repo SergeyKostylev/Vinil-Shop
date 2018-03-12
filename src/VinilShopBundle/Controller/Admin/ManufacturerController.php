@@ -14,14 +14,12 @@ use VinilShopBundle\Form\ManufacturerType;
 use Symfony\Component\HttpFoundation\Response;
 use VinilShopBundle\Service\FileUploader;
 
-
 class ManufacturerController extends Controller
 {
     /**
      * @Route("/admin/manufacturer", name = "admin_manufacturers")
      * @Template()
      */
-
     public function indexAction(Request $request)
     {
         $manufacturers = $this
@@ -30,6 +28,7 @@ class ManufacturerController extends Controller
             ->findBy([],['name'=>'ASC']);
         return['manufacturers'=>$manufacturers];
     }
+
     /**
      * @Route("/admin/manufacturer/add", name = "add_manufacturer")
      * @Template()
@@ -109,6 +108,7 @@ class ManufacturerController extends Controller
                 'form' => $form->createView()];
 
     }
+
     /**
      * @Route("/admin/manufacturer/delete/{id}", name = "delete_manufacturer")
      */
@@ -121,8 +121,7 @@ class ManufacturerController extends Controller
             ->find($id);
 
         if (!$manufacturer) {
-            throw  $this->createNotFoundException('Производитель не найдена');
-            return new Response(    'Ops',
+            return new Response(    'Ошибка',
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
@@ -142,8 +141,7 @@ class ManufacturerController extends Controller
 
         $em->remove($manufacturer);
         $em->flush();
-        dump($em);die();
-        return new Response(    'Content',
+        return new Response(    'Удалено',
             Response::HTTP_OK);
 
     }

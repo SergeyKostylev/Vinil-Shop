@@ -93,14 +93,15 @@
             </div>
         </div>
     </div>
-
-
         {% block slider %}
         {% endblock %}
-{#{{ dump(app.session.get('name')) }}#}
-
     <div class="row" id="main-menu-row">
         <div class="col-12 col-sm-5 col-md-4 col-lg-3" id="main-menu-col">
+
+            <form method="get" action="{{ path('products_search') }}" class="form-inline" style="margin-left: 5%">
+                <input class="form-control" style="width: 77%" type="text" placeholder="Поиск"  name="search">
+                <button  class="btn btn-info" style="padding: 10px" type="submit"><i class="fas font-15pt fa-search"></i></button>
+            </form>
 
             <div class="margin-top20px">
                 {{ knp_menu_render('VinilShopBundle:Builder:mainMenu',{'allow_safe_labels': true})|raw }}
@@ -138,7 +139,6 @@
 {% block scripts %}
 
 {% endblock %}
-
 </body>
 </html>
 

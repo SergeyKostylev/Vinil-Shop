@@ -6,8 +6,7 @@ use VinilShopBundle\Entity\Cart;
 
 abstract class PriceSumInCart
 {
-
-
+    
     public static function getSumInCarts($carts)
     {
         $sum = 0;

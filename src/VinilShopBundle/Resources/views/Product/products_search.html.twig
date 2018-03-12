@@ -4,23 +4,17 @@
     <div>
         <a href="{{ path('home_page') }}" class="btn btn-secondary path-tree-button"><i class="fas fa-home"></i> Главная</a>
         &#160;
-        <a href="{{ path('categotyes_list') }}" class="btn btn-secondary path-tree-button">&#9899; Категории</a>
-        {% if pagination.items %}
-            {% if pagination.items[0].category.parent %}
-                &#160;
-                <a href="{{ path('children_categotyes', {id: pagination.items[0].category.parent.id }) }}" class="btn btn-secondary path-tree-button">
-                    &#9899; {{ pagination.items[0].category.parent.name }}
-                </a>
-            {% endif %}
-            &#160;
-            <a class="btn btn-secondary path-tree-button">&#9899; {{ pagination.items[0].category.name }}</a>
+        <a href="{{ path('products_search') }}" class="btn btn-secondary path-tree-button"><i class="fab fa-google-wallet"></i> Все товары</a>
+        &#160;
+        {% if search_active %}
+            <a class="btn btn-secondary path-tree-button"><i class="fas fa-search"></i> Поиск</a>
         {% endif %}
     </div>
-
 {% endblock %}
 
 {% block body %}
 
+ {% if pagination.items|length %}
     <div class="margin-top5px">Сортировать по:</div>
     <div  class="btn-group btn-group-toggle margin-top5px">
         {{ knp_pagination_sortable(pagination, 'Увеличение цены', 'price',{'class' : 'btn-sm btn-primary', 'type':'button'}, {'direction': 'asc'}) }}
@@ -30,6 +24,10 @@
     </div>
 
 <hr>
+ {% endif %}
+    {% if not pagination.items|length %}
+        <h2><i class="far text-primary fa-frown"></i> Поиск не дал результатов</h2>
+    {% endif %}
     <div class="container">
         <div class="row justify-content-center">
         {% for product in pagination %}

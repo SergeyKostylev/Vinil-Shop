@@ -7,30 +7,27 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-
-
 class CategoryController extends Controller
 {
+
     /**
      * @Route("/categoryes/list", name = "categotyes_list")
      * @Template()
      */
-
     public function indexAction(Request $request)
     {
         $categoryes = $this
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Category')
             ->firstParentCategories();
-//        dump($categoryes);
-        return['categoryes'=>$categoryes];
+
+        return['categoryes' => $categoryes];
     }
 
     /**
      * @Route("/categoryes/parent/{id}", name = "children_categotyes")
      * @Template()
      */
-
     public function childrenCategoryesAction(Request $request, $id)
     {
         $category = $this
@@ -51,7 +48,6 @@ class CategoryController extends Controller
             return ['categoryes' => $categoryes];
         }
         else{
-
             //no child categories
             return $this->redirectToRoute('products_by_category', ['id' => $id]);
         }
@@ -80,4 +76,5 @@ class CategoryController extends Controller
             'manufacturer' => $manufacturer
         ];
     }
+
 }

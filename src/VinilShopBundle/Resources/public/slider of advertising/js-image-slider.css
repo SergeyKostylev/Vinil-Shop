@@ -1,18 +1,15 @@
 
 #slider, #slider .sliderInner {
-    width:400px;height:70px;/* Must be the same size as the slider images */
+    width:400px;height:70px;
     border-radius:3px;
 }
-
 #slider {
     background-color:white;
     position:relative;
-    margin:0 auto; /*center-aligned*/
-    /*transform: translate3d(0,0,0);*/
+    margin:0 auto;
     box-shadow: 0px 1px 5px #999999;
 }
 
-/* the link style (if an image is wrapped by a link) */
 #slider a.imgLink, #slider .video {
     z-index:2;
     cursor:pointer;
@@ -21,24 +18,9 @@
     width:100%;height:100%;
 }
 
-/*!* Caption styles *!*/
-/*#slider .mc-caption {*/
-    /*position:absolute;*/
-    /*width:100%;*/
-    /*height:auto;*/
-    /*padding:10px 0;!* 10px will increase the height.*!*/
-    /*left:0px;*/
-    /*bottom:0px;top:auto;*/
-    /*overflow:hidden;*/
-    /*font: bold 14px/20px Arial;*/
-    /*color:#EEE;*/
-    /*text-align:center;*/
-    /*background:rgba(0,0,0,0.3);*/
-/*}*/
-
 #slider .navBulletsWrapper div
 {
-    font-size:0;color:White;/*hide the index number in the bullet element*/
+    font-size:0;color:White;
 }
 
 

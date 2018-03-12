@@ -35,9 +35,8 @@ class ProductController extends Controller
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $products, /* query NOT result */
+            $products,
             $page,
-//            $request->query->getInt('page', 1)/*page number*/,
             10,
                     ['defaultSortFieldName' => $sort,
                 'defaultSortDirection' => $direction]
@@ -90,7 +89,6 @@ class ProductController extends Controller
             'form' => $form->createView()
         ];
     }
-
 
     /**
      * @Route("/admin/product/edit/{id}", name = "edit_product")
@@ -191,9 +189,8 @@ class ProductController extends Controller
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $products, /* query NOT result */
+            $products,
             $page,
-//            $request->query->getInt('page', 1)/*page number*/,
             10,
             ['defaultSortFieldName' => $sort,
                 'defaultSortDirection' => $direction]
@@ -205,7 +202,5 @@ class ProductController extends Controller
         ];
 
     }
-
-
 
 }

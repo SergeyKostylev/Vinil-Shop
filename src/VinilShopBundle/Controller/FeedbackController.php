@@ -16,7 +16,6 @@ class FeedbackController extends Controller
      * @Route("/feedback", name="feedback")
      * @Template()
      */
-
     public function indexAction()
     {
         return [];
@@ -26,7 +25,6 @@ class FeedbackController extends Controller
      * @Route("/feedback/captcha", name="feedback_captcha")
      *
      */
-
     public function captchaAction()
     {
         $number = rand(1000,9999);
@@ -44,7 +42,5 @@ class FeedbackController extends Controller
         $response->headers->set('Content-Type', 'image/png');
         $response->send();
     }
-
-
 
 }

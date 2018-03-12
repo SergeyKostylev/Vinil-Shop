@@ -2,10 +2,6 @@
 
 {% block body %}
     <div style="vertical-align: middle;">
-        {#<h3>#}
-           {#Заказ: {{ order.number }}#}
-            {#&#160;#}
-            {#&#160;#}
             <div class="btn-group btn-group-toggle margin-right20px">
                 <a href="{{ path('private_office') }}">
                     <button  type="button" class="btn-sm btn-primary margin-right10px">
@@ -24,10 +20,6 @@
     <div class="container">
 
         <h3>№: {{ order.number }} </h3>
-
-
-
-
 
             <h5>Информация о заказе:</h5>
             <div class="font-12pt">
@@ -87,9 +79,6 @@
             {% endfor %}
             </tbody>
         </table>
-
-
-
     </div>
 
 

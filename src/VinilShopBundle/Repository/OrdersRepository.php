@@ -10,7 +10,6 @@ namespace VinilShopBundle\Repository;
  */
 class OrdersRepository extends \Doctrine\ORM\EntityRepository
 {
-
     public function serchForNumber($search)
     {
         return $this

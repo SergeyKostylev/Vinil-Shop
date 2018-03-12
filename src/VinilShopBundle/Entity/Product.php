@@ -127,8 +127,6 @@ class Product
         $this->galleryImages = $galleryImages;
     }
 
-
-
     /**
      * Get id
      *
@@ -170,8 +168,7 @@ class Product
     {
         $this->manufacturer = $manufacturer;
     }
-
-
+    
     /**
      * Set name
      *
@@ -333,9 +330,7 @@ class Product
 
         return $this;
     }
-
-
-
+    
     /**
      * Set isActive
      *
@@ -395,8 +390,7 @@ class Product
 
         return $this;
     }
-
-
+    
     /**
      * Constructor
      */

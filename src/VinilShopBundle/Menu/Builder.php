@@ -58,9 +58,8 @@ class Builder implements ContainerAwareInterface
                 ->setLinkAttribute('class', $linkClasses)
             ;
         }
-
-
-
+        
         return $menu;
     }
+    
 }

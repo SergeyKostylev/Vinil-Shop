@@ -30,7 +30,6 @@ class ProductType extends AbstractType
                     'label' => 'Титульное изображение',
                     'data_class' => null,
                     'required' => $required_file
-
                 ])
             ->add('otherImages', FileType::class,
                 [
@@ -38,7 +37,6 @@ class ProductType extends AbstractType
                     'multiple' => true,
                     'required' => false
                 ])
-//            ->add('galleryImages',EntityType::class,)
             ->add('isActive')
             ->add('category', EntityType::class, ['choice_label'=>'name',
                         'class'=> Category::class,
@@ -61,7 +59,6 @@ class ProductType extends AbstractType
                             ->createQueryBuilder('manuf')
                             ->orderBy('manuf.name', 'ASC');
                 }
-
             ]);
 
     }/**
@@ -82,6 +79,5 @@ class ProductType extends AbstractType
     {
         return 'vinilshopbundle_product';
     }
-
 
 }

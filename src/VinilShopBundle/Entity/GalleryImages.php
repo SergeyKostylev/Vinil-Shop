@@ -35,7 +35,6 @@ class GalleryImages
      */
     private $product;
 
-
     /**
      * @return Product
      */
@@ -51,7 +50,6 @@ class GalleryImages
     {
         $this->product = $product;
     }
-
 
     /**
      * Get id

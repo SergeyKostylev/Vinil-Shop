@@ -19,7 +19,6 @@ class CategoryController extends Controller
      * @Route("/admin/category/list", name = "admin_categoryes")
      * @Template()
      */
-
     public function indexAction(Request $request)
     {
         $categores = $this
@@ -28,6 +27,7 @@ class CategoryController extends Controller
             ->findTree();
         return['categores'=>$categores];
     }
+
     /**
      * @Route("/admin/category/add", name = "add_category")
      * @Template()
@@ -50,12 +50,12 @@ class CategoryController extends Controller
             $em->persist($category);
             $em->flush();
             return $this->redirectToRoute('add_category');
-
         }
         return [
             'form' => $form->createView()
         ];
     }
+
     /**
      * @Route("/admin/category/edit/{id}", name = "edit_category")
      * @Template()
@@ -107,7 +107,6 @@ class CategoryController extends Controller
 
     }
 
-
     /**
      * @Route("/admin/category/delete/{id}", name = "delete_category")
      */
@@ -119,18 +118,15 @@ class CategoryController extends Controller
             ->getRepository('VinilShopBundle:Category')
             ->find($id);
 
-
         if (!$category) {
-            throw  $this->createNotFoundException('Категория не найдена');
             return new Response(    'Ops',
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }
         $em->remove($category);
         $em->flush();
-        dump($category);die;
+
         return new Response(    'Content',
             Response::HTTP_OK);
-
 
     }
 

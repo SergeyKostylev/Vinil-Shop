@@ -43,6 +43,5 @@ class UserType extends AbstractType
     {
         return 'vinilshopbundle_user';
     }
-
-
+    
 }

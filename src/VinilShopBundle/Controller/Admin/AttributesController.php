@@ -11,7 +11,6 @@ use VinilShopBundle\Entity\Attribute_name;
 use VinilShopBundle\Form\Attribute_nameType;
 use VinilShopBundle\Form\AttributeType;
 
-
 class AttributesController extends Controller
 {
     /**
@@ -42,7 +41,7 @@ class AttributesController extends Controller
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Attribute_name')
             ->findByName($attribute->getName());
-                                                                        /////СОЗДАТЬ ФЛЕШ СООБЩЕНЕ "ТАКОЙ АТТРИБУТ УЖЕ СУЩЕСТВУЕТ"
+
         if ($form->isSubmitted() && $form->isValid() && !$attributes) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($attribute);
@@ -53,7 +52,5 @@ class AttributesController extends Controller
             'form' => $form->createView()
         ];
     }
-
-
 
 }
