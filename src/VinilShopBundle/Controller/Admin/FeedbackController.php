@@ -14,7 +14,7 @@ class FeedbackController extends Controller
      * @Route("/admin/feedbacks/list/{page}/{sort}/{direction}", name="admin_feedbacks")
      * @Template()
      */
-    public function indexAction(Request $request, $page =1 , $sort = 'id', $direction='asc')
+    public function indexAction(Request $request, $page =1 , $sort = 'id', $direction='desc')
     {
         $feedbacks = $this
             ->getDoctrine()
