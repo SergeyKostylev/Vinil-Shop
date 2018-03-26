@@ -332,8 +332,24 @@ $(document).ready(function () {
     }
     review();
 
+
+    function emptyBlockView() {
+        var  $emptyBlock = $('#empty-block');
+
+        if ($(window).width() > 575){
+            $emptyBlock.fadeIn();
+        }
+        if ($(window).width() <= 575){
+            $emptyBlock.fadeOut();
+        }
+    }
+
+    emptyBlockView();
+
+
     window.onresize = function (ev) {
         review();
+        emptyBlockView();
     };
 
 
@@ -754,19 +770,6 @@ $(document).ready(function () {
             });
 
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     var $menuadd = $('#menuadd');
     var $clikTime =true;

@@ -9,29 +9,31 @@
 {% endblock %}
 
 {% block body %}
-    <div>
-        {% for category in categoryes %}
-            <div class="margin-top20px margin-right20px float-left ">
-                <div class="gallery cf">
-                    <div>
-                        <div class="text-center font-12pt">
-                            {% if category.children|length > 0 %}
-                            <a href="{{ path('children_categotyes', {id : category.id}) }}" >
-                                <img src="{{ asset(category_title_img) }}{{ category.titleImage }}">
-                            </a>
-                            {% else %}
-                            <a href="{{ path('products_by_category', {id : category.id}) }}" >
-                                <img src="{{ asset(category_title_img) }}{{ category.titleImage }}">
-                            </a>
-                            {% endif %}
-                            <br>
-                            <div class="name-field-in-category-list">
-                             {{ category.name }}
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for category in categoryes %}
+                <div class="margin-top20px margin-right20px float-left ">
+                    <div class="gallery cf">
+                        <div>
+                            <div class="text-center font-12pt">
+                                {% if category.children|length > 0 %}
+                                <a href="{{ path('children_categotyes', {id : category.id}) }}" >
+                                    <img src="{{ asset(category_title_img) }}{{ category.titleImage }}">
+                                </a>
+                                {% else %}
+                                <a href="{{ path('products_by_category', {id : category.id}) }}" >
+                                    <img src="{{ asset(category_title_img) }}{{ category.titleImage }}">
+                                </a>
+                                {% endif %}
+                                <br>
+                                <div class="name-field-in-category-list">
+                                 {{ category.name }}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

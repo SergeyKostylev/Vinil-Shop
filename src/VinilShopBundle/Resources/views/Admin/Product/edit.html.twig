@@ -89,7 +89,7 @@
             {% for image in product.galleryImages %}
                 <div class="gallery position-relative">
                     <a target="_blank" class="float-left">
-                        <img src="{{ asset(gallery_images) }}{{ image.name }}" alt="Fjords" width="300" height="200">
+                        <img src="{{ asset(gallery_images) }}{{ image.name }}" alt="Fjords" style=" max-height: 270px; max-width: 210px">
                     </a>
                     <div class="position-absolute" style="bottom: 3px; right: 3px">
                         <span class="image-id" data-image-id="{{ image.id }}"></span>

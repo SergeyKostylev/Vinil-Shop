@@ -10,15 +10,19 @@
 
 {% block body %}
     <div class="margin-top5px">
-        {% for manufacturer in manufacturers %}
+        <div class="container">
+            <div class="row justify-content-center">
+                {% for manufacturer in manufacturers %}
 
 
-            <div class="float-left manufacturer-log">
-                <a  href="{{ path('categoryes_manufacturer', {id : manufacturer.id}) }}">
-                    <img class="max-height30px" src="{{ asset(manufacturer_log) }}{{ manufacturer.titleImage }} " >
-                </a>
+                <div class="float-left manufacturer-log">
+                    <a  href="{{ path('categoryes_manufacturer', {id : manufacturer.id}) }}">
+                        <img class="max-height30px" src="{{ asset(manufacturer_log) }}{{ manufacturer.titleImage }} " >
+                    </a>
+                </div>
+
+                {% endfor %}
             </div>
-
-        {% endfor %}
+        </div>
     </div>
 {% endblock %}
