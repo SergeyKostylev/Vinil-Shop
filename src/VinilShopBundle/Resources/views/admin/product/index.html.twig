@@ -1,0 +1,89 @@
+{% extends '@VinilShop/admin_layout.html.twig' %}
+{% block titleMenu %}
+    Все товары
+{% endblock %}
+{% block body %}
+
+    <div class="pagination justify-content-center">
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+
+<button type="button" class="category-list-btn btn btn-success margin-bottom15px">Товары по категориям <i class="fas fa-angle-double-down"></i></button>
+<div  class="bg-dark category-list" style="display: none">
+    {% import _self as macros %}
+    <ul class="font-15px">
+        {{ macros.tree(categores)  }}
+    </ul>
+</div>
+
+
+
+<table class="table">
+    <thead class="table-active">
+    <tr>
+        <th scope="col">{{ knp_pagination_sortable(pagination, 'Код', 'id') }}</th>
+        <th scope="col">image</th>
+        <th scope="col">{{ knp_pagination_sortable(pagination, 'Название', 'name') }}</th>
+        <th scope="col">{{ knp_pagination_sortable(pagination, 'Цена', 'price') }}</th>
+        <th scope="col">{{ knp_pagination_sortable(pagination, 'Наличие', 'isActive') }}</td>
+        <th scope="col">{{ knp_pagination_sortable(pagination, 'Категория', 'category.name') }}</th>
+        <th scope="col">{{ knp_pagination_sortable(pagination, 'Производитель', 'manufacturer.name') }}</th>
+        <th scope="col">Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for product in pagination %}
+    <tr>
+        <td>{{ product.id }}</td>
+        <td>
+            <img src="{{ asset(images_of_entities) }}{{ product.titleImage }}" height="70">
+        </td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>
+            <div class="text-center ">
+                {% if product.isActive %}
+                    <i class="fas fa-check text-success font-15pt"></i>
+                {% else %}
+                    <i class="fas fa-times text-danger font-15pt"></i>
+                {% endif %}
+            </div>
+
+        </td>
+        <td>{{ product.category.name }}</td>
+        <td>{{ product.manufacturer.name }}</td>
+        <td>
+            <div class="btn-group-vertical button-group">
+                <a href="{{ path('edit_product' , {id: product.id}) }}"  class="btn btn-sm btn-warning">Редактировать</a>
+                <a id="{{ product.id }}" class="ajaxBtnDelProd btn btn-sm btn-danger">Удалить</a>
+            </div>
+        </td>
+    </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+
+    <div class="pagination justify-content-center">
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% macro tree(categores) %}
+    {% for category in categores %}
+        <li class="li-marker-none">
+            <a href="{{ path('product_by_category' , {id: category.id}) }}">{{ category.name }}</a>
+            {% if category.children %}
+                <ul>
+                    {{ _self.tree(category.children) }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endmacro %}

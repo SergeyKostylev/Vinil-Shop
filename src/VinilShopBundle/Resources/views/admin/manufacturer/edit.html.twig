@@ -1,0 +1,34 @@
+{% extends '@VinilShop/admin_layout.html.twig' %}
+
+      {% block titleMenu %}
+          Редактирование производителя
+      {% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-8 col-lg-5">
+            {{ form_start(form) }}
+
+            <div class="block-center titleImagePic">
+                <img src="{{ asset(manufacturer_log) }}{{ manufacturer.titleImage }}" class="margin-bottom15px admin-edit-title-img">
+            </div>
+            <div class="disp-none titleImageImputEdid">
+                {{ form_row(form.titleImage, {'label': 'Титульное изображение', 'attr' : {'class' : 'btn btn-outline-primary'}}) }}
+            </div>
+            <div class="row justify-content-center">
+                <button type="button" class="titleImageImputBut btn btn-primary">Изменить</button>
+            </div>
+
+            {{ form_row(form.name, {'label': 'Название производителя'}) }}
+            {{ form_row(form.submit, {'label': 'Изменить'}) }}
+            {{ form_end(form) }}
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-7 border-left-info height-max-content">
+            <b>Примечание:</b>
+            <br>
+            Нежелательно чтобы ширина логотипа была меньше его высоты .
+        </div>
+    </div>
+
+{% endblock %}
+

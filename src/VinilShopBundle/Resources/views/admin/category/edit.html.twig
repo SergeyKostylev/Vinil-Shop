@@ -1,0 +1,47 @@
+{% extends '@VinilShop/admin_layout.html.twig' %}
+
+   {% block titleMenu %}
+       Редактирование категории
+   {% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-8 col-lg-5">
+
+    {{ form_start(form) }}
+            <div class="row">
+                <div class="col-12">
+                    <div class="block-center titleImagePic">
+                        <img src="{{ asset(category_title_img) }}{{ category.titleImage }}" class="margin-bottom15px admin-edit-title-img">
+                    </div>
+                    <div class="disp-none titleImageImputEdid">
+                        {{ form_row(form.titleImage, {'label': 'Титульное изображение', 'attr' : {'class' : 'btn btn-outline-primary'}}) }}
+                    </div>
+                    <div class="row justify-content-center">
+                        <button type="button" class="titleImageImputBut btn btn-primary">Изменить</button>
+                    </div>
+                </div>
+            </div>
+    {{ form_row(form.parent, {'label': 'Родительская категория'}) }}
+    {{ form_row(form.name, {'label': 'Название категории'}) }}
+    {{ form_row(form.lastCategory, {'label': 'Категория не может иметь подкатегорий','attr' : {'class':'last_categ_chek edit_last_categ_chek'}}) }}
+    {{ form_row(form.attributeNames, {'attr' : {'class':'attrib_list edit_attrib_list disp-none'}}) }}
+    {{ form_row(form.submit, {'label': 'Редактировать'}) }}
+    {{ form_end(form) }}
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-7 border-left-info height-max-content">
+            <b>Примечания:</b>
+            <br>
+            <b>1.</b>Категория может не входить не в одну из существующих. Для этого поле "Родительская категория" нужно оставить пустым.
+            <br>
+            <b>2.</b> Харектеристики может иметь толь "заключительна" категория.
+            <br>
+            <b>3.</b> Титульное изображение должно иметь соотношение сторон 1х1.
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

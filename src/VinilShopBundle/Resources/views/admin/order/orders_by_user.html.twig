@@ -1,0 +1,97 @@
+{% extends '@VinilShop/admin_layout.html.twig' %}
+
+{% block titleMenu %}
+    Заказы
+    <br>
+    {{ user.username }}
+{% endblock %}
+{% block body %}
+
+    <div class="container">
+        <div id="status-icons-for-table">
+            <i id="active-false-icon" class="far font-15pt text-success fa-check-circle" style="display: none"></i>
+            <i id="active-true-icon" class="far font-15pt text-warning fa-clock"  style="display: none"></i>
+            <i id="active-question-icon" class="far font-15pt text-danger fa-question-circle"  style="display: none"></i>
+        </div>
+        {% if pagination.items %}
+        <div class="pagination justify-content-center">
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
+
+            <table class="table">
+            <thead class="table-active">
+                <tr>
+                    <th scope="col" style="vertical-align: middle; max-width: 7%" class="text-center">{{ knp_pagination_sortable(pagination, 'Код', 'id') }}</th>
+                    <th scope="col" style="vertical-align: middle; max-width: 10%" class="text-center">{{ knp_pagination_sortable(pagination, 'Закрыт', 'state') }}</th>
+                    <th scope="col" style="vertical-align: middle;" class="text-center">Номер</th>
+                    <th scope="col" style="vertical-align: middle;" class="text-center">{{ knp_pagination_sortable(pagination, 'Статус', 'state') }}</th>
+                    <th scope="col" style="vertical-align: middle;" class="text-center">Контакты заказчика</th>
+                    <th scope="col" style="vertical-align: middle;" class="text-center">{{ knp_pagination_sortable(pagination, 'Дата', 'date_create') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for order in pagination %}
+                    <tr>
+                        <td class="text-center" style="vertical-align: middle;">{{ order.id }}</td>
+                        <td style="padding-left: 9px; vertical-align: middle;" class="text-center status-field">
+                            {% if order.state.id in [5,7] %}
+                                <i class="far font-15pt text-success fa-check-circle"></i>
+                            {% else %}
+                                <i class="far font-15pt text-warning fa-clock"></i>
+                            {% endif %}
+                        </td>
+                        <td class="text-center" style="vertical-align: middle;">
+                        <a href="{{ path('admin_order_show', {id : order.id}) }}">
+                            {{ order.number }}
+                        </a>
+                        </td>
+                        <td class="text-center" style="vertical-align: middle;">
+                            <div class="row justify-content-center">
+                                <span class="order-id-data" data-order-id="{{ order.id }}"></span>
+                                <i class="order-select-spiner fa fa-spinner fa-pulse font-15pt fa-fw" ></i>
+                                <select class="order-select form-control" style="display: none">
+                                    {% for state in states %}
+                                        <option value="{{ state.id }}"
+                                                {% if state.id == order.state.id %}
+                                            selected="selected"
+                                                {% endif %}>{{ state.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </td>
+                        <td class="text-center" style="vertical-align: middle;">
+                            <i class="fas text-success fa-at"></i> {{ order.email }}
+                            <br>
+                            <i class="fas text-primary fa-rotate-90 fa-phone-square"></i> {{ order.phone }}
+                        </td>
+                        <td class="text-center" style="vertical-align: middle;">
+                            {{ order.dateCreate|date("d.m.Y") }}
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+            </table>
+
+            <div class="pagination justify-content-center">
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+            {% else %}
+                <h3>
+                    <i class="far fa-meh"></i>
+                    <br>
+                    У этого пользователя нет заказов.
+                </h3>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+{% endblock %}

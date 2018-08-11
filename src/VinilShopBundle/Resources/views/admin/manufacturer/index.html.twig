@@ -1,0 +1,42 @@
+{% extends '@VinilShop/admin_layout.html.twig' %}
+
+      {% block titleMenu %}
+          Производители
+      {% endblock %}
+
+{% block body %}
+    <table class="table table-striped text-center font-12pt">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Код</th>
+            <th scope="col">Лого</th>
+            <th scope="col">Название</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for manufacturer in manufacturers %}
+            <tr>
+                <td scope="row">{{ loop.index }}</td>
+                <td>{{ manufacturer.id }}</td>
+                <td>
+                    <img src="{{ asset(manufacturer_log) }}{{ manufacturer.titleImage }}" style="max-height: 20px; max-width: 70px ">
+                </td>
+                <td>{{ manufacturer.name }}</td>
+                <td>
+                    <span class="btn-group">
+                        <a href="{{ path('edit_manufacturer',  {id: manufacturer.id}) }}" class="text-warning" title="Редактировать"><i class="fas fa-pencil-alt"></i></a>
+                        &#160;&#160;&#160;&#160;&#160;
+                        <a id="{{ manufacturer.id }}" class="ajaxBtnDelMan text-danger" title="Удалить"><i class="fas fa-trash-alt"></i></a>
+                    </span>
+                </td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+{% endblock %}
+
