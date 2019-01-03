@@ -24,9 +24,10 @@ class UserType extends AbstractType
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => 'Пароль'),
                 'second_options' => array('label' => 'Повторите пароль'),
-            ))
-            ;
-    }/**
+            ));
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
@@ -43,5 +44,4 @@ class UserType extends AbstractType
     {
         return 'vinilshopbundle_user';
     }
-    
 }

@@ -29,12 +29,11 @@ class AttributeType extends AbstractType
                         $qb = $attribute->createQueryBuilder('a');
                         $qb->join('a.categoryes','c');
 
-                        if ($category){
+                        if ($category ){
                             $qb
                             ->where('c = :id')
                             ->setParameter('id', $category);
                         }
-
                     return $qb;
                 }
             ])
@@ -58,6 +57,4 @@ class AttributeType extends AbstractType
     {
         return 'vinilshopbundle_attribute';
     }
-
-
 }

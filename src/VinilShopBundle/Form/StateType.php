@@ -31,6 +31,4 @@ class StateType extends AbstractType
     {
         return 'vinilshopbundle_state';
     }
-
-
 }

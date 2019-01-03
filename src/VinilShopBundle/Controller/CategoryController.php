@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CategoryController extends Controller
 {
-
     /**
      * @Route("/categoryes/list", name = "categotyes_list")
      * @Template()
@@ -34,20 +33,18 @@ class CategoryController extends Controller
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Category')
             ->find($id);
-        if (!$category){
+        if (!$category) {
             throw  $this->createNotFoundException('Категория не найдена');
         }
 
-        if (count($category->getChildren())){
-
+        if (count($category->getChildren())) {
             //there are child categories
             $categoryes = $this
                 ->getDoctrine()
                 ->getRepository('VinilShopBundle:Category')
                 ->childrenCategories($id);
             return ['categoryes' => $categoryes];
-        }
-        else{
+        } else {
             //no child categories
             return $this->redirectToRoute('products_by_category', ['id' => $id]);
         }
@@ -76,5 +73,4 @@ class CategoryController extends Controller
             'manufacturer' => $manufacturer
         ];
     }
-
 }

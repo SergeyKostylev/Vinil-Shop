@@ -60,5 +60,4 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
 
     }
-    
 }

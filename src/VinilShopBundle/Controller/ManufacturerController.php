@@ -19,7 +19,8 @@ class ManufacturerController extends Controller
             ->getRepository('VinilShopBundle:Manufacturer')
             ->findBy([],['name'=>'asc']);
 
-        return ['manufacturers' => $manufacturers];
+        return [
+            'manufacturers' => $manufacturers
+        ];
     }
-
 }

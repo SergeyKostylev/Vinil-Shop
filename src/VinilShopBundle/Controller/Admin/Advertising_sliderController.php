@@ -32,7 +32,7 @@ class Advertising_sliderController extends Controller
             /**
              * @var UploadedFile $image
              */
-            foreach($images as $image){
+            foreach ($images as $image) {
                 $fileUploader = new FileUploader($this->getParameter('advertising_slider_images'));
                 $fileName = $fileUploader->upload($image);
                 $slider_image = new Advertising_slider();
@@ -56,5 +56,4 @@ class Advertising_sliderController extends Controller
             'slider' => $advSlider
         ];
     }
-
 }

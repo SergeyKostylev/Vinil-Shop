@@ -2,7 +2,6 @@
 
 namespace VinilShopBundle\Service;
 
-
 abstract class OrderNumberGenerator
 {
     public static function getOrderNumber()
@@ -11,5 +10,4 @@ abstract class OrderNumberGenerator
 
         return $number;
     }
-
 }

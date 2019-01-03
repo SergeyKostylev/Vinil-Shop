@@ -31,6 +31,4 @@ class GalleryImagesType extends AbstractType
     {
         return 'vinilshopbundle_galleryimages';
     }
-
-
 }

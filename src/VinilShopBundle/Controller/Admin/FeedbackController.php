@@ -25,8 +25,10 @@ class FeedbackController extends Controller
             $feedbacks,
             $page,
             50,
-            ['defaultSortFieldName' => $sort,
-                'defaultSortDirection' => $direction]
+            [
+                'defaultSortFieldName' => $sort,
+                'defaultSortDirection' => $direction
+            ]
         );
 
         return[
@@ -34,14 +36,12 @@ class FeedbackController extends Controller
         ];
     }
 
-
     /**
      * @Route("/admin/feedback/show/{id}", name="admin_feedback_show")
      * @Template()
      */
     public function showAction(Request $request, $id)
     {
-
         $feedback = $this
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Feedback')
@@ -56,9 +56,5 @@ class FeedbackController extends Controller
         return [
             'feedback' => $feedback
         ];
-
     }
-
-
-
 }

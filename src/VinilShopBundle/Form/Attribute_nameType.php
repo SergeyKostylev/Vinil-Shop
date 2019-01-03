@@ -32,6 +32,4 @@ class Attribute_nameType extends AbstractType
     {
         return 'vinilshopbundle_attribute_name';
     }
-
-
 }

@@ -12,7 +12,6 @@ use VinilShopBundle\Form\UserType;
 
 class SecurityController extends Controller
 {
-
     /**
      * @Route("/login", name="login")
      * @Template()
@@ -20,7 +19,7 @@ class SecurityController extends Controller
     public function loginAction(Request $request)
     {
         $user = $this->getUser();
-        if($user){
+        if ($user) {
             return $this->redirectToRoute('home_page');
         }
 
@@ -36,7 +35,6 @@ class SecurityController extends Controller
             'last_username' => $lastUsername,
             'error'         => $error,
         ];
-
     }
 
     /**
@@ -61,13 +59,13 @@ class SecurityController extends Controller
 
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
-        $form->add('submit',SubmitType::class, [
-                                                'label' => 'Регистрация',
-                                                ]);
+        $form
+            ->add('submit',SubmitType::class, [
+                'label' => 'Регистрация',
+            ]);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
@@ -81,6 +79,5 @@ class SecurityController extends Controller
             'form' => $form->createView(),
             'message' => $message
         ];
-
     }
 }

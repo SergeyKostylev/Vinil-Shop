@@ -10,8 +10,6 @@ namespace VinilShopBundle\Repository;
  */
 class Attribute_nameRepository extends \Doctrine\ORM\EntityRepository
 {
-
-
     public function attributesOfCategory($id)
     {
         return $this
@@ -21,8 +19,8 @@ class Attribute_nameRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('id',$id)
             ->getQuery()
             ->getResult();
-
     }
+    
     public function findByName($name)
     {
         return $this
@@ -31,10 +29,5 @@ class Attribute_nameRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('name',$name)
             ->getQuery()
             ->getResult();
-
     }
-
-
-
-
 }

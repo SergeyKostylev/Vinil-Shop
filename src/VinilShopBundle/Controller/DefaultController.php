@@ -13,7 +13,6 @@ class DefaultController extends Controller
      * @Route("/", name="home_page")
      * @Template()
      */
-
     public function indexAction()
     {
         $products = $this
@@ -55,10 +54,6 @@ class DefaultController extends Controller
      */
     public function infoAction()
     {
-
         return [];
     }
-
-
-
 }

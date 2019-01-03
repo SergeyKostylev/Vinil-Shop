@@ -11,7 +11,6 @@ use VinilShopBundle\Entity\User;
 
 class CartController extends Controller
 {
-
     /**
      * @Route("/cart/list", name="cart-list")
      * @Template()
@@ -27,25 +26,24 @@ class CartController extends Controller
         $notActive = [];
         $sum = 0;
 
-        if(!$user) {
+        if (!$user) {
             $session = new Session();
-            if ($session->has('cart'))
-            {
+            if ($session->has('cart')) {
                 $session_cart = $session->get('cart');
 
-                foreach ($session_cart as $product_id => $amount ){
+                foreach ($session_cart as $product_id => $amount ) {
                     $product = $this
                         ->getDoctrine()
                         ->getRepository('VinilShopBundle:Product')
                         ->find($product_id);
-                    if($product->getIsActive()){
+                    if ($product->getIsActive()) {
                         $cart[] = [
                             'product' => $product,
                             'amount' => $amount
-                            ];
+                        ];
                         $sum+= $product->getPrice() * $amount;
-                    }else{
-                        $notActive[]=[
+                    } else {
+                        $notActive[] = [
                             'product' => $product,
                             'amount' => $amount
                         ];
@@ -64,16 +62,15 @@ class CartController extends Controller
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Cart')
             ->findBy(['user' =>  $user->getId()]);
-        foreach ($all_cart as $cart_item){
 
-            if($cart_item->getProduct()->getIsActive()){
+        foreach ($all_cart as $cart_item) {
+            if ($cart_item->getProduct()->getIsActive()) {
                 $cart[] = $cart_item;
                 $price = $cart_item->getProduct()->getPrice();
                 $sum+= $price * $cart_item->getAmount();
-            }else{
+            } else {
                 $notActive[] = $cart_item;
             }
-
         }
         return [
             'cart'=> $cart,
@@ -81,5 +78,4 @@ class CartController extends Controller
             'notActive' => $notActive
         ];
     }
-
 }

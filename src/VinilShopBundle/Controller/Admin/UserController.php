@@ -25,13 +25,14 @@ class UserController extends Controller
             $users,
             $page,
             20,
-            ['defaultSortFieldName' => $sort,
-                'defaultSortDirection' => $direction]
+            [
+                'defaultSortFieldName' => $sort,
+                'defaultSortDirection' => $direction
+            ]
         );
 
         return[
             'pagination' => $pagination
         ];
     }
-
 }

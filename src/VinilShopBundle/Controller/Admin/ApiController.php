@@ -34,8 +34,8 @@ class ApiController extends Controller
         $em->remove($product);
         $em->flush();
 
-        if(count($galleryImages)) {
-            foreach ($galleryImages as $images){
+        if (count($galleryImages)) {
+            foreach ($galleryImages as $images) {
                 $nameImage = $images->getName();
                 @unlink($this->getParameter('gallery_img') . '/' .$nameImage);
             }
@@ -57,7 +57,7 @@ class ApiController extends Controller
             ->getRepository('VinilShopBundle:Category')
             ->find($category_id);
 
-        if (!$category){
+        if (!$category) {
             return new Response('Category does not exist',
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -67,14 +67,12 @@ class ApiController extends Controller
             ->getRepository('VinilShopBundle:Attribute_name')
             ->attributesOfCategory($category_id);
 
-        $collection=[];
-        foreach ($attributes as $attrib )
-        {
+        $collection = [];
+        foreach ($attributes as $attrib ) {
             /**
              * @var Attribute_name $attrib
              */
-            array_push($collection ,
-                [
+            array_push($collection , [
                     'id' => $attrib->getId(),
                     'name' => $attrib->getName()
                 ]);
@@ -82,13 +80,11 @@ class ApiController extends Controller
 
         return new JsonResponse($collection
             ,200);
-
     }
 
     /**
      * @Route("/admin/gallery-image/delete/{id}", name = "delete_gallery_image")
      */
-
     public function galleryImageAction(Request $request, $id)
     {
         $image = $this
@@ -117,7 +113,6 @@ class ApiController extends Controller
     /**
      * @Route("/admin/advertising/delete/{id}", name = "delete_advertising_image")
      */
-
     public function deleteAdvertisingSlidrImageAction(Request $request, $id)
     {
         $image = $this
@@ -127,7 +122,8 @@ class ApiController extends Controller
 
         if (!$image) {
             return new Response(    'Изображение не найдено',
-                Response::HTTP_INTERNAL_SERVER_ERROR);
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
 
         $nameImage = $image->getImage();
@@ -139,14 +135,13 @@ class ApiController extends Controller
         @unlink($this->getParameter('advertising_slider_images') . '/' .$nameImage);
 
         return new Response(    'Ок',
-            Response::HTTP_OK);
-
+            Response::HTTP_OK
+        );
     }
 
     /**
      * @Route("/admin/feedback/delete/{id}", name = "delete_feedback")
      */
-
     public function deleteFeedbackAction(Request $request, $id)
     {
         $feedback = $this
@@ -162,8 +157,8 @@ class ApiController extends Controller
         $em->remove($feedback);
         $em->flush();
         return new Response(    'Ок',
-            Response::HTTP_OK);
-
+            Response::HTTP_OK
+        );
     }
 
     /**
@@ -184,7 +179,8 @@ class ApiController extends Controller
 
         if (!$order || !$state) {
             return new Response(    'Заказ/Статус не найден',
-                Response::HTTP_INTERNAL_SERVER_ERROR);
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
         $order->setState($state);
 
@@ -195,8 +191,8 @@ class ApiController extends Controller
         $em->flush();
 
         return new JsonResponse([
-                        'active' => $active
-            ],200);
+            'active' => $active
+        ],200);
 
     }
 
@@ -204,7 +200,6 @@ class ApiController extends Controller
      * @Route("/amount-active-feedback", name="amount_active_feedback")
      *
      */
-
     public function amountInCart()
     {
         $feedbacks = $this
@@ -217,7 +212,5 @@ class ApiController extends Controller
             return  new JsonResponse([
                 'amount' => $amount
             ],200);
-
     }
-
 }

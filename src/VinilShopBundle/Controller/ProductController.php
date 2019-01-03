@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use VinilShopBundle\Entity\User;
 
-
 class ProductController extends Controller
 {
     /**
@@ -23,7 +22,7 @@ class ProductController extends Controller
             ->getRepository('VinilShopBundle:Product')
             ->find($id);
 
-        if(!$product) {
+        if (!$product) {
             throw  $this->createNotFoundException('Товар не найден');
         }
         /**
@@ -31,7 +30,7 @@ class ProductController extends Controller
          */
         $user = $this->getUser();
 
-        if($user) {
+        if ($user) {
             $inCart = $this
                 ->getDoctrine()
                 ->getRepository('VinilShopBundle:Cart')
@@ -39,10 +38,10 @@ class ProductController extends Controller
                     'user' => $user->getId(),
                     'product' => $id
                 ]);
-        }else{
+        } else {
             $session = new Session();
             $cart = $session->get('cart');
-           @$inCart = array_key_exists($id, $cart) ? true : false;
+            @$inCart = array_key_exists($id, $cart) ? true : false;
         }
         return [
             'product' => $product,
@@ -71,8 +70,10 @@ class ProductController extends Controller
             $products,
             $page,
             9,
-            ['defaultSortFieldName' => $sort,
-                'defaultSortDirection' => $direction]
+            [
+                'defaultSortFieldName' => $sort,
+                'defaultSortDirection' => $direction
+            ]
         );
         return [
             'pagination' => $pagination
@@ -115,8 +116,10 @@ class ProductController extends Controller
             $products,
             $page,
             9,
-            ['defaultSortFieldName' => $sort,
-                'defaultSortDirection' => $direction]
+            [
+                'defaultSortFieldName' => $sort,
+                'defaultSortDirection' => $direction
+            ]
         );
         return [
             'pagination' => $pagination
@@ -130,15 +133,15 @@ class ProductController extends Controller
     public function productsSearchAction(Request $request,  $page = 1, $sort = 'name', $direction='asc', $search = 'all')
     {
         $search = $request->get('search');
-        $search_active = ($search == 'all'  || $search == '') ? false : true;
+        $search_active = ($search == 'all' || $search == '') ? false : true;
 
-        if($search != 'all' && !preg_match('/^[ ]+$/ u', $search)){
+        if ($search != 'all' && !preg_match('/^[ ]+$/ u', $search)) {
 
             $products = $this
                 ->getDoctrine()
                 ->getRepository('VinilShopBundle:Product')
                 ->serchForName($search);
-        }else{
+        } else {
             $products = $this
                 ->getDoctrine()
                 ->getRepository('VinilShopBundle:Product')
@@ -150,14 +153,15 @@ class ProductController extends Controller
             $products,
             $page,
             9,
-            ['defaultSortFieldName' => $sort,
-                'defaultSortDirection' => $direction]
+            [
+                'defaultSortFieldName' => $sort,
+                'defaultSortDirection' => $direction
+            ]
         );
+
         return [
             'pagination' => $pagination,
             'search_active' => $search_active
         ];
-        
     }
-    
 }

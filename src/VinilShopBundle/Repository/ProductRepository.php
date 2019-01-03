@@ -35,7 +35,6 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
 
     public function productRandLimin($limit = 9)
     {
-
         return $this
             ->createQueryBuilder('prod')
             ->addSelect('RAND() as HIDDEN rand')
@@ -57,7 +56,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
 
-        if($last_category){
+        if ($last_category) {
             $products = $this
                 ->createQueryBuilder('prod')
                 ->join('prod.category', 'cat')
@@ -65,7 +64,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('id' , $id)
                 ->getQuery()
                 ->getResult();
-        }else{
+        } else {
             $products = $this
                 ->createQueryBuilder('prod')
                 ->join('prod.category', 'cat')
@@ -76,5 +75,4 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         }
         return $products;
     }
-
 }

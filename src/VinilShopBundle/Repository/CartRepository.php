@@ -10,5 +10,5 @@ namespace VinilShopBundle\Repository;
  */
 class CartRepository extends \Doctrine\ORM\EntityRepository
 {
-
+    
 }

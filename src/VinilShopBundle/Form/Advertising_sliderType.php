@@ -37,6 +37,4 @@ class Advertising_sliderType extends AbstractType
     {
         return 'vinilshopbundle_advertising_slider';
     }
-
-
 }

@@ -79,5 +79,4 @@ class ProductType extends AbstractType
     {
         return 'vinilshopbundle_product';
     }
-
 }

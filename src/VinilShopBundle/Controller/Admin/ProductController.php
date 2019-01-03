@@ -15,7 +15,6 @@ use VinilShopBundle\Form\AttributeType;
 use VinilShopBundle\Form\ProductType;
 use VinilShopBundle\Service\FileUploader;
 
-
 class ProductController extends Controller
 {
     /**
@@ -38,8 +37,10 @@ class ProductController extends Controller
             $products,
             $page,
             10,
-                    ['defaultSortFieldName' => $sort,
-                'defaultSortDirection' => $direction]
+            [
+                'defaultSortFieldName' => $sort,
+                'defaultSortDirection' => $direction
+            ]
         );
 
         return[
@@ -69,7 +70,7 @@ class ProductController extends Controller
 
             $galleryFiles = $product->getOtherImages();
             $em = $this->getDoctrine()->getManager();
-            foreach($galleryFiles as $file){
+            foreach ($galleryFiles as $file) {
                 $fileUploader = new FileUploader($this->getParameter('gallery_img'));
                 $fileName = $fileUploader->upload($file);
                 $gallery_image = new GalleryImages();
@@ -108,7 +109,7 @@ class ProductController extends Controller
             ->attributesOfCategory($category_id);
         $amount_attributes = count($attributes);
 
-        if(!$product) {
+        if (!$product) {
             throw  $this->createNotFoundException('Товар не найден');
         }
         $form =$this->createForm(ProductType::class, $product);
@@ -125,12 +126,12 @@ class ProductController extends Controller
         $currentFile = $product->getTitleImage();
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $galleryFiles = $form['otherImages']->getData();
             $em = $this->getDoctrine()->getManager();
 
-            foreach($galleryFiles as $file){
+            foreach ($galleryFiles as $file) {
                 $fileUploader = new FileUploader($this->getParameter('gallery_img'));
                 $fileName = $fileUploader->upload($file);
                 $gallery_image = new GalleryImages();
@@ -142,16 +143,16 @@ class ProductController extends Controller
              * @var UploadedFile $file
              */
             $file = $form['titleImage']->getData();
-            if(!empty($file)) {
+            if (!empty($file)) {
                 $fileUploader = new FileUploader($this->getParameter('img_entities_directory'));
                 $file = $product->getTitleImage();
                 $fileName = $fileUploader->upload($file);
                 $product->setTitleImage($fileName);
-                if (!empty($currentFile)){
+                if (!empty($currentFile)) {
                     @unlink($this->getParameter('img_entities_directory') . '/' .$currentFile);
                 }
-            }else{
-                if (!empty($currentFile)){
+            } else {
+                if (!empty($currentFile)) {
                     $product->setTitleImage($currentFile);
                 }
             }
@@ -192,15 +193,16 @@ class ProductController extends Controller
             $products,
             $page,
             10,
-            ['defaultSortFieldName' => $sort,
-                'defaultSortDirection' => $direction]
+            [
+                'defaultSortFieldName' => $sort,
+                'defaultSortDirection' => $direction
+            ]
         );
+
         return [
             'pagination' => $pagination,
             'category' => $category,
             'categores' => $categores
         ];
-
     }
-
 }

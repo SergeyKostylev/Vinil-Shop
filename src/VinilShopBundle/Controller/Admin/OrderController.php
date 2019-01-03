@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\Regex;
 use VinilShopBundle\Form\StateType;
 
-
 class OrderController extends Controller
 {
     /**
@@ -20,13 +19,12 @@ class OrderController extends Controller
     {
         $search = $request->get('search');
 
-        if($search != 'all' && !preg_match('/^[ ]+$/ u', $search)){
-
+        if ($search != 'all' && !preg_match('/^[ ]+$/ u', $search)) {
             $orders = $this
                 ->getDoctrine()
                 ->getRepository('VinilShopBundle:Orders')
                 ->serchForNumber($search);
-        }else{
+        } else {
         $orders = $this
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Orders')
@@ -43,8 +41,10 @@ class OrderController extends Controller
             $orders,
             $page,
             50,
-            ['defaultSortFieldName' => $sort,
-                'defaultSortDirection' => $direction]
+            [
+                'defaultSortFieldName' => $sort,
+                'defaultSortDirection' => $direction
+            ]
         );
         return[
             'pagination' => $pagination,
@@ -56,14 +56,13 @@ class OrderController extends Controller
      * @Route("/admin/orders/user/{id}/{page}/{sort}/{direction}", name = "admin_user_orders")
      * @Template()
      */
-
     public function ordersByUserAction(Request $request, $id,  $page =1 , $sort = 'id', $direction='asc')
     {
         $user = $this
               ->getDoctrine()
               ->getRepository('VinilShopBundle:User')
               ->find($id);
-        if(!$user){
+        if (!$user) {
             throw  $this->createNotFoundException('Пользователь не найден');
         }
         $orders = $this
@@ -83,8 +82,10 @@ class OrderController extends Controller
             $orders,
             $page,
             50,
-            ['defaultSortFieldName' => $sort,
-                'defaultSortDirection' => $direction]
+            [
+                'defaultSortFieldName' => $sort,
+                'defaultSortDirection' => $direction
+            ]
         );
 
         return[
@@ -105,7 +106,7 @@ class OrderController extends Controller
             ->getRepository('VinilShopBundle:Orders')
             ->find($id);
 
-        if(!$order){
+        if (!$order) {
             throw  $this->createNotFoundException('Пользователь не найден');
         }
         $states = $this
@@ -118,5 +119,4 @@ class OrderController extends Controller
             'states' => $states
         ];
     }
-
 }

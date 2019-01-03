@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
 {
-
     /**
      * @Route("/user/private-office", name="private_office")
      * @Template()
@@ -16,8 +15,7 @@ class UserController extends Controller
     public function officeAction(Request $request)
     {
         $user = $this->getUser();
-        if(!$user)
-        {
+        if (!$user) {
             return $this->redirectToRoute('home_page');
         }
         $user = $this
@@ -31,12 +29,11 @@ class UserController extends Controller
             ->findBy([
                 'user' => $user->getId(),
                 'state' => [1,2,3,4]
-                ]);
+            ]);
 
         return [
             'user' => $user,
             'active_orders' => $active_orders
-
         ];
 
     }
@@ -48,8 +45,7 @@ class UserController extends Controller
     public function allUserOrdersAction(Request $request)
     {
         $user = $this->getUser();
-        if(!$user)
-        {
+        if (!$user) {
             return $this->redirectToRoute('home_page');
         }
         $user = $this
@@ -67,9 +63,7 @@ class UserController extends Controller
         return [
             'user' => $user,
             'orders' => $orders
-
         ];
-
     }
 
     /**
@@ -79,8 +73,7 @@ class UserController extends Controller
     public function userorderAction(Request $request, $id)
     {
         $user = $this->getUser();
-        if(!$user)
-        {
+        if (!$user) {
             return $this->redirectToRoute('home_page');
         }
         $user = $this
@@ -96,8 +89,6 @@ class UserController extends Controller
         return [
             'user' => $user,
             'order' => $order
-
         ];
     }
-
 }

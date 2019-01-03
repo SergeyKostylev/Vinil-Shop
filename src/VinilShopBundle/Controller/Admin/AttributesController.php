@@ -17,14 +17,15 @@ class AttributesController extends Controller
      * @Route("/admin/attributes", name = "attributes")
      * @Template()
      */
-
     public function indexAction(Request $request)
     {
         $attributes = $this
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Attribute_name')
             ->findBy([],['name' => 'ASC']);
-        return['attributes'=>$attributes];
+        return[
+            'attributes'=>$attributes
+        ];
     }
 
     /**
@@ -52,5 +53,4 @@ class AttributesController extends Controller
             'form' => $form->createView()
         ];
     }
-
 }

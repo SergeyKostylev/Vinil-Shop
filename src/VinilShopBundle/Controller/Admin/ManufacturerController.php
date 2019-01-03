@@ -26,7 +26,9 @@ class ManufacturerController extends Controller
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Manufacturer')
             ->findBy([],['name'=>'ASC']);
-        return['manufacturers'=>$manufacturers];
+        return[
+            'manufacturers'=>$manufacturers
+        ];
     }
 
     /**
@@ -41,7 +43,7 @@ class ManufacturerController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            
             $fileUploader = new FileUploader($this->getParameter('manufacturer_log'));
             $file = $manufacturer->getTitleImage();
             $fileName = $fileUploader->upload($file);
@@ -51,7 +53,6 @@ class ManufacturerController extends Controller
             $em->persist($manufacturer);
             $em->flush();
             return $this->redirectToRoute('add_manufacturer');
-
         }
         return [
             'form' => $form->createView()
@@ -68,7 +69,7 @@ class ManufacturerController extends Controller
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Manufacturer')
             ->find($id);
-        if(!$manufacturer) {
+        if (!$manufacturer) {
             throw  $this->createNotFoundException('Manufacturer not found');
         }
 
@@ -79,21 +80,21 @@ class ManufacturerController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             /**
              * @var UploadedFile $file
              */
             $file = $form['titleImage']->getData();
-            if(!empty($file)) {
+            if (!empty($file)) {
                 $fileUploader = new FileUploader($this->getParameter('manufacturer_log'));
                 $file = $manufacturer->getTitleImage();
                 $fileName = $fileUploader->upload($file);
                 $manufacturer->setTitleImage($fileName);
-                if (!empty($currentFile)){
+                if (!empty($currentFile)) {
                     @unlink($this->getParameter('manufacturer_log') . '/' .$currentFile);
                 }
-            }else{
-                if (!empty($currentFile)){
+            } else {
+                if (!empty($currentFile)) {
                     $manufacturer->setTitleImage($currentFile);
                 }
             }
@@ -104,9 +105,10 @@ class ManufacturerController extends Controller
             return $this->redirectToRoute('admin_manufacturers');
         }
 
-        return[ 'manufacturer'=>$manufacturer,
-                'form' => $form->createView()];
-
+        return[
+            'manufacturer'=>$manufacturer,
+            'form' => $form->createView()
+        ];
     }
 
     /**
@@ -122,7 +124,8 @@ class ManufacturerController extends Controller
 
         if (!$manufacturer) {
             return new Response(    'Ошибка',
-                Response::HTTP_INTERNAL_SERVER_ERROR);
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
 
         $manuf_products = $this
@@ -131,19 +134,16 @@ class ManufacturerController extends Controller
             ->productOfManufacturer($id);
 
         if($manuf_products){
-
             return new JsonResponse([
                 'prodExist' => true
-            ],500);
-
-
+                ],500
+            );
         }
 
         $em->remove($manufacturer);
         $em->flush();
         return new Response(    'Удалено',
-            Response::HTTP_OK);
-
+            Response::HTTP_OK
+        );
     }
-
 }

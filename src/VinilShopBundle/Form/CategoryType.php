@@ -2,7 +2,6 @@
 
 namespace VinilShopBundle\Form;
 
-
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -13,7 +12,6 @@ use VinilShopBundle\Entity\Category;
 use VinilShopBundle\Repository\CategoryRepository;
 
 use VinilShopBundle\Repository\Attribute_nameRepository;
-
 
 class CategoryType extends AbstractType
 {
@@ -74,6 +72,4 @@ class CategoryType extends AbstractType
     {
         return 'vinilshopbundle_category';
     }
-
-
 }

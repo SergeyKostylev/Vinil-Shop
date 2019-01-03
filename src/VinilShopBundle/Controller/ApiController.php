@@ -18,7 +18,6 @@ use VinilShopBundle\Entity\User;
 use VinilShopBundle\Service\OrderNumberGenerator;
 use VinilShopBundle\Service\PriceSumInCart;
 
-
 class ApiController extends Controller
 {
     /**
@@ -33,52 +32,46 @@ class ApiController extends Controller
         $message = $request->get('message');
         $captcha = (int)$request->get('captcha');
 
-        if ($captcha != $this->get('session')->get('feedback_captcha')){
+        if ($captcha != $this->get('session')->get('feedback_captcha')) {
             return  new JsonResponse([
                 'answer' => 'Неверное контрольное число',
                 'itemBlock' => 'captcha'
             ],403);
         }
-        if (!preg_match('/^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/',$email)){
-
+        if (!preg_match('/^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/',$email)) {
             return  new JsonResponse([
                 'answer' => 'Некорректный email',
                 'itemBlock' => 'sender-email'
             ],403);
         }
-        if(!preg_match('/^[А-ЯA-Z]{1}[a-zа-я]{1,50}$/u',$sender_name)){
-
+        if (!preg_match('/^[А-ЯA-Z]{1}[a-zа-я]{1,50}$/u',$sender_name)) {
             return  new JsonResponse([
                 'answer' => 'Некорректное имя',
                 'itemBlock' => 'sender-name'
             ],403);
         }
-        if(strlen($title) < 4){
-
+        if (strlen($title) < 4) {
             return  new JsonResponse([
                 'answer' => 'Короткое название темы',
                 'itemBlock' => 'sender-message-title'
             ],403);
         }
 
-        if(strlen($title) > 250){
-
+        if (strlen($title) > 250) {
             return  new JsonResponse([
                 'answer' => 'Длинное название темы',
                 'itemBlock' => 'sender-message-title'
             ],403);
         }
 
-        if(strlen($message) < 50){
-
+        if (strlen($message) < 50) {
             return  new JsonResponse([
                 'answer' => 'Маленькое сообщение',
                 'itemBlock' => 'sender-message'
             ],403);
         }
 
-        if(strlen($message) > 10000){
-
+        if (strlen($message) > 10000) {
             return  new JsonResponse([
                 'answer' => 'Длинное сообщение',
                 'itemBlock' => 'sender-message'
@@ -112,7 +105,7 @@ class ApiController extends Controller
             ->getRepository('VinilShopBundle:Product')
             ->find($product_id);
 
-        if(!$product){
+        if (!$product) {
             return  new JsonResponse([
                 'answer' => 'Товар не найден'
             ],403);
@@ -122,18 +115,17 @@ class ApiController extends Controller
          */
         $user = $this->getUser();
 
-        if(!$user){
+        if (!$user) {
             $session = new Session();
-            if ($session->has('cart')){
+            if ($session->has('cart')) {
 
                 $cart = $session->get('cart');
-                if(!array_key_exists($product_id, $cart))
-                {
+                if (!array_key_exists($product_id, $cart)) {
                     $cart[$product_id] = 1;
                     $session->set('cart', $cart);
                 }
-            }else{
-                $cart =[$product_id => 1];
+            } else {
+                $cart = [$product_id => 1];
                 $session->set('cart', $cart);
             }
             return  new JsonResponse([
@@ -141,14 +133,14 @@ class ApiController extends Controller
             ],200);
         }
 
-        $cart =  $this
+        $cart = $this
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Cart')
             ->findBy([
                 'user' => $user->getId(),
                 'product' => $product->getId()
             ]);
-        if ($cart){
+        if ($cart) {
             return  new JsonResponse([
                 'answer' => 'Товар уже в корзине'
             ],200);
@@ -176,7 +168,7 @@ class ApiController extends Controller
     {
         $user= $this->getUser();
 
-        if(!$user){
+        if (!$user) {
             return  new JsonResponse([
                 'answer' => 'Пользователь отсутствует'
             ],403);
@@ -189,7 +181,7 @@ class ApiController extends Controller
                     'user' => $user->getId()
                 ]
             );
-        if(!$cart){
+        if (!$cart) {
             return  new JsonResponse([
                 'answer' => 'Товар в корзине не найден'
             ],403);
@@ -207,7 +199,6 @@ class ApiController extends Controller
             ]);
         $sum = PriceSumInCart::getSumInCarts($products_in_cart);
 
-
         return  new JsonResponse([
             'answer' => 'Товар удален из корзины',
             'sum' => $sum
@@ -221,20 +212,19 @@ class ApiController extends Controller
     public function cartDeleteAnonProductAction(Request $request, $id)
     {
         $session = new Session();
-        if($session->has('cart')){
-
+        if ($session->has('cart')) {
             $session_cart = $session->get('cart');
             unset($session_cart[$id]);
             $session->set('cart',$session_cart);
 
             $sum = 0;
-            foreach ($session_cart as $product_id => $amount){
+            foreach ($session_cart as $product_id => $amount) {
                 $product = $this
                     ->getDoctrine()
                     ->getRepository('VinilShopBundle:Product')
                     ->find($product_id );
-                if($product->getIsActive()){
-                $sum+= $product->getPrice() * $amount;
+                if ($product->getIsActive()) {
+                    $sum += $product->getPrice() * $amount;
                 }
             }
             return  new JsonResponse([
@@ -256,7 +246,7 @@ class ApiController extends Controller
     {
         $user= $this->getUser();
 
-        if(!$user){
+        if (!$user) {
             return  new JsonResponse([
                 'answer' => 'Пользователь отсутствует'
             ],403);
@@ -265,11 +255,11 @@ class ApiController extends Controller
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Cart')
             ->findBy([
-                    'product' => $id,
-                    'user' => $user->getId()
-                ]
-            );
-        if(!$cart){
+                'product' => $id,
+                'user' => $user->getId()
+            ]);
+
+        if (!$cart) {
             return  new JsonResponse([
                 'answer' => 'Товар в корзине не найден'
             ],403);
@@ -277,11 +267,11 @@ class ApiController extends Controller
 
         $cart = $cart[0];
         $amount = $cart->getAmount();
-        if($act == 1){
+        if ($act == 1) {
             $cart->setAmount(++$amount);
         }
-        if($act == -1 && $amount > 1 ){
-        $cart->setAmount(--$amount);
+        if ($act == -1 && $amount > 1 ) {
+            $cart->setAmount(--$amount);
         }
         $em = $this->getDoctrine()->getManager();
         $em->persist($cart);
@@ -292,7 +282,7 @@ class ApiController extends Controller
             ->getRepository('VinilShopBundle:Cart')
             ->findBy([
                 'user' => $user->getId()
-                ]);
+            ]);
         $sum = PriceSumInCart::getSumInCarts($products_in_cart);
 
         return  new JsonResponse([
@@ -308,29 +298,27 @@ class ApiController extends Controller
     public function setCartAmountAnonAction(Request $request,$id, $act = 1)
     {
         $session = new Session();
-        if($session->has('cart')){
+        if ($session->has('cart')) {
 
             $session_cart = $session->get('cart');
-
-            if(isset($session_cart[$id]))
-            {
+            if (isset($session_cart[$id])) {
                 $amount = $session_cart[$id];
-                if($act == 1){
+                if ($act == 1) {
                     $session_cart[$id] ++;
                 }
-                if($act == -1 && $amount > 1 ){
+                if ($act == -1 && $amount > 1 ) {
                     $session_cart[$id] --;
                 }
             }
             $session->set('cart',$session_cart);
             $sum = 0;
-            foreach ($session_cart as $product_id => $amount){
+            foreach ($session_cart as $product_id => $amount) {
                 $product = $this
                     ->getDoctrine()
                     ->getRepository('VinilShopBundle:Product')
-                    ->find($product_id );
-                if($product->getIsActive()){
-                    $sum+= $product->getPrice() * $amount;
+                    ->find($product_id);
+                if ($product->getIsActive()) {
+                    $sum += $product->getPrice() * $amount;
                 }
             }
             return  new JsonResponse([
@@ -353,8 +341,7 @@ class ApiController extends Controller
     {
         $amount = 0;
         $user = $this->getUser();
-        if($user)
-        {
+        if ($user) {
             $carts = $this
                 ->getDoctrine()
                 ->getRepository('VinilShopBundle:Cart')
@@ -362,8 +349,8 @@ class ApiController extends Controller
                     'user' => $user->getId()
                 ]);
 
-            foreach ($carts as $cart){
-                $amount+= $cart->getAmount();
+            foreach ($carts as $cart) {
+                $amount += $cart->getAmount();
             }
             return  new JsonResponse([
                 'amount' => $amount
@@ -371,10 +358,10 @@ class ApiController extends Controller
         }
 
         $session = new Session();
-        if($session->has('cart')){
+        if ($session->has('cart')) {
             $cart = $session->get('cart');
-            foreach ($cart as $product_id => $product_count){
-                $amount+= $product_count;
+            foreach ($cart as $product_id => $product_count) {
+                $amount += $product_count;
             }
             return  new JsonResponse([
                 'amount' => $amount
@@ -393,15 +380,13 @@ class ApiController extends Controller
      */
     public function apiOrderCreateAction(Request $request)
     {
-
         $name = $request->get('name');
         $email = $request->get('email');
         $phone = $request->get('phone');
         $address = $request->get('address');
         $description = $request->get('description');
 
-        if (!preg_match('/^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/',$email)){
-
+        if (!preg_match('/^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/',$email)) {
             return  new JsonResponse([
                 'answer' => 'Некорректный email.',
             ],403);
@@ -413,14 +398,14 @@ class ApiController extends Controller
 
         $user = $this->getUser();
 
-        if($user){
+        if ($user) {
             $carts = $this
                 ->getDoctrine()
                 ->getRepository('VinilShopBundle:Cart')
                 ->findBy([
-                        'user' => $user->getId()
-                    ]);
-            if($carts){
+                    'user' => $user->getId()
+                ]);
+            if ($carts) {
                 $order = new Orders();
                 $state = $this
                     ->getDoctrine()
@@ -437,16 +422,15 @@ class ApiController extends Controller
                     ->setUser($user)
                     ->setState($state)
                     ->setPrice(PriceSumInCart::getSumInCarts($carts))
-                    ->setDescription($description)
-                ;
+                    ->setDescription($description);
+
                 $em->persist($order);
 
-                foreach ($carts as $cart)
-                {
+                foreach ($carts as $cart) {
                     /**
                      * @var Cart $cart
                      */
-                    if($cart->getProduct()->getIsActive()) {
+                    if ($cart->getProduct()->getIsActive()) {
                         $productInOrder = new ProductInOrder();
                         $productInOrder
                             ->setOrder($order)
@@ -458,22 +442,20 @@ class ApiController extends Controller
                     }
                 }
                 $em->flush();
-            }else{
+            } else {
                 return  new JsonResponse([
                     'answer' => 'Корзина пуста'
                 ],403);
             }
-        }else{
-
+        } else {
             $session = new Session();
-            if($session->has('cart')){
-
+            if ($session->has('cart')) {
                 $cart = $session->get('cart');
-                if(count($cart)){
+                if (count($cart)) {
                      $product_to_order =[];
                      $order_price = 0;
 
-                    foreach ($cart as $product_id => $amount){
+                    foreach ($cart as $product_id => $amount) {
                         /**
                          * @var Product $product
                          */
@@ -481,7 +463,7 @@ class ApiController extends Controller
                             ->getDoctrine()
                             ->getRepository('VinilShopBundle:Product')
                             ->find($product_id);
-                        if($product->getIsActive()){
+                        if ($product->getIsActive()) {
                             $order_price+= $product->getPrice() * $amount;
                             $product_to_order[] = [
                                 'product' => $product,
@@ -490,7 +472,6 @@ class ApiController extends Controller
                         }
                     }
                     if (count($product_to_order)) {
-
                         $order = new Orders();
                         $state = $this
                             ->getDoctrine()
@@ -508,8 +489,7 @@ class ApiController extends Controller
                             ->setDescription($description);
                         $em->persist($order);
 
-                        foreach ($product_to_order as $product){
-
+                        foreach ($product_to_order as $product) {
                             $productInOrder = new ProductInOrder();
                             $productInOrder
                                 ->setOrder($order)
@@ -524,20 +504,20 @@ class ApiController extends Controller
                     $session->set('cart', $cart);
                 }
             }
-
         }
 
-                $message = \Swift_Message::newInstance()
+        $message = \Swift_Message::newInstance()
             ->setFrom('s03540@ukr.net')
             ->setTo($email)
             ->setSubject('Покупка на Music shop')
-            ->setBody('Спасибо что выбрали наш магазин. <br>
-                                Наш манеджер свяжется с Вами в ближайшее время для подтверждения.<br>
-                                Номер вашего заказа <b>' . $number_order . '</b>.','text/html')
+            ->setBody(
+                'Спасибо что выбрали наш магазин. <br>
+                Наш манеджер свяжется с Вами в ближайшее время для подтверждения.<br>
+                Номер вашего заказа <b>' . $number_order . '</b>.','text/html'
+            );
 
-            ;
-
-            $this->get('mailer')
+            $this
+                ->get('mailer')
                 ->send($message);
 
         return  new JsonResponse([
@@ -545,7 +525,6 @@ class ApiController extends Controller
             'number_order' => $number_order
         ],200);
     }
-
 }
 
 

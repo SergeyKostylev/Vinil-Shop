@@ -25,7 +25,9 @@ class CategoryController extends Controller
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Category')
             ->findTree();
-        return['categores'=>$categores];
+        return[
+            'categores'=>$categores
+        ];
     }
 
     /**
@@ -66,7 +68,7 @@ class CategoryController extends Controller
             ->getDoctrine()
             ->getRepository('VinilShopBundle:Category')
             ->find($id);
-        if(!$category) {
+        if (!$category) {
             throw  $this->createNotFoundException('Category not found');
         }
 
@@ -77,22 +79,21 @@ class CategoryController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
-
+        if ($form->isSubmitted() && $form->isValid()) {
             /**
              * @var UploadedFile $file
              */
             $file = $form['titleImage']->getData();
-            if(!empty($file)) {
+            if (!empty($file)) {
                 $fileUploader = new FileUploader($this->getParameter('category_title_imgs'));
                 $file = $category->getTitleImage();
                 $fileName = $fileUploader->upload($file);
                 $category->setTitleImage($fileName);
-                if (!empty($currentFile)){
+                if (!empty($currentFile)) {
                     @unlink($this->getParameter('category_title_imgs') . '/' .$currentFile);
                 }
-            }else{
-                if (!empty($currentFile)){
+            } else {
+                if (!empty($currentFile)) {
                     $category->setTitleImage($currentFile);
                 }
             }
@@ -102,8 +103,10 @@ class CategoryController extends Controller
             return $this->redirectToRoute('admin_categoryes');
         }
 
-        return[ 'category'=>$category,
-                'form' => $form->createView()];
+        return[
+            'category'=>$category,
+            'form' => $form->createView()
+        ];
 
     }
 
@@ -126,8 +129,7 @@ class CategoryController extends Controller
         $em->flush();
 
         return new Response(    'Content',
-            Response::HTTP_OK);
-
+            Response::HTTP_OK
+        );
     }
-
 }

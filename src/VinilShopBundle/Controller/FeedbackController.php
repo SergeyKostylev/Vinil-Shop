@@ -42,5 +42,4 @@ class FeedbackController extends Controller
         $response->headers->set('Content-Type', 'image/png');
         $response->send();
     }
-
 }
